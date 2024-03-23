@@ -205,7 +205,7 @@ def handle_encounter(character, board):
                     print("You've been defeated. Game Over.")
                     return  # This exits the function, potentially ending the game or requiring a game reset
 
-                # Assuming the creature was defeated, adjust character's experience
+
                 elif creature['health'] <= 0:
                     gained_exp = creature['exp']  # Use the creature's exp value
                     character['exp'] += gained_exp
@@ -254,17 +254,18 @@ def create_creature(region):
 
 
 def calculate_skill_damage(skill, character):
-    if skill == 'Power Strike':
-        # For Knight, using 'Power Strike' with damage formula str * 2 + dex * 1
-        return character['stats']['str'] * 2 + character['stats']['dex'] * 1
-    elif skill == 'Quick Shot':
-        # Example for Archer
-        return character['stats']['dex'] * 3 + character['stats']['str'] * 1
-    elif skill == 'Fireball':
-        # Example for Magician
-        return character['stats']['int'] * 4  # Example formula for Magician
+    skill_damage_formulas = {
+        'Shield Attack': character['stats']['str'] * 1.5 + character['stats']['dex'] * 2,
+        'Power Strike': character['stats']['str'] * 2 + character['stats']['dex'] * 1,
+
+        'Quick Shot': character['stats']['dex'] * 3 + character['stats']['str'] * 1,
+        'Fireball': character['stats']['int'] * 4,
+    }
+    if skill in skill_damage_formulas:
+        damage = skill_damage_formulas[skill]
+        return damage
     else:
-        print("Unknown skill.")
+        print("Unknown skill")
         return 0
 
 
@@ -289,27 +290,23 @@ def choose_skill(character):
 def engage_combat(character, creature):
     print(f"Engaging in combat with {creature['name']}...")
 
-    # Let the user choose a skill
-    chosen_skill = choose_skill(character)
-    damage_dealt = calculate_skill_damage(chosen_skill, character)
+    while creature['health'] > 0:
+        # Let the user choose a skill
+        chosen_skill = choose_skill(character)
+        damage_dealt = calculate_skill_damage(chosen_skill, character)
 
-    print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the {creature['name']}.")
+        print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the {creature['name']}.")
 
-    # Apply damage to the creature
-    creature['health'] -= damage_dealt
-    if creature['health'] > 0:
+        # Apply damage to the creature
+        creature['health'] -= damage_dealt
+        if creature['health'] <= 0:
+            break
         print(f"{creature['name']} is still alive with {creature['health']} health left.")
-    else:
-        print(f"You've defeated the {creature['name']}!")
-        # Handle post-combat logic here (e.g., experience gain)
-
-    # Example simplified creature counter-attack
-    character['hp'] -= creature['damage']
-    if character['hp'] > 0:
+        character['hp'] -= creature['damage']
+        print(f"{creature['name']} deal {creature['damage']} to you")
         print(f"After the {creature['name']}'s attack, your HP is now {character['hp']}.")
-    else:
-        print("You've been defeated. Game Over.")
-        # Implement game over logic or character revival
+
+    print(f"You've defeated the {creature['name']}!")
 
 
 def game_loop():
