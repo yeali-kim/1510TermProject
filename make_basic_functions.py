@@ -203,8 +203,7 @@ def handle_encounter(character, board):
                 # Check if the character is alive after combat
                 if character['hp'] <= 0:
                     print("You've been defeated. Game Over.")
-                    return  # This exits the function, potentially ending the game or requiring a game reset
-
+                    return False  # This exits the function, potentially ending the game or requiring a game reset
 
                 elif creature['health'] <= 0:
                     gained_exp = creature['exp']  # Use the creature's exp value
@@ -238,7 +237,7 @@ def create_creature(region):
             {'name': 'Bear', 'health': 50, 'damage': 20, 'exp': 30},
         ],
         'Desert': [
-            {'name': 'Scorpion', 'health': 200, 'damage': 50, 'exp': 100},
+            {'name': 'Scorpion', 'health': 200, 'damage': 500, 'exp': 100},
             {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250},
         ],
     }
@@ -259,7 +258,10 @@ def calculate_skill_damage(skill, character):
         'Power Strike': character['stats']['str'] * 2 + character['stats']['dex'] * 1,
 
         'Quick Shot': character['stats']['dex'] * 3 + character['stats']['str'] * 1,
+        'Fire Arrow': character['stats']['dex'] * 3 + character['stats']['str'] * 2,
+
         'Fireball': character['stats']['int'] * 4,
+        'Ice Age': character['stats']['int'] * 4 + character['stats']['dex'] * 2
     }
     if skill in skill_damage_formulas:
         damage = skill_damage_formulas[skill]
@@ -300,13 +302,19 @@ def engage_combat(character, creature):
         # Apply damage to the creature
         creature['health'] -= damage_dealt
         if creature['health'] <= 0:
+            print(f"You've defeated the {creature['name']}!")
             break
         print(f"{creature['name']} is still alive with {creature['health']} health left.")
         character['hp'] -= creature['damage']
         print(f"{creature['name']} deal {creature['damage']} to you")
         print(f"After the {creature['name']}'s attack, your HP is now {character['hp']}.")
+        if character['hp'] <= 0:
+            print("Game Over")
+            break
 
-    print(f"You've defeated the {creature['name']}!")
+
+def is_alive(character):
+    return False if character["hp"] <= 0 else True
 
 
 def game_loop():
@@ -315,7 +323,7 @@ def game_loop():
 
     print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
 
-    while True:
+    while is_alive(character):
         print_board_dict(board)  # Display the game board
 
         # Display character's current status
@@ -331,11 +339,9 @@ def game_loop():
         handle_encounter(character, board)  # Check for and handle any encounters
 
 
-game_loop()
+def main():
+    game_loop()
 
-# Create a character by asking the user to choose a class
-# character = create_character()
-# print(character)
-#
-# board = create_board_dict()
-# print_board_dict(board)
+
+if __name__ == "__main__":
+    main()
