@@ -68,7 +68,11 @@ def create_character():
     # Mapping of input numbers to character classes
     class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
     character_class = None
-
+    base_hp = {
+        'Knight': 150,
+        'Archer': 100,
+        'Magician': 80,
+    }
     # Attempt to get user input and validate it
     while character_class is None:
         try:
@@ -91,10 +95,11 @@ def create_character():
     user_character = {
         'class': character_class,
         'stats': classes[character_class],
-        'location': {'x-coordinate': 3, 'y-coordinate': 2},  # Default location at home
+        'location': {'x-coordinate': 4, 'y-coordinate': 2},  # Default location at home
         'level': 1,  # Starting level
         'exp': 0,  # Starting experience points
-        'skills': classes[character_class]['skills']  # Initial skills based on class
+        'skills': classes[character_class]['skills'],  # Initial skills based on class
+        'hp': base_hp[character_class],
     }
 
     return user_character
@@ -180,17 +185,153 @@ def move_character(character, direction, board):
         print("Invalid move. You've hit a wall.")
 
 
+def handle_encounter(character, board):
+    x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
+    current_location_type = board[(x, y)].split()[0]
+
+    if current_location_type in ['Forest', 'Desert']:
+        if random.random() < 0.8:  # 30% chance of encounter
+            creature = create_creature(current_location_type)
+            print(f"You've encountered a {creature['name']}!")
+
+            # Offer choice to engage in combat or try to run
+            action = input("Do you wish to fight (f) or try to run (r)? ")
+
+            if action.lower() == 'f':
+                engage_combat(character, creature)
+
+                # Check if the character is alive after combat
+                if character['hp'] <= 0:
+                    print("You've been defeated. Game Over.")
+                    return  # This exits the function, potentially ending the game or requiring a game reset
+
+                # Assuming the creature was defeated, adjust character's experience
+                elif creature['health'] <= 0:
+                    gained_exp = creature['exp']  # Use the creature's exp value
+                    character['exp'] += gained_exp
+                    print(f"You gained {gained_exp} Exp!")
+                    update_level(character)  # Check and handle level up
+
+            elif action.lower() == 'r':
+                # Implement escape logic, could be based on character's dex vs creature's dex
+                # Simple escape chance demonstration
+                if random.random() < 0.5:  # 50% chance to escape
+                    print("You managed to escape safely.")
+                else:
+                    print("Failed to escape. Forced into combat.")
+                    engage_combat(character, creature)
+            else:
+                print("Invalid action. You're forced into combat.")
+                engage_combat(character, creature)
+        else:
+            print("It's quiet... too quiet.")
+    else:
+        print("You move safely.")
+
+
+def create_creature(region):
+    # Define basic attributes for creatures in each region
+    creatures = {
+        'Forest': [
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10},
+            {'name': 'Wolf', 'health': 20, 'damage': 10, 'exp': 20},
+            {'name': 'Bear', 'health': 50, 'damage': 20, 'exp': 30},
+        ],
+        'Desert': [
+            {'name': 'Scorpion', 'health': 200, 'damage': 50, 'exp': 100},
+            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250},
+        ],
+    }
+
+    if region in creatures:
+        # Randomly select a creature from the specified region
+        creature = random.choice(creatures[region])
+        print(f"A wild {creature['name']} appears!")
+        return creature
+    else:
+        print("No creatures found in this region.")
+        return None
+
+
+def calculate_skill_damage(skill, character):
+    if skill == 'Power Strike':
+        # For Knight, using 'Power Strike' with damage formula str * 2 + dex * 1
+        return character['stats']['str'] * 2 + character['stats']['dex'] * 1
+    elif skill == 'Quick Shot':
+        # Example for Archer
+        return character['stats']['dex'] * 3 + character['stats']['str'] * 1
+    elif skill == 'Fireball':
+        # Example for Magician
+        return character['stats']['int'] * 4  # Example formula for Magician
+    else:
+        print("Unknown skill.")
+        return 0
+
+
+def choose_skill(character):
+    print("Available skills:")
+    skill_number = 1  # Start numbering skills at 1
+    for skill in character['skills']:
+        print(f"{skill_number}. {skill}")
+        skill_number += 1  # Increment the skill number for the next skill
+
+    skill_choice = 0
+    while skill_choice < 1 or skill_choice > len(character['skills']):
+        try:
+            skill_choice = int(input("Choose a skill to use (number): "))
+            if skill_choice < 1 or skill_choice > len(character['skills']):
+                print("Invalid choice, please select a valid skill number.")
+        except ValueError:
+            print("Please enter a number.")
+    return character['skills'][skill_choice - 1]
+
+
+def engage_combat(character, creature):
+    print(f"Engaging in combat with {creature['name']}...")
+
+    # Let the user choose a skill
+    chosen_skill = choose_skill(character)
+    damage_dealt = calculate_skill_damage(chosen_skill, character)
+
+    print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the {creature['name']}.")
+
+    # Apply damage to the creature
+    creature['health'] -= damage_dealt
+    if creature['health'] > 0:
+        print(f"{creature['name']} is still alive with {creature['health']} health left.")
+    else:
+        print(f"You've defeated the {creature['name']}!")
+        # Handle post-combat logic here (e.g., experience gain)
+
+    # Example simplified creature counter-attack
+    character['hp'] -= creature['damage']
+    if character['hp'] > 0:
+        print(f"After the {creature['name']}'s attack, your HP is now {character['hp']}.")
+    else:
+        print("You've been defeated. Game Over.")
+        # Implement game over logic or character revival
+
+
 def game_loop():
-    board = create_board_dict()
-    character = create_character()  # Assume this function is adjusted to initialize a character without input prompts
+    board = create_board_dict()  # Initialize the game board
+    character = create_character()  # Create the character based on user input
+
+    print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
 
     while True:
-        print_board_dict(board)  # Optional: Customize to show character position
-        print(f"Your location: {character['location']}")
-        direction = get_user_choice()
+        print_board_dict(board)  # Display the game board
+
+        # Display character's current status
+        print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
+        print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
+
+        direction = get_user_choice()  # Get user input for the next action
         if direction == 'quit':
+            print("Thank you for playing! Goodbye.")
             break
-        move_character(character, direction, board)
+
+        move_character(character, direction, board)  # Move the character based on the input
+        handle_encounter(character, board)  # Check for and handle any encounters
 
 
 game_loop()
