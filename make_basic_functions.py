@@ -42,9 +42,9 @@ def create_board_dict():
             board[(x, y)] = 'Castle'
     board[(9, 9)] = 'Boss'
 
-    wall_locations = [(6, y-coordinate) for y-coordinate in range(10)]
-    wall_locations += [(x-coordinate, 5) for x-coordinate in range(10)]
-    wall_locations += [(2, y-coordinate) for y-coordinate in range(5)]
+    wall_locations = [(6, y_coordinate) for y_coordinate in range(10)]
+    wall_locations += [(x_coordinate, 5) for x_coordinate in range(10)]
+    wall_locations += [(2, y) for y in range(5)]
     for wall in wall_locations:
         board[wall] = 'Wall'
 
