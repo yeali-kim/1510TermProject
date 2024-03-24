@@ -42,9 +42,9 @@ def create_board_dict():
             board[(x, y)] = 'Castle'
     board[(9, 9)] = 'Boss'
 
-    wall_locations = [(6, i) for i in range(10)]
-    wall_locations += [(i, 5) for i in range(10)]
-    wall_locations += [(2, i) for i in range(5)]
+    wall_locations = [(6, y-coordinate) for y-coordinate in range(10)]
+    wall_locations += [(x-coordinate, 5) for x-coordinate in range(10)]
+    wall_locations += [(2, y-coordinate) for y-coordinate in range(5)]
     for wall in wall_locations:
         board[wall] = 'Wall'
 
@@ -123,20 +123,22 @@ def update_level(character):
         print(f"Congratulations! Your character is now level {character['level']}.")
 
         # Stat increases depend on character class
-        if character['class'] == 'Knight':
-            character['stats']['str'] += 2  # Knights get stronger
-            character['stats']['dex'] += 1  # Minor dexterity increase
+        if character['class'] == 'Knight':  # Knight get more hp than other classes
+            character['stats']['str'] += 2
+            character['stats']['dex'] += 1
+            character['hp'] += 20
         elif character['class'] == 'Archer':
             character['stats']['str'] += 1
-            character['stats']['dex'] += 2  # Archers become more dexterous
+            character['stats']['dex'] += 3
+            character['hp'] += 15
         elif character['class'] == 'Magician':
-            character['stats']['dex'] += 1
-            character['stats']['int'] += 2  # Magicians' intelligence greatly increases
+            character['stats']['dex'] += 2
+            character['stats']['int'] += 3
+            character['hp'] += 10
 
-        # Print stat increase message
         print("Your stats have increased:")
         print(f"Strength: {character['stats']['str']}, Dexterity: {character['stats']['dex']}, \
-        Intelligence: {character['stats']['int']}")
+        Intelligence: {character['stats']['int']}, HP: {character['hp']}")
 
         # Check for another level up in case of remaining Exp
         update_level(character)
