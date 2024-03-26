@@ -68,11 +68,7 @@ def create_character():
     # Mapping of input numbers to character classes
     class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
     character_class = None
-    base_hp = {
-        'Knight': 150,
-        'Archer': 100,
-        'Magician': 80,
-    }
+
     # Attempt to get user input and validate it
     while character_class is None:
         try:
@@ -86,9 +82,9 @@ def create_character():
 
     # Define default stats for each class
     classes = {
-        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'skills': ['Shield Attack', 'Power Strike']},
-        'Archer': {'str': 6, 'dex': 10, 'int': 3, 'skills': ['Quick Shot', 'Fire Arrow']},
-        'Magician': {'str': 3, 'dex': 4, 'int': 10, 'skills': ['Fireball', 'Ice Age']},
+        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'skills': ['Shield Attack', 'Power Strike']},
+        'Archer': {'str': 6, 'dex': 10, 'int': 3, 'hp': 100, 'skills': ['Quick Shot', 'Fire Arrow']},
+        'Magician': {'str': 3, 'dex': 4, 'int': 10, 'hp': 80, 'skills': ['Fireball', 'Ice Age']},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -99,7 +95,7 @@ def create_character():
         'level': 1,  # Starting level
         'exp': 0,  # Starting experience points
         'skills': classes[character_class]['skills'],  # Initial skills based on class
-        'hp': base_hp[character_class],
+        'hp': classes[character_class]['hp'],
     }
 
     return user_character
@@ -109,7 +105,13 @@ def update_level(character):
     # Base experience required for the first level up
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
-    exp_growth_rate = 1.2  # 20% more Exp required for each level
+    exp_growth_rate = 1.05  # 5% more Exp required for each level
+    # base hp to calculate total hp when character leveled up
+    base_hp = {
+        'Knight': 150,
+        'Archer': 100,
+        'Magician': 80,
+    }
 
     # Calculate the current required Exp for the next level
     exp_for_next_level = base_exp_per_level * (exp_growth_rate ** (character['level'] - 1))
@@ -126,7 +128,7 @@ def update_level(character):
         if character['class'] == 'Knight':  # Knight get more hp than other classes
             character['stats']['str'] += 2
             character['stats']['dex'] += 1
-            character['hp'] += 20
+            character['hp'] = base_hp[character['class']] * (1 + ((character['level']-1)/10))  # 10% increase hp
         elif character['class'] == 'Archer':
             character['stats']['str'] += 1
             character['stats']['dex'] += 3
@@ -192,7 +194,7 @@ def handle_encounter(character, board):
     current_location_type = board[(x, y)].split()[0]
 
     if current_location_type in ['Forest', 'Desert']:
-        if random.random() < 0.8:  # 30% chance of encounter
+        if random.random() < 0.8:  # 80% chance of encounter
             creature = create_creature(current_location_type)
             print(f"You've encountered a {creature['name']}!")
 
@@ -234,12 +236,12 @@ def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10},
+            {'name': 'Rabbit', 'health': 100, 'damage': 5, 'exp': 100},
             {'name': 'Wolf', 'health': 20, 'damage': 10, 'exp': 20},
             {'name': 'Bear', 'health': 50, 'damage': 20, 'exp': 30},
         ],
         'Desert': [
-            {'name': 'Scorpion', 'health': 200, 'damage': 500, 'exp': 100},
+            {'name': 'Scorpion', 'health': 200, 'damage': 50, 'exp': 100},
             {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250},
         ],
     }
