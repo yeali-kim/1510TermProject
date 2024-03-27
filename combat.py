@@ -1,6 +1,7 @@
 import random
 import character_functions
 
+
 def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
@@ -13,9 +14,9 @@ def create_creature(region):
         'Desert': [
             {'name': 'Dune', 'health': 100, 'damage': 30, 'exp': 80},
             {'name': 'Scorpion', 'health': 200, 'damage': 50, 'exp': 100},
-            {'name': 'Salamanders', 'health': 300, 'damage':70, 'exp': 150},
+            {'name': 'Salamanders', 'health': 300, 'damage': 70, 'exp': 150},
             {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250},
-        
+
         ],
         'Castle': [
             {'name': 'Cerberus', 'health': 700, 'damage': 200, 'exp': 500},
@@ -66,6 +67,7 @@ def create_creature(region):
         print("No creatures found in this region.")
         return None
 
+
 def calculate_skill_damage(skill, character):
     skill_damage_formulas = {
         'Shield Attack': character['stats']['str'] * 1.5 + character['stats']['dex'] * 2,
@@ -84,6 +86,7 @@ def calculate_skill_damage(skill, character):
         print("Unknown skill")
         return 0
 
+
 def choose_skill(character):
     print("Available skills:")
     skill_number = 1  # Start numbering skills at 1
@@ -98,7 +101,8 @@ def choose_skill(character):
         except ValueError:
             print("Please enter a number.")
     return character['skills'][skill_choice - 1]
-  
+
+
 def engage_combat(character, creature):
     print(f"Engaging in combat with {creature['name']}...")
 
@@ -122,9 +126,11 @@ def engage_combat(character, creature):
             print("Game Over")
             break
 
+
 def is_alive(character):
     return False if character["hp"] <= 0 else True
-  
+
+
 def handle_encounter(character, board):
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
     current_location_type = board[(x, y)].split()[0]
