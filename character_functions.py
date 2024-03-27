@@ -25,7 +25,7 @@ def create_character():
     user_character = {
         'class': character_class,
         'stats': classes[character_class],
-        'location': {'x-coordinate': 4, 'y-coordinate': 2},  # Default location at home
+        'location': {'x-coordinate': 6, 'y-coordinate': 2},  # Default location at home
         'level': 1,  # Starting level
         'exp': 0,  # Starting experience points
         'skills': classes[character_class]['skills'],  # Initial skills based on class
@@ -117,7 +117,7 @@ def move_character(character, direction, board):
         print(f"Encountered {board[(new_x, new_y)]}. Interaction not yet implemented.")
 
     # Allow movement if it's within the same region, through a door, or from home
-    if board[(new_x, new_y)] != 'Wall':
+    if board[(new_x, new_y)] != 'horizontal_wall' or 'vertical_wall':
         if "Door" in board[(new_x, new_y)]:
             print(f"Moving through the door to {board[(new_x, new_y)]}...")
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y

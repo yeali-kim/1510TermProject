@@ -1,7 +1,6 @@
 import character_functions
 import board
 import combat
-import make_basic_functions
 
 
 def game_loop():
@@ -21,8 +20,8 @@ def game_loop():
             print("Thank you for playing! Goodbye.")
             break
 
-        character_functions.move_character(character, direction, board)  # Move the character based on the input
-        combat.handle_encounter(character, board)  # Check for and handle any encounters
+        character_functions.move_character(character, direction, game_board)  # Move the character based on the input
+        combat.handle_encounter(character, game_board)  # Check for and handle any encounters
 
 
 def main():

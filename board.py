@@ -3,15 +3,15 @@ def create_board():
     # Set fields on board
     for row in range(11):
         for col in range(11):
-            board[(col, row)] = "desert"
+            board[(col, row)] = "Desert"
             if col in range(0, 3) and row in range(0, 5):
-                board[(col, row)] = "school"
+                board[(col, row)] = "School"
             elif col in range(4, 7) and row in range(0, 5):
-                board[(col, row)] = "town"
+                board[(col, row)] = "Town"
             elif col in range(8, 12) and row in range(0, 8):
-                board[(col, row)] = "forest"
+                board[(col, row)] = "Forest"
             elif col in range(6, 12) and row in range(8, 11):
-                board[(col, row)] = "castle"
+                board[(col, row)] = "Castle"
 
             if row == 5 and col < 7:
                 board[(col, row)] = "horizontal_wall"
@@ -52,11 +52,11 @@ def print_board(board):
                 print("═══", end="")
             elif cell_value == "vertical_wall":
                 print(" ║ ", end="")
-            elif cell_value == "forest":
+            elif cell_value == "Forest":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
-            elif cell_value == "desert":
+            elif cell_value == "Desert":
                 print('\033[93m' + " ~ " + '\033[0m', end="")
-            elif cell_value == "castle":
+            elif cell_value == "Castle":
                 print('\033[90m' + " # " + '\033[0m', end="")
             elif cell_value == "dragon":
                 print('\033[91m' + " @ " + '\033[0m', end="")
