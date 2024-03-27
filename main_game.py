@@ -9,7 +9,7 @@ def game_loop():
 
     print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
     while combat.is_alive(character):
-        board.print_board(game_board)  # Display the game board
+        board.print_board(game_board, character)  # Display the game board
 
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
@@ -19,13 +19,15 @@ def game_loop():
         if direction == 'quit':
             print("Thank you for playing! Goodbye.")
             break
-
+        
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
+        
 
 
 def main():
     game_loop()
+    
 
 
 if __name__ == "__main__":
