@@ -16,9 +16,10 @@ def create_character():
 
     # Define default stats for each class
     classes = {
-        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'max_hp': 150, 'skills': ['Shield Attack', 'Power Strike']},
+        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'max_hp': 150,
+                   'skills': ['Shield Attack', 'Power Strike']},
         'Archer': {'str': 6, 'dex': 10, 'int': 3, 'hp': 100, 'max_hp': 100, 'skills': ['Quick Shot', 'Fire Arrow']},
-        'Magician': {'str': 3, 'dex': 4, 'int': 10000, 'hp': 80, 'max_hp':80, 'skills': ['Fireball', 'Ice Age']},
+        'Magician': {'str': 3, 'dex': 4, 'int': 10000, 'hp': 80, 'max_hp': 80, 'skills': ['Fireball', 'Ice Age']},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -59,20 +60,23 @@ def update_level(character):
         print(f"Congratulations! Your character is now level {character['level']}.")
 
         # Stat increases depend on character class
-        if character['class'] == 'Knight':  # Knight get more hp than other classes
+        if character['class'] == 'Knight':  # Knight get more Health Points than other classes
             character['stats']['str'] += 2
             character['stats']['dex'] += 1
-            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level']-1)/10)), 0)  # 10% increase hp
+            # 10% increase hp
+            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level'] - 1) / 10)), 0)
             character['hp'] = character['max_hp']
         elif character['class'] == 'Archer':
             character['stats']['str'] += 1
             character['stats']['dex'] += 3
-            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level']-1)/10)), 0)  # 10% increase hp
+            # 10% increase hp
+            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level'] - 1) / 10)), 0)
             character['hp'] = character['max_hp']
         elif character['class'] == 'Magician':
             character['stats']['dex'] += 2
             character['stats']['int'] += 3
-            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level']-1)/10)), 0)  # 10% increase hp
+            # 10% increase hp
+            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level'] - 1) / 10)), 0)
             character['hp'] = character['max_hp']
 
         print("Your stats have increased:")
@@ -91,6 +95,7 @@ def get_user_choice():
         user_input = input("Enter movement direction (up, down, left, right) or 'quit' to exit: ")
         user_input = user_input.lower()
     return user_input
+
 
 def move_character(character, direction, board):
     # Current location
