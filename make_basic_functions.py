@@ -1,69 +1,6 @@
 import random
 
 
-def create_board_dict():
-    # Initialize the board as a dictionary
-    board = {(x, y): ' ' for x in range(10) for y in range(10)}
-
-    # School
-    for x in range(2):
-        for y in range(5):
-            board[(x, y)] = 'School'
-    school_npcs = [(0, 1), (1, 2), (0, 3)]
-    for npc in school_npcs:
-        board[npc] = 'NPC skill ' + str(school_npcs.index(npc) + 1)
-
-    # Town
-    for x in range(2, 6):
-        for y in range(5):
-            board[(x, y)] = 'Town'
-    board[(4, 2)] = 'Home'
-    town_npcs = [(3, 0), (3, 3), (4, 1), (5, 3), (3, 4)]
-    for npc in town_npcs:
-        board[npc] = 'NPC'
-
-    # Forest
-    for x in range(6, 10):
-        for y in range(5):
-            board[(x, y)] = 'Forest'
-    forest_npc = (random.randint(6, 9), random.randint(0, 4))
-    board[forest_npc] = 'NPC'
-
-    # Desert
-    for x in range(6):
-        for y in range(5, 10):
-            board[(x, y)] = 'Desert'
-    desert_npc = (random.randint(0, 5), random.randint(5, 9))
-    board[desert_npc] = 'NPC'
-
-    # Castle
-    for x in range(6, 10):
-        for y in range(5, 10):
-            board[(x, y)] = 'Castle'
-    board[(9, 9)] = 'Boss'
-
-    wall_locations = [(6, y_coordinate) for y_coordinate in range(10)]
-    wall_locations += [(x_coordinate, 5) for x_coordinate in range(10)]
-    wall_locations += [(2, y) for y in range(5)]
-    for wall in wall_locations:
-        board[wall] = 'Wall'
-
-    # Doors - Placed based on the transition areas
-    board[(2, 4)] = 'Door to Town'  # School to Town
-    board[(6, 2)] = 'Door to Forest'  # Town to Forest
-    board[(4, 5)] = 'Door to Desert'  # Town to Desert
-    board[(6, 8)] = 'Door to Castle'  # Desert to Castle
-
-    return board
-
-
-def print_board_dict(board):
-    for y in range(10):
-        row = [board[(x, y)] for x in range(10)]
-        print('         '.join(row))
-        print("")
-
-
 def create_character():
     # Mapping of input numbers to character classes
     class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}

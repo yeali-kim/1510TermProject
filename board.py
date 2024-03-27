@@ -1,4 +1,4 @@
-def create_game_board():
+def create_board():
     board = {}
     # Set fields on board
     for row in range(11):
@@ -28,15 +28,13 @@ def create_game_board():
     return board
 
 
-game_board = create_game_board()
 
-
-def print_game_board():
+def print_board(board):
     print("╔═══" + "═══" * 2 + "═╦═" + "═══" * 3 + "═╦═" + "═══" * 3 + "╗")  # Top border
     for row in range(11):
         print("║", end="")  # Left border
         for col in range(11):
-            cell_value = game_board[(col, row)]
+            cell_value = board[(col, row)]
             if (col, row) == (7, 5):
                 print("═╝ ", end="")
             elif (col, row) == (3, 5):
@@ -66,8 +64,3 @@ def print_game_board():
                 print("   ", end="")
         print("║")  # Right border
     print("╚═══" + "═══" * 10 + "╝")  # Bottom border
-
-
-if __name__ == "__main__":
-    create_game_board()
-    print_game_board()

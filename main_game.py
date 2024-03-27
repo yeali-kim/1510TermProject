@@ -1,15 +1,16 @@
 import character_functions
+import board
 import combat
 import make_basic_functions
 
+
 def game_loop():
-    board = make_basic_functions.create_board_dict()  # Initialize the game board
+    game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
 
     print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
-
     while combat.is_alive(character):
-        make_basic_functions.print_board_dict(board)  # Display the game board
+        board.print_board(game_board)  # Display the game board
 
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
