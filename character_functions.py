@@ -117,7 +117,7 @@ def move_character(character, direction, board):
         print(f"Encountered {board[(new_x, new_y)]}. Interaction not yet implemented.")
 
     # Allow movement if it's within the same region, through a door, or from home
-    if board[(new_x, new_y)] != 'horizontal_wall' or 'vertical_wall':
+    if board[(new_x, new_y)] != 'vertical_wall' and board[(new_x, new_y)] != 'horizontal_wall':
         if "Door" in board[(new_x, new_y)]:
             print(f"Moving through the door to {board[(new_x, new_y)]}...")
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
