@@ -24,6 +24,7 @@ def create_board():
         board[coord] = "NPC"
     board[(6, 2)] = "home"
     board[(10, 10)] = "dragon"
+    board[(7, 1)] = "Door"
     
 
     return board
@@ -53,6 +54,8 @@ def print_board(board, character):
                 print("═══", end="")
             elif cell_value == "vertical_wall":
                 print(" ║ ", end="")
+            elif (col, row) == (character['location']['x-coordinate'], character['location']['y-coordinate']):
+                print('\033[94m' + " P " + '\033[0m', end="")    
             elif cell_value == "Forest":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
             elif cell_value == "Desert":
@@ -61,8 +64,7 @@ def print_board(board, character):
                 print('\033[90m' + " # " + '\033[0m', end="")
             elif cell_value == "dragon":
                 print('\033[91m' + " @ " + '\033[0m', end="")
-            elif (col, row) == (character['location']['x-coordinate'], character['location']['y-coordinate']):
-                print('\033[94m' + " P " + '\033[0m', end="")
+            
             else:
                 print("   ", end="")
         print("║")  # Right border
