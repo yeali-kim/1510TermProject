@@ -142,8 +142,8 @@ def calculate_skill_damage(skill, chosen_type, character, creature):
 def choose_skill(character):
     print("Available skills:")
     skills_list = list(character['skills'].keys())  # Convert skill names to a list
-    for i, skill in enumerate(skills_list, start=1):
-        print(f"{i}. {skill}")
+    for i in range(len(skills_list)):
+        print(f"{i + 1}. {skills_list[i]}")
 
     skill_choice = 0
     while skill_choice < 1 or skill_choice > len(skills_list):
