@@ -5,13 +5,13 @@ def create_board():
     # Set fields on board
     for row in range(11):
         for col in range(11):
-            board[(col, row)] = "Desert"
+            board[(col, row)] = "Forest"
             if col in range(0, 3) and row in range(0, 5):
                 board[(col, row)] = "School"
             elif col in range(4, 7) and row in range(0, 5):
                 board[(col, row)] = "Town"
             elif col in range(8, 12) and row in range(0, 8):
-                board[(col, row)] = "Forest"
+                board[(col, row)] = "Desert"
             elif col in range(6, 12) and row in range(8, 11):
                 board[(col, row)] = "Castle"
             if row == 5 and col < 7:
@@ -63,9 +63,9 @@ def print_board(board, character):
                 print(" ║ ", end="")
             elif (col, row) == (character['location']['x-coordinate'], character['location']['y-coordinate']):
                 print('\033[91m' + " P " + '\033[0m', end="")
-            elif cell_value == "Forest":
-                print('\033[92m' + " ^ " + '\033[0m', end="")
             elif cell_value == "Desert":
+                print('\033[92m' + " ^ " + '\033[0m', end="")
+            elif cell_value == "Forest":
                 print('\033[93m' + " ~ " + '\033[0m', end="")
             elif cell_value == "Castle":
                 print('\033[90m' + " # " + '\033[0m', end="")
