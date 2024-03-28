@@ -19,15 +19,13 @@ def game_loop():
         if direction == 'quit':
             print("Thank you for playing! Goodbye.")
             break
-        
+
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
-        
 
 
 def main():
     game_loop()
-    
 
 
 if __name__ == "__main__":
