@@ -1,5 +1,3 @@
-import npc 
-
 def create_board():
     board = {}
     # Set fields on board
@@ -14,8 +12,10 @@ def create_board():
                 board[(col, row)] = "Forest"
             elif col in range(6, 12) and row in range(8, 11):
                 board[(col, row)] = "Castle"
-            if row == 5 and col < 7 or col == 3 and row < 3 or col == 4 and row ==3 or row == 1 and col == 7 or 1 < row < 5 and col == 7:
-                board[(col, row)] = "wall"
+            if row == 5 and col < 7:
+                board[(col, row)] = "horizontal_wall"
+            if col == 3 and row < 3 or col == 3 and row == 4 or col == 7 and row == 0 or col == 7 and row == 2 or col == 7 and 1 < row < 5:
+                board[(col, row)] = "vertical_wall"
 
     # Set NPC and home location
     NPC = []
