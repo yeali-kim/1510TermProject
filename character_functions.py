@@ -149,8 +149,7 @@ def move_character(character, direction, board):
         print(f"Moving to {board[(new_x, new_y)]}...")
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
     elif board[(new_x, new_y)] == 'horizontal_wall' and board[(new_x, new_y)] == 'vertical_wall':
-        # NPC[(new_x, new_y)]
-        print("There is a NPC.")
+        print("Invalid move. You've hit a wall.")
     elif board[(new_x, new_y)] == 'home':
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
@@ -158,4 +157,5 @@ def move_character(character, direction, board):
         # dragon()
         print("There is a dragon.")
     else:
-        print("Invalid move. You've hit a wall.")
+        # NPC[(new_x, new_y)]
+        print("There is a NPC.")
