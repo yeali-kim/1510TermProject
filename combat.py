@@ -6,10 +6,10 @@ def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10},
-            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20},
-            {'name': 'Nidalee', 'health': 50, 'damage': 20, 'exp': 30},
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass'},
+            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15, 'type': 'normal'},
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'water'},
+            {'name': 'Nidalee', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'fire'},
         ],
         'Desert': [
             {'name': 'Dune', 'health': 100, 'damage': 30, 'exp': 80},
@@ -68,8 +68,10 @@ def create_creature(region):
         return None
 
 
-def calculate_skill_damage(skill, character):
+def calculate_skill_damage(skill, chosen_type, character, creature):
     skill_damage_formulas = {
+        'Tackle': character['stats']['str'] * 0.5 + character['stats']['dex'] * 0.5 + character['stats']['int'] * 0.5,
+
         'Shield Attack': character['stats']['str'] * 1.5 + character['stats']['dex'] * 2,
         'Power Strike': character['stats']['str'] * 2 + character['stats']['dex'] * 1,
 
@@ -80,8 +82,58 @@ def calculate_skill_damage(skill, character):
         'Ice Age': character['stats']['int'] * 4 + character['stats']['dex'] * 2
     }
     if skill in skill_damage_formulas:
-        damage = skill_damage_formulas[skill]
-        return damage
+        if creature['type'] == 'grass':
+            if chosen_type == 'normal':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            elif chosen_type == 'grass':
+                damage = skill_damage_formulas[skill] * 0.5
+                return damage
+            elif chosen_type == 'water':
+                damage = skill_damage_formulas[skill] * -0.5
+                return damage
+            else:
+                damage = skill_damage_formulas[skill] * 2
+                return damage
+        elif creature['type'] == 'normal':
+            if chosen_type == 'normal':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            elif chosen_type == 'grass':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            elif chosen_type == 'water':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            else:
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+        elif creature['type'] == 'water':
+            if chosen_type == 'normal':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            elif chosen_type == 'grass':
+                damage = skill_damage_formulas[skill] * 2
+                return damage
+            elif chosen_type == 'water':
+                damage = skill_damage_formulas[skill] * 0.5
+                return damage
+            else:
+                damage = skill_damage_formulas[skill] * -0.5
+                return damage
+        else:
+            if chosen_type == 'normal':
+                damage = skill_damage_formulas[skill] * 1
+                return damage
+            elif chosen_type == 'grass':
+                damage = skill_damage_formulas[skill] * -0.5
+                return damage
+            elif chosen_type == 'water':
+                damage = skill_damage_formulas[skill] * 2
+                return damage
+            else:
+                damage = skill_damage_formulas[skill] * 0.5
+                return damage
     else:
         print("Unknown skill")
         return 0
@@ -89,18 +141,22 @@ def calculate_skill_damage(skill, character):
 
 def choose_skill(character):
     print("Available skills:")
-    skill_number = 1  # Start numbering skills at 1
-    for skill in character['skills']:
-        print(f"{skill_number}. {skill}")
-        skill_number += 1  # Increment the skill number for the next skill
+    skills_list = list(character['skills'].keys())  # Convert skill names to a list
+    for i in range(len(skills_list)):
+        print(f"{i + 1}. {skills_list[i]}")
 
     skill_choice = 0
-    while skill_choice < 1 or skill_choice > len(character['skills']):
+    while skill_choice < 1 or skill_choice > len(skills_list):
         try:
             skill_choice = int(input("Choose a skill to use (number): "))
+            if skill_choice < 1 or skill_choice > len(skills_list):
+                print(f"Please enter a number between 1 and {len(skills_list)}.")
         except ValueError:
-            print("Please enter a number.")
-    return character['skills'][skill_choice - 1]
+            print("Please enter a valid number.")
+
+    # Return the chosen skill name and type as a tuple
+    chosen_skill_name = skills_list[skill_choice - 1]
+    return chosen_skill_name, character['skills'][chosen_skill_name]
 
 
 def engage_combat(character, creature):
@@ -108,8 +164,8 @@ def engage_combat(character, creature):
 
     while creature['health'] > 0:
         # Let the user choose a skill
-        chosen_skill = choose_skill(character)
-        damage_dealt = calculate_skill_damage(chosen_skill, character)
+        chosen_skill, chosen_type = choose_skill(character)
+        damage_dealt = calculate_skill_damage(chosen_skill, chosen_type, character, creature)
 
         print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the {creature['name']}.")
 
@@ -139,6 +195,7 @@ def handle_encounter(character, board):
         if random.random() < 0.8:  # 80% chance of encounter
             creature = create_creature(current_location_type)
             print(f"You've encountered a {creature['name']}!")
+            print(f"The {creature['name']} is {creature['type']} type")
 
             # Offer choice to engage in combat or try to run
             action = input("Do you wish to fight (f) or try to run (r)? ")

@@ -1,25 +1,40 @@
+import random
+
+
 def create_character():
     # Mapping of input numbers to character classes
-    class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
-    character_class = None
+    # class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
+    character_class = 'Citizen'
+
+    skills = {
+        'Citizen': {
+            'Tackle': 'normal'
+        },
+        'Knight': {
+            'Shield Attack': 'normal',
+            'Fire Sword': 'fire',
+            'Power Strike': 'normal',
+        }
+    }
 
     # Attempt to get user input and validate it
-    while character_class is None:
-        try:
-            choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
-            if choice in class_options:
-                character_class = class_options[choice]
-            else:
-                print("Invalid choice. Please enter a number between 1 and 3.")
-        except ValueError:
-            print("Please enter a valid number to choose your class!")
+    # while character_class is None:
+    #     try:
+    #         choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
+    #         if choice in class_options:
+    #             character_class = class_options[choice]
+    #         else:
+    #             print("Invalid choice. Please enter a number between 1 and 3.")
+    #     except ValueError:
+    #         print("Please enter a valid number to choose your class!")
 
     # Define default stats for each class
     classes = {
-        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'max_hp': 150,
-                   'skills': ['Shield Attack', 'Power Strike']},
-        'Archer': {'str': 6, 'dex': 10, 'int': 3, 'hp': 100, 'max_hp': 100, 'skills': ['Quick Shot', 'Fire Arrow']},
-        'Magician': {'str': 3, 'dex': 4, 'int': 10000, 'hp': 80, 'max_hp': 80, 'skills': ['Fireball', 'Ice Age']},
+        'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
+                    'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
+        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'max_hp': 150},
+        'Archer': {'str': 6, 'dex': 10, 'int': 3, 'hp': 100, 'max_hp': 100},
+        'Magician': {'str': 3, 'dex': 4, 'int': 10000, 'hp': 80, 'max_hp': 80},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -29,8 +44,9 @@ def create_character():
         'location': {'x-coordinate': 6, 'y-coordinate': 2},  # Default location at home
         'level': 1,  # Starting level
         'exp': 0,  # Starting experience points
-        'skills': classes[character_class]['skills'],  # Initial skills based on class
+        'skills': skills[character_class],
         'hp': classes[character_class]['hp'],
+        'max_hp': classes[character_class]['max_hp']
     }
 
     return user_character
@@ -43,6 +59,7 @@ def update_level(character):
     exp_growth_rate = 1.05  # 5% more Exp required for each level
     # base hp to calculate total hp when character leveled up
     base_hp = {
+        'Citizen': 100,
         'Knight': 150,
         'Archer': 100,
         'Magician': 80,
@@ -60,7 +77,11 @@ def update_level(character):
         print(f"Congratulations! Your character is now level {character['level']}.")
 
         # Stat increases depend on character class
-        if character['class'] == 'Knight':  # Knight get more Health Points than other classes
+        if character['class'] == 'Citizen':
+            character['stats']['str'] += 1
+            character['stats']['dex'] += 1
+            character['stats']['int'] += 1
+        elif character['class'] == 'Knight':  # Knight get more Health Points than other classes
             character['stats']['str'] += 2
             character['stats']['dex'] += 1
             # 10% increase hp
