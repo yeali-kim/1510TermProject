@@ -53,7 +53,7 @@ def print_board(board, character):
             elif cell_value == "vertical_wall":
                 print(" ║ ", end="")
             elif (col, row) == (character['location']['x-coordinate'], character['location']['y-coordinate']):
-                print('\033[94m' + " P " + '\033[0m', end="")
+                print('\033[91m' + " P " + '\033[0m', end="")
             elif cell_value == "Forest":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
             elif cell_value == "Desert":
