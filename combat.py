@@ -6,10 +6,10 @@ def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass'},
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass', 'gold': random.randint(1, 5)},
             {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15, 'type': 'normal'},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'water'},
-            {'name': 'Nidalee', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'fire'},
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'grass'},
+            {'name': 'Nidalee', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'grass'},
         ],
         'Desert': [
             {'name': 'Dune', 'health': 100, 'damage': 30, 'exp': 80},
@@ -157,6 +157,14 @@ def choose_skill(character):
     # Return the chosen skill name and type as a tuple
     chosen_skill_name = skills_list[skill_choice - 1]
     return chosen_skill_name, character['skills'][chosen_skill_name]
+
+
+def drink_potion(character):
+    if character['potion'] > 0:
+        character['hp'] = character['max_hp']
+        print("Your hp is full now!")
+    else:
+        print("You don't have potion...")
 
 
 def engage_combat(character, creature):

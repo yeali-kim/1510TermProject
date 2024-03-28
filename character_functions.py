@@ -1,4 +1,6 @@
 import random
+import npc
+import combat
 
 
 def create_character():
@@ -32,9 +34,6 @@ def create_character():
     classes = {
         'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
                     'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
-        'Knight': {'str': 10, 'dex': 5, 'int': 2, 'hp': 150, 'max_hp': 150},
-        'Archer': {'str': 6, 'dex': 10, 'int': 3, 'hp': 100, 'max_hp': 100},
-        'Magician': {'str': 3, 'dex': 4, 'int': 10000, 'hp': 80, 'max_hp': 80},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -46,7 +45,8 @@ def create_character():
         'exp': 0,  # Starting experience points
         'skills': skills[character_class],
         'hp': classes[character_class]['hp'],
-        'max_hp': classes[character_class]['max_hp']
+        'max_hp': classes[character_class]['max_hp'],
+        'potion': 1  # Starting potion
     }
 
     return user_character
@@ -81,7 +81,10 @@ def update_level(character):
             character['stats']['str'] += 1
             character['stats']['dex'] += 1
             character['stats']['int'] += 1
-        elif character['class'] == 'Knight':  # Knight get more Health Points than other classes
+            # 10% increase hp
+            character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level'] - 1) / 10)), 0)
+            character['hp'] = character['max_hp']
+        elif character['class'] == 'Knight':
             character['stats']['str'] += 2
             character['stats']['dex'] += 1
             # 10% increase hp
@@ -112,13 +115,15 @@ def update_level(character):
 
 def get_user_choice():
     user_input = ""
-    while user_input not in ["up", "down", "left", "right", "quit"]:
-        user_input = input("Enter movement direction (up, down, left, right) or 'quit' to exit: ")
+    while user_input not in ["up", "down", "left", "right", "quit", "potion"]:
+        user_input = input("Enter movement direction (up, down, left, right) or 'potion' to drink potion or 'quit' to "
+                           "exit: ")
         user_input = user_input.lower()
     return user_input
 
 
 def move_character(character, direction, board):
+    valid_move = ['Town', 'School', 'Forest', 'Desert', 'Castle']
     # Current location
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
     # Calculate new location based on the direction
@@ -138,14 +143,18 @@ def move_character(character, direction, board):
         print("Invalid move. Out of bounds.")
         return
 
-    # Determine if the new location is an NPC
-    if "NPC" in board[(new_x, new_y)]:
-        print(f"Encountered {board[(new_x, new_y)]}. Interaction not yet implemented.")
-
     # Allow movement if it's within the same region, through a door, or from home
-    if board[(new_x, new_y)] != 'vertical_wall' and board[(new_x, new_y)] != 'horizontal_wall':
-        if "Door" in board[(new_x, new_y)]:
-            print(f"Moving through the door to {board[(new_x, new_y)]}...")
+    if board[(new_x, new_y)] in valid_move:
+        print(f"Moving to {board[(new_x, new_y)]}...")
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+    elif board[(new_x, new_y)] == 'NPC':
+        # NPC[(new_x, new_y)]
+        print("There is a NPC.")
+    elif board[(new_x, new_y)] == 'home':
+        character['hp'] = character['max_hp']
+        print("Your hp is full now.")
+    elif board[(new_x, new_y)] == 'dragon':
+        # dragon()
+        print("There is a dragon.")
     else:
         print("Invalid move. You've hit a wall.")
