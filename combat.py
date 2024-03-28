@@ -204,7 +204,6 @@ def handle_encounter(character, board):
             creature = create_creature(current_location_type)
             print(f"You've encountered a {creature['name']}!")
             print(f"The {creature['name']} is {creature['type']} type")
-
             # Offer choice to engage in combat or try to run
             action = input("Do you wish to fight (f) or try to run (r)? ")
 
