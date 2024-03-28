@@ -1,3 +1,5 @@
+import npc 
+
 def create_board():
     board = {}
     # Set fields on board
@@ -12,19 +14,19 @@ def create_board():
                 board[(col, row)] = "Forest"
             elif col in range(6, 12) and row in range(8, 11):
                 board[(col, row)] = "Castle"
-
-            if row == 5 and col < 7:
-                board[(col, row)] = "horizontal_wall"
-            if (col == 3 or col == 7) and row < 5:
-                board[(col, row)] = "vertical_wall"
+            if row == 5 and col < 7 or col == 3 and row < 3 or col == 4 and row ==3 or row == 1 and col == 7 or 1 < row < 5 and col == 7:
+                board[(col, row)] = "wall"
 
     # Set NPC and home location
-    npc_locations = [(0, 0), (0, 3), (2, 2), (4, 1), (6, 0), (5, 4), (1, 10)]
+    NPC = []
+    npc_locations = [(0, 0), (0, 3), (2, 2), (4, 1), (6, 0), (5, 4)]
     for coord in npc_locations:
         board[coord] = "NPC"
     board[(6, 2)] = "home"
     board[(10, 10)] = "dragon"
     board[(7, 1)] = "Door"
+    board[(4, 5)] = "Door"
+
 
     return board
 
@@ -67,3 +69,4 @@ def print_board(board, character):
                 print("   ", end="")
         print("║")  # Right border
     print("╚═══" + "═══" * 10 + "╝")  # Bottom border
+    
