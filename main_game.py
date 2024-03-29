@@ -7,13 +7,14 @@ def game_loop():
     game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
     print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
+    character["name"] = input("What is your name? ")
     board.print_board(game_board, character)  # Display the game board
     while combat.is_alive(character):
 
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
-        print(f"Your stats: {character['stats']}")
+        print(f"Your stats: {character['stats']}, You have {character['money']} golds")
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
