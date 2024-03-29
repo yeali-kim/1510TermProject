@@ -16,7 +16,17 @@ def create_character():
         'Knight': {
             'Shield Attack': 'normal',
             'Fire Sword': 'fire',
-            'Power Strike': 'normal',
+            'Guillotine': 'normal'
+        },
+        'Archer': {
+            "Fire Arrow": "fire",
+            "Frost Arrow": "water",
+            "Storm of Arrows": "normal"
+        },
+        "Magician": {
+            "Ice Age": "water",
+            "Inferno Sphere": "fire",
+            "Poison Nova": "grass",
         }
     }
 
@@ -47,7 +57,8 @@ def create_character():
         'skills': skills[character_class],
         'hp': classes[character_class]['hp'],
         'max_hp': classes[character_class]['max_hp'],
-        'potion': 1  # Starting potion
+        'potion': 1,  # Starting potion
+        "money": 0  # Starting money
     }
 
     return user_character
@@ -93,7 +104,7 @@ def update_level(character):
             character['hp'] = character['max_hp']
         elif character['class'] == 'Archer':
             character['stats']['str'] += 1
-            character['stats']['dex'] += 3
+            character['stats']['dex'] += 4
             # 10% increase hp
             character['max_hp'] = round(base_hp[character['class']] * (1 + ((character['level'] - 1) / 10)), 0)
             character['hp'] = character['max_hp']
