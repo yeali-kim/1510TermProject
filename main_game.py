@@ -6,8 +6,12 @@ import combat
 def game_loop():
     game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
-    print("\nWelcome to the adventure! Explore, fight creatures, and discover treasures.\n")
+    game_board = board.set_npc_location(game_board, character)  # Set the locations of NPCs on the board
+    
+    print("\nWelcome to the adventure!\n")
+    
     board.print_board(game_board, character)  # Display the game board
+    
     while combat.is_alive(character):
 
         # Display character's current status

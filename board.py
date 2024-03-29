@@ -19,8 +19,10 @@ def create_board():
                 board[(col, row)] = "horizontal_wall"
             if col == 3 and row < 3 or col == 3 and row == 4 or col == 7 and row == 0 or col == 7 and row == 2 or col == 7 and 1 < row < 5:
                 board[(col, row)] = "vertical_wall"
+    return board
 
-    # Set NPC and home location
+
+def set_npc_location(board, character):
     set_locations = {
         (0, 0): npc.jinkx(character),
         (0, 3): npc.chrissipus(character),
@@ -32,10 +34,8 @@ def create_board():
         (10, 10): npc.chris,
         (random.randint(8, 11), random.randint(0, 8)): npc.daughter 
     }
-
     for location, value in set_locations.items():
         board[location] = value
-
     return board
 
 
