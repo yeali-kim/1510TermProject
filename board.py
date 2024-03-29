@@ -24,7 +24,7 @@ def create_board():
 
 def set_npc_location(board, character):
     set_locations = {
-        (0, 0): "jinkx"
+        (0, 0): "jinkx",
         (0, 3): "chrissipus",
         (2, 2): "hypatia",
         (4, 1): "shawn",
@@ -32,7 +32,7 @@ def set_npc_location(board, character):
         (5, 4): "daniel",
         (6, 2): "home",
         (10, 10): "chris",
-        (random.randint(8, 11), random.randint(0, 8)): "daughter"
+        (random.randint(8, 11), random.randint(0, 8)): "heca"
     }
     for location, value in set_locations.items():
         board[location] = value
@@ -54,7 +54,7 @@ def print_board(board, character):
             elif col == 11:
                 if row != 5:
                     print("", end="")
-            elif cell_value in [npc.jinkx, npc.chrissipus, npc.hypatia, npc.shawn, npc.david, npc.daniel, npc.chris, npc.daughter]:
+            elif cell_value in ["jinkx", "chrissipus", "hypatia", "shawn", "david", "daniel"]:
                 print("[*]", end="")
             elif cell_value == "home":
                 print("[H]", end="")
@@ -70,7 +70,7 @@ def print_board(board, character):
                 print('\033[93m' + " ~ " + '\033[0m', end="")
             elif cell_value == "Castle":
                 print('\033[90m' + " # " + '\033[0m', end="")
-            elif cell_value == "dragon":
+            elif cell_value == "chris":
                 print('\033[91m' + " @ " + '\033[0m', end="")
             else:
                 print("   ", end="")
