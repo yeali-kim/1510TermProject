@@ -21,15 +21,15 @@ def create_board():
 
     # Set NPC and home location
     set_locations = {
-        (0, 0): "Jinkx",
-        (0, 3): "Chrissipus",
-        (2, 2): "Hypatia",
-        (4, 1): "Shawn",
-        (6, 0): "David",
-        (5, 4): "Daniel",
+        (0, 0): npc.jinkx,
+        (0, 3): npc.chrissipus,
+        (2, 2): npc.hypatia,
+        (4, 1): npc.shawn,
+        (6, 0): npc.david,
+        (5, 4): npc.daniel,
         (6, 2): "home",
-        (10, 10): "Chris the dragon",
-        (random.randint(8, 11), random.randint(0, 8)): "daughter" 
+        (10, 10): npc.chris,
+        (random.randint(8, 11), random.randint(0, 8)): npc.daughter 
     }
 
     for location, value in set_locations.items():
