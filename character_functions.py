@@ -10,6 +10,47 @@ def create_character():
     # class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
     character_class = 'Citizen'
 
+    citizen_skill = {
+        'Citizen': {
+            'Tackle': 'normal'
+        }
+    }
+
+    # Attempt to get user input and validate it
+    # while character_class is None:
+    #     try:
+    #         choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
+    #         if choice in class_options:
+    #             character_class = class_options[choice]
+    #         else:
+    #             print("Invalid choice. Please enter a number between 1 and 3.")
+    #     except ValueError:
+    #         print("Please enter a valid number to choose your class!")
+
+    classes = {
+        'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
+                    'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
+
+    }
+
+    # Initialize the character with class-specific stats, location, level, Exp, and skills
+    user_character = {
+        'class': character_class,
+        'stats': classes[character_class],
+        'location': {'x-coordinate': 6, 'y-coordinate': 2},  # Default location at home
+        'level': 1,  # Starting level
+        'exp': 0,  # Starting experience points
+        'skills': citizen_skill[character_class],
+        'hp': classes[character_class]['hp'],
+        'max_hp': classes[character_class]['max_hp'],
+        'potion': 1,  # Starting potion
+        "money": 0  # Starting money
+    }
+
+    return user_character
+
+
+def update_skills(character):
     skills = {
         'Citizen': {
             'Tackle': 'normal'
@@ -30,39 +71,7 @@ def create_character():
             "Poison Nova": "grass",
         }
     }
-
-    # Attempt to get user input and validate it
-    # while character_class is None:
-    #     try:
-    #         choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
-    #         if choice in class_options:
-    #             character_class = class_options[choice]
-    #         else:
-    #             print("Invalid choice. Please enter a number between 1 and 3.")
-    #     except ValueError:
-    #         print("Please enter a valid number to choose your class!")
-
-    # Define default stats for each class
-    classes = {
-        'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
-                    'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
-    }
-
-    # Initialize the character with class-specific stats, location, level, Exp, and skills
-    user_character = {
-        'class': character_class,
-        'stats': classes[character_class],
-        'location': {'x-coordinate': 6, 'y-coordinate': 2},  # Default location at home
-        'level': 1,  # Starting level
-        'exp': 0,  # Starting experience points
-        'skills': skills[character_class],
-        'hp': classes[character_class]['hp'],
-        'max_hp': classes[character_class]['max_hp'],
-        'potion': 1,  # Starting potion
-        "money": 0  # Starting money
-    }
-
-    return user_character
+    character["skills"] = skills[character['class']]
 
 
 def update_level(character):
