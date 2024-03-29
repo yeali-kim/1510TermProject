@@ -246,5 +246,3 @@ def handle_encounter(character, board):
                 engage_combat(character, creature)
         else:
             print("It's quiet... too quiet.")
-    else:
-        print("You move safely.")
