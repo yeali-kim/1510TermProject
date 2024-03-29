@@ -166,4 +166,7 @@ def move_character(character, direction, board):
         print("Your hp is full now.")
     else:
         interact = input(f"You encountered someone. Would you like to talk to them? (Y/N)")
-        board[(new_x, new_y)] if interact == "Y" else None
+        if interact == "Y":
+            func_name = board[(new_x, new_y)]
+            parameter_value = "character"
+            call(npc, func_name, parameter_value)
