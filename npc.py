@@ -26,7 +26,7 @@ def chrissipus(character):
             "Y": "Chrissipus: I knew it! Grab your sword my friend! Not that one. That one is expensive.",
             "N": "Chrissipus: Fine. Pfft, look at your size anyways."
             }
-        user_action = input("Chrissipus: Hi there young man! My name is Chrissipus, the mighty Knight!\nI can teach you some sword skills. Would you like to learn some? (Y/N)")
+        user_action = input("Chrissipus: Hi there young man! My name is Chrissipus, the mighty knight!\nI can teach you some sword skills. Would you like to learn some? (Y/N)")
         if user_action in ["Y", "N"]:
             if user_action == "Y":
                 print(responses["Y"])
@@ -51,8 +51,8 @@ def hypatia(character):
         if user_action in ["Y", "N"]:       
             if user_action == "Y":
                 print(responses["Y"])
-                print("...\n...\nGreat job surviving through the training.\nNow you are a knight!\nUse your new skills wisely.")
-                character['class'] = 'Knight'
+                print("...\n...\nGreat job surviving through the training.\nNow you are a archer!\nUse your new skills wisely.")
+                character['class'] = 'Archer'
                 print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
                 return character
             else:
@@ -62,6 +62,26 @@ def hypatia(character):
             
 
 def shawn(character):
+    say_hi = input("You met Shawn. Do you want to talk to him? (Y/N)")
+    if say_hi == "Y":
+        responses = {
+            "Y": "Shawn: Thank you so much! Please find my daughter. She was last seen in the forest.",
+            "N": "Shawn: I understand. It's a difficult task. I'll just keep waiting."
+            }
+        user_action = input("Shawn: My daughter Heca has been missing for a month. Can you help me find her? (Y/N)")
+        if user_action in ["Y", "N"]:       
+            if user_action == "Y":
+                print(responses["Y"])
+                shawn_quest(character)
+            else:
+                print(responses["N"])
+        else:
+            response = "Invalid input. Please enter Y or N"
+            
+
+def shawn_quest(character):
+    
+            
     responses = {
         "greeting": "My daughter Heca has been missing for a month. Can you help me find her? (Y/N)",
         "yes_response": "Thank you so much! Please find my daughter. She was last seen in the forest.",
@@ -83,8 +103,8 @@ def david(character):
 
 def daniel(character):
     responses = {
-        "greeting": "Welcome to my shop! Full health elixirs are 50G each. Would you like to buy one? (Y/N)",
-        "yes_response": "Great! That will be 50G.",
+        "greeting": "Welcome to my shop! Full health elixirs are 100G each. Would you like to buy one? (Y/N)",
+        "yes_response": "Great! That will be 100G.",
         "no_response": "No worries. My potions are always available.",
         "fulfilled": "Thank you for your purchase! Use your elixir wisely.",
         "unfulfilled": "You don't have enough gold to buy a potion. Come back when you do."
@@ -97,8 +117,8 @@ def daughter(character):
     }
     print (responses["greeting"])
 
-def chris():
+def chris(character):
     responses = {
         "greeting": "How dare you enter my lair! Prepare to face my wrath!"
     }
-    print (responses["greeting"]
+    
