@@ -164,9 +164,6 @@ def move_character(character, direction, board):
     elif board[(new_x, new_y)] == 'home':
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
-    elif board[(new_x, new_y)] == 'dragon':
-        # dragon()
-        print("There is a dragon.")
     else:
-        # board[(new_x, new_y)]
-        print("There is a NPC.")
+        interact = input(f"You encountered someone. Would you like to talk to them? (Y/N)")
+        board[(new_x, new_y)] if interact == "Y" else None
