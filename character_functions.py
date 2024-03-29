@@ -1,4 +1,5 @@
 import random
+from operator import call
 import npc
 import combat
 import board
@@ -165,8 +166,5 @@ def move_character(character, direction, board):
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
     else:
-        interact = input(f"You encountered someone. Would you like to talk to them? (Y/N)")
-        if interact == "Y":
-            func_name = board[(new_x, new_y)]
-            parameter_value = "character"
-            call(npc, func_name, parameter_value)
+        func_name = getattr(npc, board[(new_x, new_y)])
+        call(func_name, character)
