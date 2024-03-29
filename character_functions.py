@@ -154,4 +154,5 @@ def move_character(character, direction, board):
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
     else:
-        return board[(new_x, new_y)]  # NPC[(new_x, new_y)]
+        interact = input(f"You encountered someone. Would you like to talk to them? (Y/N)")
+        board[(new_x, new_y)] if interact == "Y" else None
