@@ -148,7 +148,7 @@ def move_character(character, direction, board):
     if board[(new_x, new_y)] in valid_move:
         print(f"Moving to {board[(new_x, new_y)]}...")
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
-    elif board[(new_x, new_y)] == 'horizontal_wall' and board[(new_x, new_y)] == 'vertical_wall':
+    elif board[(new_x, new_y)] == 'horizontal_wall' or board[(new_x, new_y)] == 'vertical_wall':
         print("Invalid move. You've hit a wall.")
     elif board[(new_x, new_y)] == 'home':
         character['hp'] = character['max_hp']
