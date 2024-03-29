@@ -1,4 +1,5 @@
 import random
+import npc
 
 def create_board():
     board = {}
@@ -53,7 +54,7 @@ def print_board(board, character):
             elif col == 11:
                 if row != 5:
                     print("", end="")
-            elif cell_value in ["Jinkx", "Chrissipus", "Archie", "Shawn", "David", "Daniel"]:
+            elif cell_value in [npc.jinkx, npc.chrissipus, npc.hypatia, npc.shawn, npc.david, npc.daniel, npc.chris, npc.daughter]:
                 print("[*]", end="")
             elif cell_value == "home":
                 print("[H]", end="")
