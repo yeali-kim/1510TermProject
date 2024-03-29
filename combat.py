@@ -6,23 +6,32 @@ def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass', 'gold': random.randint(1, 5)},
-            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15, 'type': 'normal'},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'grass'},
-            {'name': 'Nidalee', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'grass'},
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass', 'golds': random.randint(1, 5)},
+            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15, 'type': 'normal', 'golds': random.randint(2, 8)},
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'grass', 'golds': random.randint(5, 10)},
+            {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'grass',
+             'golds': random.randint(7, 12)},
         ],
         'Desert': [
-            {'name': 'Dune', 'health': 100, 'damage': 30, 'exp': 80},
-            {'name': 'Scorpion', 'health': 200, 'damage': 50, 'exp': 100},
-            {'name': 'Salamanders', 'health': 300, 'damage': 70, 'exp': 150},
-            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250},
+            {'name': 'Scorpion', 'health': 100, 'damage': 30, 'exp': 80, "type": "fire",
+             "golds": random.randint(10, 15)},
+            {'name': 'Skeleton', 'health': 200, 'damage': 50, 'exp': 100, "type": "normal",
+             "golds": random.randint(12, 17)},
+            {'name': 'Golem', 'health': 300, 'damage': 70, 'exp': 150, "type": "water",
+             "golds": random.randint(15, 20)},
+            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250, "type": "normal",
+             "golds": random.randint(20, 25)},
 
         ],
         'Castle': [
-            {'name': 'Cerberus', 'health': 700, 'damage': 200, 'exp': 500},
-            {'name': 'Gargoyle', 'health': 1000, 'damage': 300, 'exp': 800},
-            {'name': 'Death Knight', 'health': 1500, 'damage': 500, 'exp': 1000},
-            {'name': 'Lich', 'health': 2000, 'damage': 700, 'exp': 1500},
+            {'name': 'Cerberus', 'health': 700, 'damage': 200, 'exp': 500, "type": "fire",
+             "gold": random.randint(20, 25)},
+            {'name': 'Gargoyle', 'health': 1000, 'damage': 300, 'exp': 800, "type": "normal",
+             "gold": random.randint(25, 30)},
+            {'name': 'Lich', 'health': 1000, 'damage': 700, 'exp': 1000, "type": "water",
+             "gold": random.randint(30, 35)},
+            {'name': 'Death Knight', 'health': 2000, 'damage': 500, 'exp': 1500, "type": "normal",
+             "gold": random.randint(35, 40)},
         ]
     }
 
@@ -73,13 +82,16 @@ def calculate_skill_damage(skill, chosen_type, character, creature):
         'Tackle': character['stats']['str'] * 0.5 + character['stats']['dex'] * 0.5 + character['stats']['int'] * 0.5,
 
         'Shield Attack': character['stats']['str'] * 1.5 + character['stats']['dex'] * 2,
-        'Power Strike': character['stats']['str'] * 2 + character['stats']['dex'] * 1,
+        "Fire Sword": character["stats"]["str"] * 2,
+        "Guillotine": character["stats"]["str"] * 3,
 
-        'Quick Shot': character['stats']['dex'] * 3 + character['stats']['str'] * 1,
-        'Fire Arrow': character['stats']['dex'] * 3 + character['stats']['str'] * 2,
+        'Fire Arrow': character['stats']['dex'] * 4,
+        "Frost Arrow": character["stats"]["dex"] * 4,
+        "Storm of Arrows": character["stats"]["dex"] * 4 + character["stats"]["str"] * 2,
 
-        'Fireball': character['stats']['int'] * 4,
-        'Ice Age': character['stats']['int'] * 4 + character['stats']['dex'] * 2
+        'Ice Age': character['stats']['int'] * 3,
+        "Inferno Sphere": character["stats"]["int"] * 3,
+        "Poison Nova": character["stats"]["int"] * 3,
     }
     if skill in skill_damage_formulas:
         if creature['type'] == 'grass':
@@ -219,6 +231,8 @@ def handle_encounter(character, board):
                     gained_exp = creature['exp']  # Use the creature's exp value
                     character['exp'] += gained_exp
                     print(f"You gained {gained_exp} Exp!")
+                    character["money"] += creature["golds"]  # Add creature's gold
+                    print(f"You got {creature['golds']} golds")
                     character_functions.update_level(character)  # Check and handle level up
 
             elif action.lower() == 'r':
