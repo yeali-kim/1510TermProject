@@ -192,18 +192,20 @@ def daughter(character):
 
 
 def chris(character):
-    dragon_chris = {'health': 5000, 'type': 'normal'}
+    dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
+    print(f"Now Chris's health is {dragon_chris['health']} and type is {dragon_chris['type']}")
     while dragon_chris['health'] > 0:
         # Let the user choose a skill
         chosen_skill, chosen_type = combat.choose_skill(character)
         damage_dealt = combat.calculate_skill_damage(chosen_skill, chosen_type, character, dragon_chris)
-
         print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the Chris.")
         dragon_chris['health'] -= damage_dealt
         if dragon_chris['health'] <= 0:
             print(f"You've defeated the Chris!")
             break
         print(f"Chris is still alive with {dragon_chris['health']} health left.")
+        dragon_chris['type'] = random.choice(["fire", "water", "grass", "normal"])
+        print(f"Now Chris's type is {dragon_chris['type']}!!!")
         dragon_skills = ['attack', 'fire breath', 'question']
         skill = random.choice(dragon_skills)
         if skill == "attack":
