@@ -45,7 +45,7 @@ def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
     skills = {
         "Citizen": {
             "Tackle": "normal",
-            "Knife of Justice": "normal"
+            "Guardian of Justice": "normal"
         },
         "Knight": {
             "Shield Attack": "normal",
