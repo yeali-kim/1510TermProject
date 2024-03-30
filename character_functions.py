@@ -15,7 +15,7 @@ def create_character():
     }
 
     classes = {
-        "Citizen": {"str": random.randint(1, 10), "dex": 99999999,
+        "Citizen": {"str": random.randint(1, 10), "dex": random.randint(1, 10),
                     "int": random.randint(1, 10), "hp": 100, "max_hp": 100},
     }
 
