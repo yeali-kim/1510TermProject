@@ -15,7 +15,7 @@ def create_character():
     }
 
     classes = {
-        "Citizen": {"str": random.randint(1, 10), "dex": random.randint(1, 10),
+        "Citizen": {"str": random.randint(1, 10), "dex": 99999999,
                     "int": random.randint(1, 10), "hp": 100, "max_hp": 100},
     }
 
@@ -34,7 +34,8 @@ def create_character():
         "shawn_quest": None,
         "david_quest": False,
         "heca_found": False,
-        "tree branches": 0
+        "tree branches": 0,
+        "chris": False
     }
 
     return user_character
@@ -122,7 +123,7 @@ def get_user_choice():
     return user_input
 
 
-def move_character(character, direction, board):
+def move_character(character, direction, game_board):
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
     # Current location
     x, y = character["location"]["x-coordinate"], character["location"]["y-coordinate"]
@@ -139,24 +140,24 @@ def move_character(character, direction, board):
         new_x += 1
 
     # Check for out-of-bounds
-    if (new_x, new_y) not in board:
+    if (new_x, new_y) not in game_board:
         print("Invalid move. Out of bounds.")
         return
 
     # Allow movement if it's within the same region, through a door, or from home
-    if board[(new_x, new_y)] in valid_move:
-        print(f"Moving to {board[(new_x, new_y)]}...")
+    if game_board[(new_x, new_y)] in valid_move:
+        print(f"Moving to {game_board[(new_x, new_y)]}...")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif board[(new_x, new_y)] == "horizontal_wall" or board[(new_x, new_y)] == "vertical_wall":
+    elif game_board[(new_x, new_y)] == "horizontal_wall" or game_board[(new_x, new_y)] == "vertical_wall":
         print("Invalid move. You've hit a wall.")
-    elif board[(new_x, new_y)] == "Door to School":
-        if board[(x, y)] == "Town":
+    elif game_board[(new_x, new_y)] == "Door to School":
+        if game_board[(x, y)] == "Town":
             print("You are moving through the door to School.")
         else:
             print("You are moving through the door to Town.")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif board[(new_x, new_y)] == "Door to Forest":
-        if board[(x, y)] == "Town":
+    elif game_board[(new_x, new_y)] == "Door to Forest":
+        if game_board[(x, y)] == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
@@ -170,8 +171,8 @@ def move_character(character, direction, board):
         else:
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
             print("You are moving through the door to Town.")
-    elif board[(new_x, new_y)] == "Door to Desert":
-        if board[(x, y)] == "Town":
+    elif game_board[(new_x, new_y)] == "Door to Desert":
+        if game_board[(x, y)] == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
@@ -185,9 +186,9 @@ def move_character(character, direction, board):
         else:
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
             print("You are moving through the door to Town.")
-    elif board[(new_x, new_y)] == "home":
+    elif game_board[(new_x, new_y)] == "home":
         character["hp"] = character["max_hp"]
         print("Your hp is full now.")
     else:
-        func_name = getattr(npc, board[(new_x, new_y)]) # Call the function based on the NPC name
+        func_name = getattr(npc, game_board[(new_x, new_y)])      # Call the function based on the NPC name
         call(func_name, character)
