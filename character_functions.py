@@ -66,7 +66,7 @@ def update_level(character):
     # Base experience required for the first level up
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
-    exp_growth_rate = 1.05  # 5% more Exp required for each level
+    exp_growth_rate = 1.01  # 1% more Exp required for each level
     # base hp to calculate total hp when character leveled up
     base_hp = {
         "Citizen": 100,
@@ -88,34 +88,29 @@ def update_level(character):
 
         # Stat increases depend on character class
         if character["class"] == "Citizen":
-            character["stats"]["str"] += 1
-            character["stats"]["dex"] += 1
-            character["stats"]["int"] += 1
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 1  # str stat
+            character["stats"][1] += 1  # dex stat
+            character["stats"][2] += 1  # int stat
+            character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
         elif character["class"] == "Knight":
-            character["stats"]["str"] += 2
-            character["stats"]["dex"] += 1
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 10     # str stat
+            character["stats"][1] += 5      # dex stat
+            character["max_hp"] += character["level"] * 15
             character["hp"] = character["max_hp"]
         elif character["class"] == "Archer":
-            character["stats"]["str"] += 1
-            character["stats"]["dex"] += 4
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 10     # str stat
+            character["stats"][1] += 15     # dex stat
+            character["max_hp"] += character["level"] * 12
             character["hp"] = character["max_hp"]
         elif character["class"] == "Magician":
-            character["stats"]["dex"] += 2
-            character["stats"]["int"] += 3
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][2] += 20     # int stat
+            character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
 
         print("Your stats have increased:")
-        print(f"Strength: {character["stats"]["str"]}, Dexterity: {character["stats"]["dex"]}, \
-        Intelligence: {character["stats"]["int"]}, HP: {character["hp"]}")
+        print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},\
+        Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
 
         # Check for another level up in case of remaining Exp
         update_level(character)
@@ -152,7 +147,7 @@ def move_character(character, direction, board):
         print("Invalid move. Out of bounds.")
         return
 
-    # Allow movement if it"s within the same region, through a door, or from home
+    # Allow movement if it's within the same region, through a door, or from home
     if board[(new_x, new_y)] in valid_move:
         print(f"Moving to {board[(new_x, new_y)]}...")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
