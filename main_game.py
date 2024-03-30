@@ -17,15 +17,16 @@ def game_loop():
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
         print(f"Your stats: {character['stats']}, You have {character['money']} golds"
-              f" and {character['potion']} potions")
+              f" and {character['elixir']} elixirs")
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
             print("Thank you for playing! Goodbye.")
             break
-        if direction == 'potion':
-            combat.drink_potion(character)
+        if direction == 'elixir':
+            combat.drink_elixir(character)
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
+        heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
 
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
