@@ -6,8 +6,6 @@ import board
 
 
 def create_character():
-    # Mapping of input numbers to character classes
-    # class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
     character_class = 'Citizen'
 
     citizen_skill = {
@@ -16,21 +14,9 @@ def create_character():
         }
     }
 
-    # Attempt to get user input and validate it
-    # while character_class is None:
-    #     try:
-    #         choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
-    #         if choice in class_options:
-    #             character_class = class_options[choice]
-    #         else:
-    #             print("Invalid choice. Please enter a number between 1 and 3.")
-    #     except ValueError:
-    #         print("Please enter a valid number to choose your class!")
-
     classes = {
         'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
                     'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
-
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
