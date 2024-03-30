@@ -12,8 +12,7 @@ def game_loop():
     print(f"\nWelcome to the adventure {character['name']}! Explore, fight creatures.\n")
     board.print_board(game_board, character)  # Display the game board
     
-    while combat.is_alive(character):
-
+    while combat.is_alive(character) and npc.game_clear(character):
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
