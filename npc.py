@@ -242,34 +242,34 @@ def chris(character):
         # Let the user choose a skill
         chosen_skill, chosen_type = combat.choose_skill(character)
         damage_dealt = combat.calculate_skill_damage(chosen_skill, chosen_type, character, dragon_chris)
-        print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the Chris.")
+        print(f"Unleashing {chosen_skill}, you inflict {damage_dealt} damage upon Chris.")
         dragon_chris['health'] -= damage_dealt
         if dragon_chris['health'] <= 0:
             print(f"You've defeated the Chris!")
             break
         print(f"Chris is still alive with {dragon_chris['health']} health left.")
         dragon_chris['type'] = random.choice(["fire", "water", "grass", "normal"])
-        print(f"Now Chris's type is {dragon_chris['type']}!!!")
+        print(f"An enigmatic aura envelops Chris, transforming him into a {dragon_chris['type']} dragon!!!")
         dragon_skills = ['attack', 'fire breath', 'question']
         skill = random.choice(dragon_skills)
         if skill == "attack":
-            print("Chris dealt 500 damage to you!!")
+            print("Chris unleashes a devastating attack, dealing 500 damage to you!!")
             character["hp"] -= 500
-            print(f"You have {character['hp']} left!!")
+            print(f"Reeling from the blow, you're left with {character['hp']} health!!")
         elif skill == "fire breath":
-            print("Watch out!!! Dragon breath is coming!!")
-            user_choice = input("Enter up, down, left, or right to avoid the breath!! ")
+            print("Danger looms! Chris inhales deeply, preparing to unleash his dragon breath!!")
+            user_choice = input("Quick! Move up, down, left, or right to dodge the inferno!! ")
             user_choice = user_choice.lower()
             dragon_breath = ['up', 'down', 'left', 'right']
             if user_choice == random.choice(dragon_breath) or user_choice not in dragon_breath:
                 character["hp"] -= 700
-                print("You are burning!!!!")
-                print(f"You have {character['hp']} left")
+                print("Engulfed by flames, agony consumes you!!!")
+                print(f"Reeling from the blow, you're left with {character['hp']} health!!")
             else:
-                print("You avoid breath!!")
+                print("With agility, you evade the deadly flames!")
         elif skill == "question":
-            print("Dragon: I will test your agility")
-            print("I will give you simple word it will be shown in only 0.3 seconds")
+            print("Chris eyes you with a cunning glint. 'Let's test your agility,' he smirks.")
+            print("'Catch a glimpse of this word; it will vanish in 0.3 seconds. Be ready...'")
             print("Open your eyes...")
             time.sleep(3)
             random_words = ['dog', 'cat', 'rat', 'pet']
@@ -277,12 +277,13 @@ def chris(character):
             print(answer)
             time.sleep(0.3)
             print("\n" * 100)
-            user_answer = input("Enter the word from dragon: ")
+            user_answer = input("What was the word? Speak quickly: ")
             if user_answer == answer:
-                print("Dragon: Correct...")
+                print("'Impressive,' Chris nods, acknowledging your sharpness.")
             else:
                 character["max_hp"] -= 100
-                print(f"You've cursed from dragon, your max hp was decreased..now your max hp is {character['max_hp']}")
+                print("Chris's curse weaves its dark magic, reducing your vigor. Your maximum health decreases...")
+                print(f"Now, your vitality's ceiling is a mere {character['max_hp']}.")
         if character['hp'] <= 0:
             print("Game Over")
             break
