@@ -36,43 +36,17 @@ def create_creature(region: str) -> dict[str, int | str] | None:
         ]
     }
 
-    if region == 'Forest':
-        # Randomly select a creature from the specified region
-        creature = random.randint(1, 10)
-        if creature <= 3:
-            creature = creatures['Forest'][0]
-        elif creature <= 6:
-            creature = creatures['Forest'][1]
-        elif creature <= 8:
-            creature = creatures['Forest'][2]
-        else:
-            creature = creatures['Forest'][3]
-        print(f"A wild {creature['name']} appears!")
-        return creature
-    elif region == 'Desert':
-        creature = random.randint(1, 10)
-        if creature <= 3:
-            creature = creatures['Desert'][0]
-        elif creature <= 6:
-            creature = creatures['Desert'][1]
-        elif creature <= 8:
-            creature = creatures['Desert'][2]
-        else:
-            creature = creatures['Desert'][3]
-        print(f"A wild {creature['name']} appears!")
-        return creature
-    elif region == 'Castle':
-        creature = random.randint(1, 10)
-        if creature <= 3:
-            creature = creatures['Castle'][0]
-        elif creature <= 6:
-            creature = creatures['Castle'][1]
-        elif creature <= 8:
-            creature = creatures['Castle'][2]
-        else:
-            creature = creatures['Castle'][3]
-        print(f"A guardian {creature['name']} appears!")
-        return creature
+    if region in creatures:
+        creature_number = random.randint(1, 10)
+        # Define thresholds for creature selection
+        probability = [3, 6, 8, 10]  # Last number ensures all cases are covered
+        # Determine the creature based on the random number
+        for index, threshold in enumerate(probability):
+            if creature_number <= threshold:
+                selected_creature = creatures[region][index]
+                message = "A wild" if region != 'Castle' else "A guardian"
+                print(f"{message} {selected_creature['name']} appears!")
+                return selected_creature
     else:
         print("No creatures found in this region.")
         return None
