@@ -231,7 +231,8 @@ def game_clear(character):
 
 def chris(character):
     dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
-    print(f"Now Chris's health is {dragon_chris['health']} and type is {dragon_chris['type']}")
+    print("You've encountered dragon Chris!!")
+    print(f"Chris has {dragon_chris['health']} hp and type is {dragon_chris['type']}")
     print("Chris: You've come far, hero. But have you ever questioned "
           "why I'm the enemy? Who decided I was the villain?")
     time.sleep(2)
