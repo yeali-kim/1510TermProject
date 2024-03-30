@@ -1,8 +1,6 @@
 import random
 from operator import call
 import npc
-import combat
-import board
 
 
 def create_character() -> dict[str, str | int | bool | dict[str, int]]:
@@ -22,7 +20,7 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
     # Initialize the character with class-specific stats, location, level, Exp, and skills
     user_character = {
         "class": character_class,
-        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int'], ],
+        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int']],
         "location": {"x-coordinate": 6, "y-coordinate": 2},  # Default location at home
         "level": 1,  # Starting level
         "exp": 0,  # Starting experience points
@@ -190,4 +188,3 @@ def move_character(character, direction: str, game_board: dict[tuple[int, int], 
     else:
         func_name = getattr(npc, new_area)  # Call the function based on the NPC name
         call(func_name, character)
-
