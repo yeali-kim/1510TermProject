@@ -16,13 +16,13 @@ def create_character():
 
     classes = {
         'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
-                    'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
+                    'int': random.randint(1, 10), 'hp': 1000000, 'max_hp': 1000000},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
     user_character = {
         'class': character_class,
-        'stats': classes[character_class],
+        'stats': [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int']],
         'location': {'x-coordinate': 6, 'y-coordinate': 2},  # Default location at home
         'level': 1,  # Starting level
         'exp': 0,  # Starting experience points
