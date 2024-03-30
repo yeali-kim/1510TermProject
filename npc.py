@@ -3,18 +3,18 @@ import character_functions
 
 
 def jinkx(character):
-    say_hi = input("You met \033[1;35m Jinkx \u001b[30m. Do you want to talk to her? (Y/N)").strip().lower()
+    say_hi = input("You met \033[1;35m Jinkx \033[0m. Do you want to talk to her? (Y/N)").strip().lower()
     while say_hi not in ["y", "n"]:
         print("Invalid input. Please enter Y or N")
-        say_hi = input("You met \033[1;35m Jinkx \u001b[30m. Do you want to talk to her? (Y/N)").strip().lower()
+        say_hi = input("You met \033[1;35m Jinkx \033[0m. Do you want to talk to her? (Y/N)").strip().lower()
     if say_hi == "y":
-        user_action = input("\033[1;35m Jinkx \u001b[30m : Hi there little fella! My name is \033[1;35m Jinkx \u001b[30m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
+        user_action = input("\033[1;35m Jinkx \033[0m : Hi there little fella! My name is \033[1;35m Jinkx \033[0m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
         while user_action not in ["y", "n"]:
             print("Invalid input. Please enter Y or N")
-            user_action = input("\033[1;35m Jinkx \u001b[30m : Hi there little fella! My name is \033[1;35m Jinkx \u001b[30m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
+            user_action = input("\033[1;35m Jinkx \033[0m : Hi there little fella! My name is \033[1;35m Jinkx \033[0m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
         responses = {
-            "y": "\033[1;35m Jinkx \u001b[30m : Wonderful! Let's start right away. Abracadabra!",
-            "n": "\033[1;35m Jinkx \u001b[30m : Fine. You don't look like a wizard material anyways."
+            "y": "\033[1;35m Jinkx \033[0m : Wonderful! Let's start right away. Abracadabra!",
+            "n": "\033[1;35m Jinkx \033[0m : Fine. You don't look like a wizard material anyways."
             }
         if user_action == "y":
             character['class'] = 'Magician' #set class to Magician
@@ -27,7 +27,7 @@ def jinkx(character):
                 "You are now a wizard!",
                 "Use your new skills wisely.",
                 '\033[92m' + f"Your class is now {character['class']}.",
-                '\033[92m' + f"Now you can use these skills. {character['skills']}." + '\u001b[30m'
+                '\033[92m' + f"Now you can use these skills. {character['skills']}." + '\033[0m'
             ]
             for line in lines:
                 print(line)
@@ -53,7 +53,7 @@ def chrissipus(character):
                 print(
                     "...\n...\nGreat job surviving through the training.\nNow you are a knight!\nUse your new skills wisely.")
                 character['class'] = 'Knight'
-                print('\033[92m' + f"Your class is now {character['class']}." + '\u001b[30m')
+                print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
                 return character
             else:
                 print(responses["n"])
@@ -76,7 +76,7 @@ def hypatia(character):
                 print(
                     "...\n...\nGreat job surviving through the training.\nNow you are a archer!\nUse your new skills wisely.")
                 character['class'] = 'Archer'
-                print('\033[92m' + f"Your class is now {character['class']}." + '\u001b[30m')
+                print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
                 return character
             else:
                 print(responses["n"])
