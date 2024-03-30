@@ -5,6 +5,20 @@ import npc
 
 
 def game_loop():
+    """
+    Run the main game loop. This function initializes the game state, handles player input, and updates the game
+    based on the player's actions and game events. The game continues until the player's character dies or achieves
+    the game objective.
+
+    :precondition: all necessary modules (`board`, `character_functions`, `combat`, `npc`) are correctly implemented
+    and available for creating the game board, character, handling movement, combat, and NPC interactions.
+    :precondition: the game's environment and initial settings are predefined.
+    :postcondition: updates the game board and character's state based on player actions and interactions.
+    :postcondition: prints messages to guide the player through the game, including narrative introductions,
+    status updates, and results of actions.
+    :postcondition: the function ends when the player's character meets the game-ending conditions such as death or
+    completing the main objective.
+    """
     game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
     game_board = board.set_npc_location(game_board, character)  # Set the locations of NPCs on the board
@@ -38,6 +52,9 @@ def game_loop():
 
 
 def main():
+    """
+    Drive the program.
+    """
     game_loop()
 
 
