@@ -171,6 +171,42 @@ def move_character(character, direction, board):
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
     elif board[(new_x, new_y)] == 'horizontal_wall' or board[(new_x, new_y)] == 'vertical_wall':
         print("Invalid move. You've hit a wall.")
+    elif board[(new_x, new_y)] == 'Door to School':
+        if board[(x, y)] == "Town":
+            print("You are moving through the door to School.")
+        else:
+            print("You are moving through the door to Town.")
+        character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+    elif board[(new_x, new_y)] == 'Door to Forest':
+        if board[(x, y)] == "Town":
+            user_input = ""
+            valid_input = ['y', 'n']
+            while user_input not in valid_input:
+                user_input = input("Are you sure to enter the Forest? Y/N ")
+                user_input = user_input.lower()
+            if user_input == 'y':
+                character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+                print("Be careful...")
+            else:
+                print("Come back when you are ready...")
+        else:
+            character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+            print("You are moving through the door to Town.")
+    elif board[(new_x, new_y)] == 'Door to Desert':
+        if board[(x, y)] == "Town":
+            user_input = ""
+            valid_input = ['y', 'n']
+            while user_input not in valid_input:
+                user_input = input("Are you sure to enter the Desert? Y/N ")
+                user_input = user_input.lower()
+            if user_input == 'y':
+                character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+                print("Be careful... Desert is dangerous....")
+            else:
+                print("Come back when you are ready...")
+        else:
+            character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+            print("You are moving through the door to Town.")
     elif board[(new_x, new_y)] == 'home':
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
