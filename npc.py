@@ -235,7 +235,7 @@ def chris(character):
     print("Chris: You've come far, hero. But have you ever questioned "
           "why I'm the enemy? Who decided I was the villain?")
     time.sleep(2)
-    print("You: You threaten all of Dragon Coast! Your reign ends now.")
+    print(f"{character['name']}: You threaten all of Dragon Coast! Your reign ends now.")
     print("Chris: Look around. Who brought more harm? I, who sought to protect my realm, "
           "or you, who blindly followed a path of destruction?")
     while dragon_chris['health'] > 0:
@@ -306,7 +306,7 @@ def chris(character):
     user_input = input("You can accept or deny her final request accept/deny? ")
     user_input = user_input.lower()
     if user_input == "accept":
-        print("I see now the destruction I've wrought. I am the architect of Eldoria's demise. "
+        print("I see now the destruction I've wrought. I am the architect of Dragon Coast's demise. "
               "It's time I make amends, not as a hero, but as a guardian.")
     else:
         print("They misunderstand. I did what I had to do. If being the devil means shouldering the world's hate to "
