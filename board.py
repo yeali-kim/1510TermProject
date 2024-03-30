@@ -19,6 +19,9 @@ def create_board():
                 board[(col, row)] = "horizontal_wall"
             if col == 3 and row < 3 or col == 3 and row == 4 or col == 7 and row == 0 or col == 7 and row == 2 or col == 7 and 1 < row < 5:
                 board[(col, row)] = "vertical_wall"
+    board[(3, 3)] = 'Door to School'  # Town to School
+    board[(7, 1)] = 'Door to Forest'  # Town to Forest
+    board[(4, 5)] = 'Door to Desert'  # Town to Desert
     return board
 
 
@@ -49,8 +52,6 @@ def print_board(board, character):
                 print("═╝ ", end="")
             elif (col, row) == (3, 5):
                 print("═╩═", end="")
-            elif (col, row) in [(3, 3), (7, 1), (4, 5)]:
-                print("   ", end="")
             elif col == 11:
                 if row != 5:
                     print("", end="")
@@ -64,6 +65,8 @@ def print_board(board, character):
                 print(" ║ ", end="")
             elif (col, row) == (character['location']['x-coordinate'], character['location']['y-coordinate']):
                 print('\033[91m' + " P " + '\033[0m', end="")
+            elif (col, row) in [(3, 3), (7, 1), (4, 5)]:
+                print("   ", end="")
             elif cell_value == "Forest" or cell_value == "heca":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
             elif cell_value == "Desert":

@@ -6,8 +6,6 @@ import board
 
 
 def create_character():
-    # Mapping of input numbers to character classes
-    # class_options = {1: 'Knight', 2: 'Archer', 3: 'Magician'}
     character_class = 'Citizen'
 
     citizen_skill = {
@@ -16,21 +14,9 @@ def create_character():
         }
     }
 
-    # Attempt to get user input and validate it
-    # while character_class is None:
-    #     try:
-    #         choice = int(input("Enter the number that you want for your class - 1. Knight, 2. Archer, 3. Magician: "))
-    #         if choice in class_options:
-    #             character_class = class_options[choice]
-    #         else:
-    #             print("Invalid choice. Please enter a number between 1 and 3.")
-    #     except ValueError:
-    #         print("Please enter a valid number to choose your class!")
-
     classes = {
         'Citizen': {'str': random.randint(1, 10), 'dex': random.randint(1, 10),
                     'int': random.randint(1, 10), 'hp': 100, 'max_hp': 100},
-
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -171,6 +157,42 @@ def move_character(character, direction, board):
         character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
     elif board[(new_x, new_y)] == 'horizontal_wall' or board[(new_x, new_y)] == 'vertical_wall':
         print("Invalid move. You've hit a wall.")
+    elif board[(new_x, new_y)] == 'Door to School':
+        if board[(x, y)] == "Town":
+            print("You are moving through the door to School.")
+        else:
+            print("You are moving through the door to Town.")
+        character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+    elif board[(new_x, new_y)] == 'Door to Forest':
+        if board[(x, y)] == "Town":
+            user_input = ""
+            valid_input = ['y', 'n']
+            while user_input not in valid_input:
+                user_input = input("Are you sure to enter the Forest? Y/N ")
+                user_input = user_input.lower()
+            if user_input == 'y':
+                character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+                print("Be careful...")
+            else:
+                print("Come back when you are ready...")
+        else:
+            character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+            print("You are moving through the door to Town.")
+    elif board[(new_x, new_y)] == 'Door to Desert':
+        if board[(x, y)] == "Town":
+            user_input = ""
+            valid_input = ['y', 'n']
+            while user_input not in valid_input:
+                user_input = input("Are you sure to enter the Desert? Y/N ")
+                user_input = user_input.lower()
+            if user_input == 'y':
+                character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+                print("Be careful... Desert is dangerous....")
+            else:
+                print("Come back when you are ready...")
+        else:
+            character['location']['x-coordinate'], character['location']['y-coordinate'] = new_x, new_y
+            print("You are moving through the door to Town.")
     elif board[(new_x, new_y)] == 'home':
         character['hp'] = character['max_hp']
         print("Your hp is full now.")
