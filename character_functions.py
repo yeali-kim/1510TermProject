@@ -29,10 +29,11 @@ def create_character():
         "skills": citizen_skill[character_class],
         "hp": classes[character_class]["hp"],
         "max_hp": classes[character_class]["max_hp"],
-        "potion": 1,  # Starting potion
+        "elixir": 1,  # Starting elixir
         "money": 0,  # Starting money
-        "shawn_quest": False,
-        "david_quest": False,
+        "shawn_quest": None,
+        "david_quest": None,
+        "heca_found": False
     }
 
     return user_character
@@ -120,8 +121,8 @@ def update_level(character):
 
 def get_user_choice():
     user_input = ""
-    while user_input not in ["up", "down", "left", "right", "quit", "potion"]:
-        user_input = input("Enter movement direction (up, down, left, right) or 'potion' to drink potion or 'quit' to exit: ")
+    while user_input not in ["up", "down", "left", "right", "quit", "elixir"]:
+        user_input = input("Enter movement direction (up, down, left, right) or 'elixir' to drink elixir or 'quit' to exit: ")
         user_input = user_input.lower()
     return user_input
 
@@ -193,5 +194,5 @@ def move_character(character, direction, board):
         character["hp"] = character["max_hp"]
         print("Your hp is full now.")
     else:
-        func_name = getattr(npc, board[(new_x, new_y)])
+        func_name = getattr(npc, board[(new_x, new_y)]) # Call the function based on the NPC name
         call(func_name, character)

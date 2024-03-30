@@ -171,12 +171,12 @@ def choose_skill(character):
     return chosen_skill_name, character['skills'][chosen_skill_name]
 
 
-def drink_potion(character):
-    if character['potion'] > 0:
+def drink_elixir(character):
+    if character['elixir'] > 0:
         character['hp'] = character['max_hp']
         print("Your hp is full now!")
     else:
-        print("You don't have potion...")
+        print("You don't have any elixir...")
 
 
 def engage_combat(character, creature):

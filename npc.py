@@ -1,5 +1,6 @@
 import time
 import character_functions
+import board
 import random
 import combat
 
@@ -10,7 +11,7 @@ def jinkx(character):
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print("\033[1;35mJinkx\033[0m : Hi there little fella! My name is \033[1;35mJinkx\033[0m, the wise wizard!")
+            print("\033[1;35mJinkx\033[0m: Hi there little fella! My name is \033[1;35mJinkx\033[0m, the wise wizard!")
             time.sleep(1)
             print("I can teach you some magic spells.")
             time.sleep(1)
@@ -18,8 +19,8 @@ def jinkx(character):
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
-                "y": "\033[1;35mJinkx\033[0m : Wonderful! Let's start right away. Abracadabra!",
-                "n": "\033[1;35mJinkx\033[0m : Fine. You don't look like a wizard material anyways."
+                "y": "\033[1;35mJinkx\033[0m: Wonderful! Let's start right away. Abracadabra!",
+                "n": "\033[1;35mJinkx\033[0m: Fine. You don't look like a wizard material anyways."
                 }
             if user_action == "y":
                 character['class'] = 'Magician' #set class to Magician
@@ -41,9 +42,9 @@ def jinkx(character):
                 print(responses["n"])
                 time.sleep(1)
     elif character['class'] == 'Knight':
-        print("\033[1;35mJinkx\033[0m : You are already a knight. Chrissipus will be disappointed.")
+        print("\033[1;35mJinkx\033[0m: You are already a knight. Chrissipus will be disappointed.")
     else:
-        print("\033[1;35mJinkx\033[0m : You are already an archer. Hypatia will be disappointed.")
+        print("\033[1;35mJinkx\033[0m: You are already an archer. Hypatia will be disappointed.")
     return character
 
 
@@ -61,8 +62,8 @@ def chrissipus(character):
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
-                "y": "\033[1;35mChrissipus\033[0m : I knew it! Grab your sword my friend! Not that one. That one is expensive.",
-                "n": "\033[1;35mChrissipus\033[0m : Fine. Pfft, look at your size anyways."
+                "y": "\033[1;35mChrissipus\033[0m: I knew it! Grab your sword my friend! Not that one. That one is expensive.",
+                "n": "\033[1;35mChrissipus\033[0m: Fine. Pfft, look at your size anyways."
                 }
             if user_action == "y":
                 character['class'] = 'Knight' #set class to Knight
@@ -84,9 +85,9 @@ def chrissipus(character):
                 print(responses["n"])
                 time.sleep(1)
     elif character['class'] == 'Magician':
-        print("\033[1;35mChrissipus\033[0m : You are already a magician. Jinkx will be disappointed.")
+        print("\033[1;35mChrissipus\033[0m: You are already a magician. Jinkx will be disappointed.")
     else:
-        print("\033[1;35mChrissipus\033[0m : You are already an archer. Hypatia will be disappointed.")
+        print("\033[1;35mChrissipus\033[0m: You are already an archer. Hypatia will be disappointed.")
     return character
 
 
@@ -96,7 +97,7 @@ def hypatia(character):
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print("\033[1;35mHypatia\033[0m : Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
+            print("\033[1;35mHypatia\033[0m: Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
             time.sleep(1)
             print("I can teach you some archery skills.")
             time.sleep(1)
@@ -104,8 +105,8 @@ def hypatia(character):
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
-                "y": "\033[1;35mHypatia\033[0m : Hypatia: I knew it! I will make you the best archer in the world!",
-                "n": "\033[1;35mHypatia\033[0m : Fine. You look clumsy anyways. Archery is not for everyone."
+                "y": "\033[1;35mHypatia\033[0m: Hypatia: I knew it! I will make you the best archer in the world!",
+                "n": "\033[1;35mHypatia\033[0m: Fine. You look clumsy anyways. Archery is not for everyone."
                 }
             if user_action == "y":
                 character['class'] = 'Archer' #set class to Archer
@@ -134,33 +135,57 @@ def hypatia(character):
 
 
 def shawn(character):
-    say_hi = input("You met Shawn. Do you want to talk to him? (Y/N)")
-    if say_hi == "y":
-        responses = {
-            "y": "Shawn: Thank you so much! Please find my daughter. She was last seen in the forest.",
-            "n": "Shawn: I understand. It's a difficult task. I'll just keep waiting."
-        }
-        user_action = input("Shawn: My daughter Heca has been missing for a month. Can you help me find her? (Y/N)")
-        if user_action in ["y", "n"]:
+    if character["shawn_quest"] == None:
+        say_hi = input("You met \u001b[34;1mShawn\033[0m. Do you want to talk to him? (Y/N)").strip().lower()
+        while say_hi not in ["y", "n"]:
+            say_hi = input("Invalid input. Please enter Y or N").strip().lower()
+        if say_hi == "y":
+            print("\u001b[34;1mShawn\033[0m: Hello there! My name is \u001b[34;1mShawn\033[0m. I need your help.")
+            time.sleep(1)
+            print("My daughter \u001b[31;1mHeca\033[0m has been missing for a month. Can you help me find her? (Y/N)")
+            while user_action not in ["y", "n"]:
+                user_action = input("Invalid input. Please enter Y or N").strip().lower()
+            responses = {
+                "y": "\u001b[34;1mShawn\033[0m: Thank you so much! Please find my daughter. She was last seen in the forest.",
+                "n": "\u001b[34;1mShawn\033[0m: I understand. It's a difficult task. I'll just keep waiting."
+            }
             if user_action == "y":
                 print(responses["y"])
-                shawn_quest(character)
+                character["shawn_quest"] = True
             else:
                 print(responses["n"])
-        else:
-            response = "Invalid input. Please enter Y or N"
+    elif character["shawn_quest"] == True and character["heca_found"] == False:
+        print("\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[31;1mHeca\033[0m. Please hurry.")
+    elif character["shawn_quest"] == True and character["heca_found"] == True:
+        print("\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+        time.sleep(1)
+        print("\u001b[34;1mShawn\033[0m: Here is a reward for you.")
+        time.sleep(1)
+        print("You received \u001b[37;1m3 \u001b[37melixirs\033[0m.")
+        character["shawn_quest"] = False
+        character["elixir"] += 3
+    else:
+        print("\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+        
+
+def heca(character):
+    if character["shawn_quest"] == True:
+        print("\u001b[31;1mHeca\033[0m: Yes, Shawn is my father! Thank you for finding me!") 
+        time.sleep(1)
+        print("I was lost in the forest. My father must be worried sick.")
+        time.sleep(1)
+        print("Let's go back to my father!")
+        character["heca_found"] = True
+    else:
+        print("\u001b[31;1m???\033[0m: I don't know you. Leave me alone!")
 
 
-def shawn_quest(character):
-    responses = {
-        "greeting": "My daughter Heca has been missing for a month. Can you help me find her? (Y/N)",
-        "yes_response": "Thank you so much! Please find my daughter. She was last seen in the forest.",
-        "no_response": "I understand. It's a difficult task. I'll just keep waiting.",
-        "fulfilled": "Thank you so much for finding my daughter! Here is a reward for you.",
-        "unfulfilled": "I'm still waiting for you to find my daughter. Please hurry."
-    }
-    print(responses["greeting"])
-
+def heca_found(character, board):
+    if character["shawn_quest"] == False and character["heca_found"] == True:
+        heca_coord = (key for key, val in board.items() if val == "heca")
+        board[heca_coord] = "Forest"
+        return board
+    
 
 def david(character):
     responses = {
@@ -177,9 +202,9 @@ def daniel(character):
     responses = {
         "greeting": "Welcome to my shop! Full health elixirs are 100G each. Would you like to buy one? (Y/N)",
         "yes_response": "Great! That will be 100G.",
-        "no_response": "No worries. My potions are always available.",
+        "no_response": "No worries. My elixirs are always available.",
         "fulfilled": "Thank you for your purchase! Use your elixir wisely.",
-        "unfulfilled": "You don't have enough gold to buy a potion. Come back when you do."
+        "unfulfilled": "You don't have enough gold to buy a elixir. Come back when you do."
     }
     print(responses["greeting"])
 
