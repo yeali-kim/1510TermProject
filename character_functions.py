@@ -32,8 +32,9 @@ def create_character():
         "elixir": 1,  # Starting elixir
         "money": 0,  # Starting money
         "shawn_quest": None,
-        "david_quest": None,
-        "heca_found": False
+        "david_quest": False,
+        "heca_found": False,
+        "tree branches": 0
     }
 
     return user_character
@@ -68,16 +69,9 @@ def update_level(character):
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
     exp_growth_rate = 1.01  # 1% more Exp required for each level
-    # base hp to calculate total hp when character leveled up
-    base_hp = {
-        "Citizen": 100,
-        "Knight": 150,
-        "Archer": 100,
-        "Magician": 80,
-    }
 
     # Calculate the current required Exp for the next level
-    exp_for_next_level = base_exp_per_level * (exp_growth_rate ** (character["level"] - 1))
+    exp_for_next_level = round(base_exp_per_level * (exp_growth_rate ** (character["level"] - 1)))
 
     # Check if the character has enough Exp to level up
     if character["exp"] >= exp_for_next_level:
@@ -110,8 +104,8 @@ def update_level(character):
             character["hp"] = character["max_hp"]
 
         print("Your stats have increased:")
-        print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},\
-        Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
+        print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},"
+              f" Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
 
         # Check for another level up in case of remaining Exp
         update_level(character)
@@ -122,7 +116,8 @@ def update_level(character):
 def get_user_choice():
     user_input = ""
     while user_input not in ["up", "down", "left", "right", "quit", "elixir"]:
-        user_input = input("Enter movement direction (up, down, left, right) or 'elixir' to drink elixir or 'quit' to exit: ")
+        user_input = input("Enter movement direction (up, down, left, right) or 'elixir'"
+                           " to drink elixir or 'quit' to exit: ")
         user_input = user_input.lower()
     return user_input
 
