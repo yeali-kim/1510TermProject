@@ -6,8 +6,9 @@ import combat
 
 
 def jinkx(character):
-    if character['class'] == 'Citizen': #check if class is Citizen
-        say_hi = input("You met \033[1;35mJinkx\033[0m. Do you want to talk to her? (Y/N)").strip().lower() # ask user if they want to talk to Jinkx
+    if character['class'] == 'Citizen':  # check if class is Citizen
+        say_hi = input(
+            "You met \033[1;35mJinkx\033[0m. Do you want to talk to her? (Y/N)").strip().lower()  # ask user if they want to talk to Jinkx
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
@@ -15,16 +16,17 @@ def jinkx(character):
             time.sleep(1)
             print("I can teach you some magic spells.")
             time.sleep(1)
-            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn magic spells
+            user_action = input(
+                "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn magic spells
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
                 "y": "\033[1;35mJinkx\033[0m: Wonderful! Let's start right away. Abracadabra!",
                 "n": "\033[1;35mJinkx\033[0m: Fine. You don't look like a wizard material anyways."
-                }
+            }
             if user_action == "y":
-                character['class'] = 'Magician' #set class to Magician
-                character_functions.update_skills(character) #update skills
+                character['class'] = 'Magician'  # set class to Magician
+                character_functions.update_skills(character)  # update skills
                 lines = [
                     responses["y"],
                     "...",
@@ -49,25 +51,27 @@ def jinkx(character):
 
 
 def chrissipus(character):
-    if character['class'] == 'Citizen': #check if class is Citizen
+    if character['class'] == 'Citizen':  # check if class is Citizen
         say_hi = input("You met \033[1;35mChrissipus\033[0m. Do you want to talk to him? (Y/N)").strip().lower()
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print("\033[1;35mChrissipus\033[0m : Hi there young man! My name is \033[1;35mChrissipus\033[0m, the mighty knight!")
+            print(
+                "\033[1;35mChrissipus\033[0m : Hi there young man! My name is \033[1;35mChrissipus\033[0m, the mighty knight!")
             time.sleep(1)
             print("I can teach you some sword skills.")
             time.sleep(1)
-            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn sword skills
+            user_action = input(
+                "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn sword skills
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
                 "y": "\033[1;35mChrissipus\033[0m: I knew it! Grab your sword my friend! Not that one. That one is expensive.",
                 "n": "\033[1;35mChrissipus\033[0m: Fine. Pfft, look at your size anyways."
-                }
+            }
             if user_action == "y":
-                character['class'] = 'Knight' #set class to Knight
-                character_functions.update_skills(character) #update skills
+                character['class'] = 'Knight'  # set class to Knight
+                character_functions.update_skills(character)  # update skills
                 lines = [
                     responses["y"],
                     "...",
@@ -92,25 +96,27 @@ def chrissipus(character):
 
 
 def hypatia(character):
-    if character['class'] == 'Citizen': #check if class is Citizen
+    if character['class'] == 'Citizen':  # check if class is Citizen
         say_hi = input("You met \033[1;35mHypatia\033[0m. Do you want to talk to her? (Y/N)").strip().lower()
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print("\033[1;35mHypatia\033[0m: Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
+            print(
+                "\033[1;35mHypatia\033[0m: Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
             time.sleep(1)
             print("I can teach you some archery skills.")
             time.sleep(1)
-            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn archery skills
+            user_action = input(
+                "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn archery skills
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N").strip().lower()
             responses = {
                 "y": "\033[1;35mHypatia\033[0m: Hypatia: I knew it! I will make you the best archer in the world!",
                 "n": "\033[1;35mHypatia\033[0m: Fine. You look clumsy anyways. Archery is not for everyone."
-                }
+            }
             if user_action == "y":
-                character['class'] = 'Archer' #set class to Archer
-                character_functions.update_skills(character) #update skills
+                character['class'] = 'Archer'  # set class to Archer
+                character_functions.update_skills(character)  # update skills
                 lines = [
                     responses["y"],
                     "...",
@@ -155,9 +161,11 @@ def shawn(character):
             else:
                 print(responses["n"])
     elif character["shawn_quest"] == True and character["heca_found"] == False:
-        print("\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[31;1mHeca\033[0m. Please hurry.")
+        print(
+            "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[31;1mHeca\033[0m. Please hurry.")
     elif character["shawn_quest"] == True and character["heca_found"] == True:
-        print("\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+        print(
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
         time.sleep(1)
         print("\u001b[34;1mShawn\033[0m: Here is a reward for you.")
         time.sleep(1)
@@ -165,12 +173,13 @@ def shawn(character):
         character["shawn_quest"] = False
         character["elixir"] += 3
     else:
-        print("\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
-        
+        print(
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+
 
 def heca(character):
     if character["shawn_quest"] == True:
-        print("\u001b[31;1mHeca\033[0m: Yes, Shawn is my father! Thank you for finding me!") 
+        print("\u001b[31;1mHeca\033[0m: Yes, Shawn is my father! Thank you for finding me!")
         time.sleep(1)
         print("I was lost in the forest. My father must be worried sick.")
         time.sleep(1)
@@ -185,7 +194,7 @@ def heca_found(character, board):
         heca_coord = (key for key, val in board.items() if val == "heca")
         board[heca_coord] = "Forest"
         return board
-    
+
 
 def david(character):
     responses = {
@@ -216,9 +225,19 @@ def daughter(character):
     print(responses["greeting"])
 
 
+def game_clear(character):
+    return False if character["chris"] else True
+
+
 def chris(character):
     dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
     print(f"Now Chris's health is {dragon_chris['health']} and type is {dragon_chris['type']}")
+    print("Chris: You've come far, hero. But have you ever questioned "
+          "why I'm the enemy? Who decided I was the villain?")
+    time.sleep(2)
+    print("You: You threaten all of Dragon Coast! Your reign ends now.")
+    print("Chris: Look around. Who brought more harm? I, who sought to protect my realm, "
+          "or you, who blindly followed a path of destruction?")
     while dragon_chris['health'] > 0:
         # Let the user choose a skill
         chosen_skill, chosen_type = combat.choose_skill(character)
@@ -267,6 +286,28 @@ def chris(character):
         if character['hp'] <= 0:
             print("Game Over")
             break
-
-
-
+    character["chris"] = True
+    scripts = [
+        "Chris (with his last breath): See the world through my eyes, and understand the truth you refused to see.",
+        "The player returns to the villages and landscapes they once 'saved', only to find them in ruins or eerily "
+        "silent.",
+        'NPCs, now fearful, whisper among themselves as the player approaches, branding them not as a hero but as '
+        '"The True Devil of Dragon Coast."',
+        "Environmental cues highlight the destruction: withered lands, extinguished fires, and monuments once erected "
+        "in the player's honor now defaced.",
+        "With the fall of Chris, the scales of Dragon Coast tip into darkness. The hero, once revered, now walks a "
+        "path lined with the shadows of their deeds.",
+        "A new legend begins—not of a savior, but of a harbinger who bore the world's end on their shoulders."
+    ]
+    for line in scripts:
+        print(line)
+        time.sleep(3)
+    print(f"Heca: Please...{character['name']} stop to kill innocents")
+    user_input = input("You can accept or deny her final request accept/deny? ")
+    user_input = user_input.lower()
+    if user_input == "accept":
+        print("I see now the destruction I've wrought. I am the architect of Eldoria's demise. "
+              "It's time I make amends, not as a hero, but as a guardian.")
+    else:
+        print("They misunderstand. I did what I had to do. If being the devil means shouldering the world's hate to "
+              "bring about change, then so be it.")
