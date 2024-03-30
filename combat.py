@@ -79,19 +79,19 @@ def create_creature(region):
 
 def calculate_skill_damage(skill, chosen_type, character, creature):
     skill_damage_formulas = {
-        'Tackle': character['stats']['str'] * 0.5 + character['stats']['dex'] * 0.5 + character['stats']['int'] * 0.5,
+        'Tackle': character['stats'][0] * 0.5 + character['stats'][1] * 0.5 + character['stats'][2] * 0.5,
 
-        'Shield Attack': character['stats']['str'] * 1.5 + character['stats']['dex'] * 2,
-        "Fire Sword": character["stats"]["str"] * 2,
-        "Guillotine": character["stats"]["str"] * 3,
+        'Shield Attack': character['stats'][0] * 1.5 + character['stats'][1] * 2,
+        "Fire Sword": character["stats"][0] * 2,
+        "Guillotine": character["stats"][0] * 3,
 
-        'Fire Arrow': character['stats']['dex'] * 4,
-        "Frost Arrow": character["stats"]["dex"] * 4,
-        "Storm of Arrows": character["stats"]["dex"] * 4 + character["stats"]["str"] * 2,
+        'Fire Arrow': character['stats'][1] * 4,
+        "Frost Arrow": character["stats"][1] * 4,
+        "Storm of Arrows": character["stats"][1] * 4 + character["stats"][0] * 2,
 
-        'Ice Age': character['stats']['int'] * 3,
-        "Inferno Sphere": character["stats"]["int"] * 3,
-        "Poison Nova": character["stats"]["int"] * 3,
+        'Ice Age': character['stats'][2] * 3,
+        "Inferno Sphere": character["stats"][2] * 3,
+        "Poison Nova": character["stats"][2] * 3,
     }
     if skill in skill_damage_formulas:
         if creature['type'] == 'grass':

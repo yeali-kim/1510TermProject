@@ -1,6 +1,8 @@
 import time
 import character_functions
 import board
+import random
+import combat
 
 
 def jinkx(character):
@@ -215,6 +217,54 @@ def daughter(character):
 
 
 def chris(character):
-    responses = {
-        "greeting": "How dare you enter my lair! Prepare to face my wrath!"
-    }
+    dragon_chris = {'health': 5000, 'type': 'normal'}
+    while dragon_chris['health'] > 0:
+        # Let the user choose a skill
+        chosen_skill, chosen_type = combat.choose_skill(character)
+        damage_dealt = combat.calculate_skill_damage(chosen_skill, chosen_type, character, dragon_chris)
+
+        print(f"Using {chosen_skill}, you deal {damage_dealt} damage to the Chris.")
+        dragon_chris['health'] -= damage_dealt
+        if dragon_chris['health'] <= 0:
+            print(f"You've defeated the Chris!")
+            break
+        print(f"Chris is still alive with {dragon_chris['health']} health left.")
+        dragon_skills = ['attack', 'fire breath', 'question']
+        skill = random.choice(dragon_skills)
+        if skill == "attack":
+            print("Chris dealt 500 damage to you!!")
+            character["hp"] -= 500
+            print(f"You have {character['hp']} left!!")
+        elif skill == "fire breath":
+            print("Watch out!!! Dragon breath is coming!!")
+            user_choice = input("Enter up, down, left, or right to avoid the breath!! ")
+            user_choice = user_choice.lower()
+            dragon_breath = ['up', 'down', 'left', 'right']
+            if user_choice == random.choice(dragon_breath) or user_choice not in dragon_breath:
+                character["hp"] -= 700
+                print("You are burning!!!!")
+                print(f"You have {character['hp']} left")
+            else:
+                print("You avoid breath!!")
+        elif skill == "question":
+            print("Dragon: I will test your agility")
+            print("I will give you simple word it will be shown in only 0.3 seconds")
+            print("Open your eyes...")
+            time.sleep(3)
+            random_words = ['dog', 'cat', 'rat', 'pet']
+            answer = random.choice(random_words)
+            print(answer)
+            time.sleep(0.3)
+            print("\n" * 100)
+            user_answer = input("Enter the word from dragon: ")
+            if user_answer == answer:
+                print("Dragon: Correct...")
+            else:
+                character["max_hp"] -= 100
+                print(f"You've cursed from dragon, your max hp was decreased..now your max hp is {character['max_hp']}")
+        if character['hp'] <= 0:
+            print("Game Over")
+            break
+
+
+
