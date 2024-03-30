@@ -1,22 +1,37 @@
+import time
+
 def jinkx(character):
     say_hi = input("You met Jinkx. Do you want to talk to her? (Y/N)")
-    if say_hi == "Y":
-        responses = {
+    while upper.say_hi not in ["Y", "N"]:
+        print("Invalid input. Please enter Y or N")
+    if upper.say_hi == "Y":
+        user_action = input("Jinkx: Hi there little fella! My name is Jinkx, the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
+        while upper.user_action not in ["Y", "N"]:
+            print("Invalid input. Please enter Y or N")
+        if upper.user_action == "Y":
+            responses = {
             "Y": "Jinkx: Wonderful! Let's start right away. Abracadabra!",
             "N": "Jinkx: Fine. You don't look like a wizard material anyways."
             }
-        user_action = input("Jinkx: Hi there little fella! My name is Jinkx, the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
-        if user_action in ["Y", "N"]:
-            if user_action == "Y":
-                print(responses["Y"])
-                print("...\n...\nGreat job surviving through the training.\nNow you are a wizard!\nUse your new skills wisely.")
-                character['class'] = 'Magician'
-                print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
-                return character
+            if upper.user_action == "Y":
+                character['class'] = 'Magician' #set class to Magician
+                lines = [
+                    responses["Y"],
+                    "...",
+                    "...",
+                    "Great job surviving through the training.",
+                    "You are now a wizard!",
+                    "Use your new skills wisely."
+                    '\033[92m' + f"Your class is now {character['class']}." + '\033[0m',
+                    '\033[92m' + f"Now you can use these skills. {character['skills']}." + '\033[0m',
+                ]
+                for line in lines:
+                    print(line)
+                    time.sleep(0.2)
             else:
                 print(responses["N"])
-        else:
-            response = "Invalid input. Please enter Y or N"
+        
+    return character
 
 
 def chrissipus(character):
