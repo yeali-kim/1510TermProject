@@ -6,20 +6,20 @@ def create_creature(region):
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 10, 'type': 'grass', 'golds': random.randint(1, 5)},
-            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 15, 'type': 'normal', 'golds': random.randint(2, 8)},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 20, 'type': 'grass', 'golds': random.randint(5, 10)},
-            {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 30, 'type': 'grass',
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass', 'golds': random.randint(1, 5)},
+            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal', 'golds': random.randint(2, 8)},
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass', 'golds': random.randint(5, 10)},
+            {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 80, 'type': 'grass',
              'golds': random.randint(7, 12)},
         ],
         'Desert': [
-            {'name': 'Scorpion', 'health': 100, 'damage': 30, 'exp': 80, "type": "fire",
+            {'name': 'Scorpion', 'health': 100, 'damage': 30, 'exp': 150, "type": "fire",
              "golds": random.randint(10, 15)},
-            {'name': 'Skeleton', 'health': 200, 'damage': 50, 'exp': 100, "type": "normal",
+            {'name': 'Skeleton', 'health': 200, 'damage': 50, 'exp': 200, "type": "normal",
              "golds": random.randint(12, 17)},
-            {'name': 'Golem', 'health': 300, 'damage': 70, 'exp': 150, "type": "water",
+            {'name': 'Golem', 'health': 300, 'damage': 70, 'exp': 300, "type": "water",
              "golds": random.randint(15, 20)},
-            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250, "type": "normal",
+            {'name': 'Sand Serpent', 'health': 500, 'damage': 400, 'exp': 250, "type": "normal",
              "golds": random.randint(20, 25)},
 
         ],
