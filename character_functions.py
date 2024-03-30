@@ -5,7 +5,7 @@ import combat
 import board
 
 
-def create_character():
+def create_character() -> dict[str, str | int | bool | dict[str, int]]:
     character_class = "Citizen"
 
     citizen_skill = {
@@ -22,7 +22,7 @@ def create_character():
     # Initialize the character with class-specific stats, location, level, Exp, and skills
     user_character = {
         "class": character_class,
-        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int'],],
+        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int'], ],
         "location": {"x-coordinate": 6, "y-coordinate": 2},  # Default location at home
         "level": 1,  # Starting level
         "exp": 0,  # Starting experience points
@@ -41,7 +41,7 @@ def create_character():
     return user_character
 
 
-def update_skills(character):
+def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
     skills = {
         "Citizen": {
             "Tackle": "normal"
@@ -65,7 +65,7 @@ def update_skills(character):
     character["skills"] = skills[character["class"]]
 
 
-def update_level(character):
+def update_level(character: dict[str, str | int | bool | dict[str, int]]):
     # Base experience required for the first level up
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
@@ -90,17 +90,17 @@ def update_level(character):
             character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
         elif character["class"] == "Knight":
-            character["stats"][0] += 10     # str stat
-            character["stats"][1] += 5      # dex stat
+            character["stats"][0] += 10  # str stat
+            character["stats"][1] += 5  # dex stat
             character["max_hp"] += character["level"] * 15
             character["hp"] = character["max_hp"]
         elif character["class"] == "Archer":
-            character["stats"][0] += 10     # str stat
-            character["stats"][1] += 15     # dex stat
+            character["stats"][0] += 10  # str stat
+            character["stats"][1] += 15  # dex stat
             character["max_hp"] += character["level"] * 12
             character["hp"] = character["max_hp"]
         elif character["class"] == "Magician":
-            character["stats"][2] += 20     # int stat
+            character["stats"][2] += 20  # int stat
             character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
 
@@ -114,7 +114,7 @@ def update_level(character):
         print(f"You need {exp_for_next_level - character["exp"]} more Exp to reach level {character["level"] + 1}.")
 
 
-def get_user_choice():
+def get_user_choice() -> str:
     user_input = ""
     while user_input not in ["up", "down", "left", "right", "quit", "elixir"]:
         user_input = input("Enter movement direction (up, down, left, right) or 'elixir'"
@@ -123,7 +123,7 @@ def get_user_choice():
     return user_input
 
 
-def move_character(character, direction, game_board):
+def move_character(character, direction: str, game_board: dict[tuple[int, int], str]):
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
     # Current location
     x, y = character["location"]["x-coordinate"], character["location"]["y-coordinate"]
@@ -190,5 +190,5 @@ def move_character(character, direction, game_board):
         character["hp"] = character["max_hp"]
         print("Your hp is full now.")
     else:
-        func_name = getattr(npc, game_board[(new_x, new_y)])      # Call the function based on the NPC name
+        func_name = getattr(npc, game_board[(new_x, new_y)])  # Call the function based on the NPC name
         call(func_name, character)
