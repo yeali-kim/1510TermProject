@@ -8,7 +8,8 @@ def create_creature(region):
         'Forest': [
             {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass', 'golds': random.randint(1, 5)},
             {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal', 'golds': random.randint(2, 8)},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass', 'golds': random.randint(5, 10)},
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',
+             'golds': random.randint(5, 10), 'tree branches': random.randint(1, 3)},
             {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 80, 'type': 'grass',
              'golds': random.randint(7, 12)},
         ],
@@ -19,19 +20,19 @@ def create_creature(region):
              "golds": random.randint(12, 17)},
             {'name': 'Golem', 'health': 300, 'damage': 70, 'exp': 300, "type": "water",
              "golds": random.randint(15, 20)},
-            {'name': 'Sand Serpent', 'health': 500, 'damage': 400, 'exp': 250, "type": "normal",
+            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250, "type": "normal",
              "golds": random.randint(20, 25)},
 
         ],
         'Castle': [
             {'name': 'Cerberus', 'health': 700, 'damage': 200, 'exp': 500, "type": "fire",
-             "gold": random.randint(20, 25)},
+             "golds": random.randint(20, 25)},
             {'name': 'Gargoyle', 'health': 1000, 'damage': 300, 'exp': 800, "type": "normal",
-             "gold": random.randint(25, 30)},
+             "golds": random.randint(25, 30)},
             {'name': 'Lich', 'health': 1000, 'damage': 700, 'exp': 1000, "type": "water",
-             "gold": random.randint(30, 35)},
+             "golds": random.randint(30, 35)},
             {'name': 'Death Knight', 'health': 2000, 'damage': 500, 'exp': 1500, "type": "normal",
-             "gold": random.randint(35, 40)},
+             "golds": random.randint(35, 40)},
         ]
     }
 
@@ -207,42 +208,54 @@ def is_alive(character):
     return False if character["hp"] <= 0 else True
 
 
+def tree_branches(character, creature):
+    if creature["name"] == "Stump" and character["david_quest"]:
+        character["tree branches"] += creature["tree branches"]
+        print(f"You got {creature['tree branches']} tree branches.")
+        print(f"Now you have {character['tree branches']} branches")
+
+
 def handle_encounter(character, board):
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
-    current_location_type = board[(x, y)].split()[0]
+    current_location_type = board[(x, y)]
 
     if current_location_type in ['Forest', 'Desert', 'Castle']:
         if random.random() < 0.8:  # 80% chance of encounter
             creature = create_creature(current_location_type)
             print(f"You've encountered a {creature['name']}!")
             print(f"The {creature['name']} is {creature['type']} type")
-            # Offer choice to engage in combat or try to run
-            action = input("Do you wish to fight (f) or try to run (r)? ")
-
-            if action.lower() == 'f':
-                engage_combat(character, creature)
-
-                # Check if the character is alive after combat
-                if character['hp'] <= 0:
-                    print("You've been defeated. Game Over.")
-                    return False  # This exits the function, potentially ending the game or requiring a game reset
-
-                elif creature['health'] <= 0:
-                    gained_exp = creature['exp']  # Use the creature's exp value
-                    character['exp'] += gained_exp
-                    print(f"You gained {gained_exp} Exp!")
-                    character["money"] += creature["golds"]  # Add creature's gold
-                    print(f"You got {creature['golds']} golds")
-                    character_functions.update_level(character)  # Check and handle level up
-
-            elif action.lower() == 'r':
-                if random.random() < 0.5:  # 50% chance to escape
-                    print("You managed to escape safely.")
-                else:
-                    print("Failed to escape. Forced into combat.")
-                    engage_combat(character, creature)
-            else:
-                print("Invalid action. You're forced into combat.")
-                engage_combat(character, creature)
+            main_combat(creature, character)
         else:
             print("It's quiet... too quiet.")
+
+
+def main_combat(creature, character):
+    # Offer choice to engage in combat or try to run
+    action = input("Do you wish to fight (f) or try to run (r)? ")
+
+    if action.lower() == 'f':
+        engage_combat(character, creature)
+
+        # Check if the character is alive after combat
+        if character['hp'] <= 0:
+            print("You've been defeated. Game Over.")
+            return False  # This exits the function, potentially ending the game or requiring a game reset
+
+        elif creature['health'] <= 0:
+            gained_exp = creature['exp']  # Use the creature's exp value
+            character['exp'] += gained_exp
+            print(f"You gained {gained_exp} Exp!")
+            character["money"] += creature["golds"]  # Add creature's gold
+            print(f"You got {creature['golds']} golds")
+            tree_branches(character, creature)
+            character_functions.update_level(character)  # Check and handle level up
+
+    elif action.lower() == 'r':
+        if random.random() < 0.5:  # 50% chance to escape
+            print("You managed to escape safely.")
+        else:
+            print("Failed to escape. Forced into combat.")
+            engage_combat(character, creature)
+    else:
+        print("Invalid action. You're forced into combat.")
+        engage_combat(character, creature)
