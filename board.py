@@ -27,7 +27,7 @@ def create_board():
 
 def set_npc_location(board, character):
     set_locations = {
-        (6, 1): "jinkx",
+        (0, 0): "jinkx",
         (0, 3): "chrissipus",
         (2, 2): "hypatia",
         (4, 1): "shawn",
