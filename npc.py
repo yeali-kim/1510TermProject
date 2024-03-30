@@ -3,85 +3,132 @@ import character_functions
 
 
 def jinkx(character):
-    say_hi = input("You met \033[1;35m Jinkx \033[0m. Do you want to talk to her? (Y/N)").strip().lower()
-    while say_hi not in ["y", "n"]:
-        print("Invalid input. Please enter Y or N")
-        say_hi = input("You met \033[1;35m Jinkx \033[0m. Do you want to talk to her? (Y/N)").strip().lower()
-    if say_hi == "y":
-        user_action = input("\033[1;35m Jinkx \033[0m : Hi there little fella! My name is \033[1;35m Jinkx \033[0m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
-        while user_action not in ["y", "n"]:
-            print("Invalid input. Please enter Y or N")
-            user_action = input("\033[1;35m Jinkx \033[0m : Hi there little fella! My name is \033[1;35m Jinkx \033[0m , the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
-        responses = {
-            "y": "\033[1;35m Jinkx \033[0m : Wonderful! Let's start right away. Abracadabra!",
-            "n": "\033[1;35m Jinkx \033[0m : Fine. You don't look like a wizard material anyways."
-            }
-        if user_action == "y":
-            character['class'] = 'Magician' #set class to Magician
-            character_functions.update_skills(character) #update skills
-            lines = [
-                responses["y"],
-                "...",
-                "...",
-                "Great job surviving through the training.",
-                "You are now a wizard!",
-                "Use your new skills wisely.",
-                '\033[92m' + f"Your class is now {character['class']}.",
-                '\033[92m' + f"Now you can use these skills. {character['skills']}." + '\033[0m'
-            ]
-            for line in lines:
-                print(line)
-                time.sleep(0.2)
-        else:
-            print(responses["n"])
-        
+    if character['class'] == 'Citizen': #check if class is Citizen
+        say_hi = input("You met \033[1;35mJinkx\033[0m. Do you want to talk to her? (Y/N)").strip().lower() # ask user if they want to talk to Jinkx
+        while say_hi not in ["y", "n"]:
+            say_hi = input("Invalid input. Please enter Y or N").strip().lower()
+        if say_hi == "y":
+            print("\033[1;35mJinkx\033[0m : Hi there little fella! My name is \033[1;35mJinkx\033[0m, the wise wizard!")
+            time.sleep(1)
+            print("I can teach you some magic spells.")
+            time.sleep(1)
+            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn magic spells
+            while user_action not in ["y", "n"]:
+                user_action = input("Invalid input. Please enter Y or N").strip().lower()
+            responses = {
+                "y": "\033[1;35mJinkx\033[0m : Wonderful! Let's start right away. Abracadabra!",
+                "n": "\033[1;35mJinkx\033[0m : Fine. You don't look like a wizard material anyways."
+                }
+            if user_action == "y":
+                character['class'] = 'Magician' #set class to Magician
+                character_functions.update_skills(character) #update skills
+                lines = [
+                    responses["y"],
+                    "...",
+                    "...",
+                    "Great job surviving through the training.",
+                    "You are now a \033[92mmagician\033[0m!",
+                    "Use your new skills wisely.\n",
+                    f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
+                    f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
+                ]
+                for line in lines:
+                    print(line)
+                    time.sleep(1)
+            else:
+                print(responses["n"])
+                time.sleep(1)
+    elif character['class'] == 'Knight':
+        print("\033[1;35mJinkx\033[0m : You are already a knight. Chrissipus will be disappointed.")
+    else:
+        print("\033[1;35mJinkx\033[0m : You are already an archer. Hypatia will be disappointed.")
     return character
 
 
 def chrissipus(character):
-    say_hi = input("You met Chrissipus. Do you want to talk to him? (Y/N)")
-    if say_hi == "y":
-        responses = {
-            "y": "Chrissipus: I knew it! Grab your sword my friend! Not that one. That one is expensive.",
-            "n": "Chrissipus: Fine. Pfft, look at your size anyways."
-        }
-        user_action = input(
-            "Chrissipus: Hi there young man! My name is Chrissipus, the mighty knight!\nI can teach you some sword skills. Would you like to learn some? (Y/N)")
-        if user_action in ["y", "n"]:
+    if character['class'] == 'Citizen': #check if class is Citizen
+        say_hi = input("You met \033[1;35mChrissipus\033[0m. Do you want to talk to him? (Y/N)").strip().lower()
+        while say_hi not in ["y", "n"]:
+            say_hi = input("Invalid input. Please enter Y or N").strip().lower()
+        if say_hi == "y":
+            print("\033[1;35mChrissipus\033[0m : Hi there young man! My name is \033[1;35mChrissipus\033[0m, the mighty knight!")
+            time.sleep(1)
+            print("I can teach you some sword skills.")
+            time.sleep(1)
+            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn sword skills
+            while user_action not in ["y", "n"]:
+                user_action = input("Invalid input. Please enter Y or N").strip().lower()
+            responses = {
+                "y": "\033[1;35mChrissipus\033[0m : I knew it! Grab your sword my friend! Not that one. That one is expensive.",
+                "n": "\033[1;35mChrissipus\033[0m : Fine. Pfft, look at your size anyways."
+                }
             if user_action == "y":
-                print(responses["y"])
-                print(
-                    "...\n...\nGreat job surviving through the training.\nNow you are a knight!\nUse your new skills wisely.")
-                character['class'] = 'Knight'
-                print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
-                return character
+                character['class'] = 'Knight' #set class to Knight
+                character_functions.update_skills(character) #update skills
+                lines = [
+                    responses["y"],
+                    "...",
+                    "...",
+                    "Great job surviving through the training.",
+                    "You are now a \033[92mknight\033[0m!",
+                    "Use your new skills carefully.\n",
+                    f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
+                    f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
+                ]
+                for line in lines:
+                    print(line)
+                    time.sleep(1)
             else:
                 print(responses["n"])
-        else:
-            response = "Invalid input. Please enter Y or N"
+                time.sleep(1)
+    elif character['class'] == 'Magician':
+        print("\033[1;35mChrissipus\033[0m : You are already a magician. Jinkx will be disappointed.")
+    else:
+        print("\033[1;35mChrissipus\033[0m : You are already an archer. Hypatia will be disappointed.")
+    return character
 
 
 def hypatia(character):
-    say_hi = input("You met Hypatia. Do you want to talk to her? (Y/N)")
-    if say_hi == "y":
-        responses = {
-            "y": "Hypatia: I knew it! I will make you the best archer in the world!",
-            "n": "Hypatia: Fine. You look clumsy anyways. Archery is not for everyone."
-        }
-        user_action = input(
-            "Hypatia: Hi there little one! My name is Hypatia, the great archer!\nI can teach you some archery skills. Would you like to learn some? (Y/N)")
-        if user_action in ["y", "n"]:
+    if character['class'] == 'Citizen': #check if class is Citizen
+        say_hi = input("You met \033[1;35mHypatia\033[0m. Do you want to talk to her? (Y/N)").strip().lower()
+        while say_hi not in ["y", "n"]:
+            say_hi = input("Invalid input. Please enter Y or N").strip().lower()
+        if say_hi == "y":
+            print("\033[1;35mHypatia\033[0m : Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
+            time.sleep(1)
+            print("I can teach you some archery skills.")
+            time.sleep(1)
+            user_action = input("Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn archery skills
+            while user_action not in ["y", "n"]:
+                user_action = input("Invalid input. Please enter Y or N").strip().lower()
+            responses = {
+                "y": "\033[1;35mHypatia\033[0m : Hypatia: I knew it! I will make you the best archer in the world!",
+                "n": "\033[1;35mHypatia\033[0m : Fine. You look clumsy anyways. Archery is not for everyone."
+                }
             if user_action == "y":
-                print(responses["y"])
-                print(
-                    "...\n...\nGreat job surviving through the training.\nNow you are a archer!\nUse your new skills wisely.")
-                character['class'] = 'Archer'
-                print('\033[92m' + f"Your class is now {character['class']}." + '\033[0m')
-                return character
+                character['class'] = 'Archer' #set class to Archer
+                character_functions.update_skills(character) #update skills
+                lines = [
+                    responses["y"],
+                    "...",
+                    "...",
+                    "Great job surviving through the training.",
+                    "You are now an \033[92marcher\033[0m!",
+                    "Use your new skills thoughtfully.\n",
+                    f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
+                    f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
+                ]
+                for line in lines:
+                    print(line)
+                    time.sleep(1)
             else:
                 print(responses["n"])
-        else:
-            response = "Invalid input. Please enter Y or N"
+                time.sleep(1)
+    elif character['class'] == 'Magician':
+        print("\033[1;35mHypatia\033[0m : You are already a magician. Jinkx will be disappointed.")
+    else:
+        print("\033[1;35mHypatia\033[0m : You are already a knight. Chrissipus will be disappointed.")
+    return character
 
 
 def shawn(character):
