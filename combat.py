@@ -2,7 +2,7 @@ import random
 import character_functions
 
 
-def create_creature(region):
+def create_creature(region: str) -> dict[str, int | str] | None:
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
@@ -78,7 +78,7 @@ def create_creature(region):
         return None
 
 
-def calculate_skill_damage(skill, chosen_type, character, creature):
+def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creature: dict) -> int:
     skill_damage_formulas = {
         'Tackle': character['stats'][0] * 0.5 + character['stats'][1] * 0.5 + character['stats'][2] * 0.5,
 
@@ -152,7 +152,7 @@ def calculate_skill_damage(skill, chosen_type, character, creature):
         return 0
 
 
-def choose_skill(character):
+def choose_skill(character: dict) -> tuple[str, str]:
     print("Available skills:")
     skills_list = list(character['skills'].keys())  # Convert skill names to a list
     for i in range(len(skills_list)):
@@ -172,7 +172,7 @@ def choose_skill(character):
     return chosen_skill_name, character['skills'][chosen_skill_name]
 
 
-def drink_elixir(character):
+def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]):
     if character['elixir'] > 0:
         character['hp'] = character['max_hp']
         print("Your hp is full now!")
@@ -180,7 +180,7 @@ def drink_elixir(character):
         print("You don't have any elixir...")
 
 
-def engage_combat(character, creature):
+def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
     print(f"Engaging in combat with {creature['name']}...")
 
     while creature['health'] > 0:
@@ -204,18 +204,18 @@ def engage_combat(character, creature):
             break
 
 
-def is_alive(character):
+def is_alive(character: dict[str, str | int | bool | dict[str, int]]) -> bool:
     return False if character["hp"] <= 0 else True
 
 
-def tree_branches(character, creature):
+def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
     if creature["name"] == "Stump" and character["david_quest"]:
         character["tree branches"] += creature["tree branches"]
         print(f"You got {creature['tree branches']} tree branches.")
         print(f"Now you have {character['tree branches']} branches")
 
 
-def handle_encounter(character, board):
+def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], board: dict[tuple[int, int], str]):
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
     current_location_type = board[(x, y)]
 
@@ -229,7 +229,7 @@ def handle_encounter(character, board):
             print("It's quiet... too quiet.")
 
 
-def main_combat(creature, character):
+def main_combat(creature: dict[str, int | str], character: dict[str, str | int | bool | dict[str, int]]):
     # Offer choice to engage in combat or try to run
     action = input("Do you wish to fight (f) or try to run (r)? ")
 
