@@ -146,7 +146,7 @@ def move_character(character, direction: str, game_board: dict[tuple[int, int], 
     # Allow movement if it's within the same region, through a door, or from home
     if new_area in valid_move:
         if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
-            print(f"Now you are in the {new_area}. Be careful {new_area} is dangerous")
+            print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
         print(f"Moving to {new_area}...")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
     elif new_area in ["horizontal_wall", "vertical_wall"]:
