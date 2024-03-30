@@ -4,18 +4,18 @@ import character_functions
 
 def jinkx(character):
     say_hi = input("You met Jinkx. Do you want to talk to her? (Y/N)")
-    while upper.say_hi not in ["Y", "N"]:
+    while say_hi.upper not in ["Y", "N"]:
         print("Invalid input. Please enter Y or N")
-    if upper.say_hi == "Y":
+    if say_hi.upper == "Y":
         user_action = input("Jinkx: Hi there little fella! My name is Jinkx, the wise wizard!\nI can teach you some magic spells. Would you like to learn some? (Y/N)")
-        while upper.user_action not in ["Y", "N"]:
+        while user_action.upper not in ["Y", "N"]:
             print("Invalid input. Please enter Y or N")
-        if upper.user_action == "Y":
+        if user_action.upper == "Y":
             responses = {
             "Y": "Jinkx: Wonderful! Let's start right away. Abracadabra!",
             "N": "Jinkx: Fine. You don't look like a wizard material anyways."
             }
-            if upper.user_action == "Y":
+            if user_action.upper == "Y":
                 character['class'] = 'Magician' #set class to Magician
                 lines = [
                     responses["Y"],
