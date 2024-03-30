@@ -1,6 +1,7 @@
 import character_functions
 import board
 import combat
+import npc
 
 
 def game_loop():
@@ -16,11 +17,8 @@ def game_loop():
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
-        print(f"Your stats: {character['stats']}, You have {character['money']} golds"
-              f" and {character['elixir']} elixirs")
-        print(f"Your stats: str: {character['stats'][0]}, dex: {character['stats'][1]}, int: {character['stats'][2]}"
-              f" You have {character['money']} golds"
-              f" and {character['potion']} potions")
+        print(f"You have {character['money']} golds and {character['elixir']} elixirs")
+        print(f"Your stats: str: {character['stats'][0]}, dex: {character['stats'][1]}, int: {character['stats'][2]}")
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
@@ -29,7 +27,7 @@ def game_loop():
         if direction == 'elixir':
             combat.drink_elixir(character)
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
-        heca_found(character, game_board)
+        npc.heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
 
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
