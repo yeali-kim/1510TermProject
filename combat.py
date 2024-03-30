@@ -55,6 +55,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
 def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creature: dict) -> int:
     skill_damage_formulas = {
         'Tackle': character['stats'][0] * 0.5 + character['stats'][1] * 0.5 + character['stats'][2] * 0.5,
+        "Knife of Justice": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
 
         'Shield Attack': character['stats'][0] * 1.5 + character['stats'][1] * 2,
         "Fire Sword": character["stats"][0] * 2,
@@ -67,6 +68,9 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
         'Ice Age': character['stats'][2] * 3,
         "Inferno Sphere": character["stats"][2] * 3,
         "Poison Nova": character["stats"][2] * 3,
+
+        "Hell Fire": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
+        "Abracadabra": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
     }
     types = {
         ('grass', 'normal'): 1,

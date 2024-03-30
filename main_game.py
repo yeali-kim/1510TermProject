@@ -34,6 +34,7 @@ def game_loop():
         board.print_board(game_board, character)  # Display the game board
 
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
+    print(f"{character['name']} is {character['class']}, has {character['skills']} skills")
 
 
 def main():

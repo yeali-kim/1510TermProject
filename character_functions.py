@@ -44,7 +44,8 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
 def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
     skills = {
         "Citizen": {
-            "Tackle": "normal"
+            "Tackle": "normal",
+            "Knife of Justice": "normal"
         },
         "Knight": {
             "Shield Attack": "normal",
@@ -60,6 +61,10 @@ def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
             "Ice Age": "water",
             "Inferno Sphere": "fire",
             "Poison Nova": "grass",
+        },
+        "Devil": {
+            "Hell Fire": "fire",
+            "Abracadabra": "normal",
         }
     }
     character["skills"] = skills[character["class"]]
