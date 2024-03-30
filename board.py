@@ -27,7 +27,7 @@ def create_board():
 
 def set_npc_location(board, character):
     set_locations = {
-        (0, 0): "jinkx",
+        (6, 1): "jinkx",
         (0, 3): "chrissipus",
         (2, 2): "hypatia",
         (4, 1): "shawn",
@@ -67,9 +67,9 @@ def print_board(board, character):
                 print('\033[91m' + " P " + '\033[0m', end="")
             elif (col, row) in [(3, 3), (7, 1), (4, 5)]:
                 print("   ", end="")
-            elif cell_value == "Forest":
+            elif cell_value == "Forest" or cell_value == "heca":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
-            elif cell_value == "Desert" or cell_value == "heca":
+            elif cell_value == "Desert":
                 print('\033[93m' + " ~ " + '\033[0m', end="")
             elif cell_value == "Castle":
                 print('\033[90m' + " # " + '\033[0m', end="")
