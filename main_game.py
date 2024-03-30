@@ -13,8 +13,8 @@ def game_loop():
     :precondition: all necessary modules (`board`, `character_functions`, `combat`, `npc`) are correctly implemented
     and available for creating the game board, character, handling movement, combat, and NPC interactions.
     :precondition: the game's environment and initial settings are predefined.
-    :postcondition: updates the game board and character's state based on player actions and interactions.
-    :postcondition: prints messages to guide the player through the game, including narrative introductions,
+    :postcondition: update the game board and character's state based on player actions and interactions.
+    :postcondition: print messages to guide the player through the game, including narrative introductions,
     status updates, and results of actions.
     :postcondition: the function ends when the player's character meets the game-ending conditions such as death or
     completing the main objective.
