@@ -94,59 +94,28 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
         "Inferno Sphere": character["stats"][2] * 3,
         "Poison Nova": character["stats"][2] * 3,
     }
+    types = {
+        ('grass', 'normal'): 1,
+        ('grass', 'grass'): 0.5,
+        ('grass', 'water'): -0.5,
+        ('grass', 'fire'): 2,
+        ('normal', 'normal'): 1,
+        ('normal', 'grass'): 1,
+        ('normal', 'water'): 1,
+        ('normal', 'fire'): 1,
+        ('water', 'normal'): 1,
+        ('water', 'grass'): 2,
+        ('water', 'water'): 0.5,
+        ('water', 'fire'): -0.5,
+        ('fire', 'normal'): 1,
+        ('fire', 'grass'): -0.5,
+        ('fire', 'water'): 2,
+        ('fire', 'other'): 0.5,
+    }
     if skill in skill_damage_formulas:
-        if creature['type'] == 'grass':
-            if chosen_type == 'normal':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            elif chosen_type == 'grass':
-                damage = skill_damage_formulas[skill] * 0.5
-                return damage
-            elif chosen_type == 'water':
-                damage = skill_damage_formulas[skill] * -0.5
-                return damage
-            else:
-                damage = skill_damage_formulas[skill] * 2
-                return damage
-        elif creature['type'] == 'normal':
-            if chosen_type == 'normal':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            elif chosen_type == 'grass':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            elif chosen_type == 'water':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            else:
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-        elif creature['type'] == 'water':
-            if chosen_type == 'normal':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            elif chosen_type == 'grass':
-                damage = skill_damage_formulas[skill] * 2
-                return damage
-            elif chosen_type == 'water':
-                damage = skill_damage_formulas[skill] * 0.5
-                return damage
-            else:
-                damage = skill_damage_formulas[skill] * -0.5
-                return damage
-        else:
-            if chosen_type == 'normal':
-                damage = skill_damage_formulas[skill] * 1
-                return damage
-            elif chosen_type == 'grass':
-                damage = skill_damage_formulas[skill] * -0.5
-                return damage
-            elif chosen_type == 'water':
-                damage = skill_damage_formulas[skill] * 2
-                return damage
-            else:
-                damage = skill_damage_formulas[skill] * 0.5
-                return damage
+        multiplier = types[(creature["type"], chosen_type)]
+        damage = skill_damage_formulas[skill] * multiplier
+        return damage
     else:
         print("Unknown skill")
         return 0
