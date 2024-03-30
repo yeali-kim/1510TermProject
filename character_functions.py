@@ -125,39 +125,35 @@ def get_user_choice() -> str:
 
 def move_character(character, direction: str, game_board: dict[tuple[int, int], str]):
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
+    movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
     # Current location
     x, y = character["location"]["x-coordinate"], character["location"]["y-coordinate"]
     # Calculate new location based on the direction
-    new_x, new_y = x, y
-
-    if direction == "up":
-        new_y -= 1
-    elif direction == "down":
-        new_y += 1
-    elif direction == "left":
-        new_x -= 1
-    elif direction == "right":
-        new_x += 1
+    value_of_coordinates = movement.get(direction, (0, 0))
+    new_x, new_y = x + value_of_coordinates[0], y + value_of_coordinates[1]
 
     # Check for out-of-bounds
     if (new_x, new_y) not in game_board:
         print("Invalid move. Out of bounds.")
         return
-
+    new_area = game_board[(new_x, new_y)]
+    current_area = game_board[(x, y)]
     # Allow movement if it's within the same region, through a door, or from home
-    if game_board[(new_x, new_y)] in valid_move:
-        print(f"Moving to {game_board[(new_x, new_y)]}...")
+    if new_area in valid_move:
+        if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
+            print(f"Now you are in the {new_area}. Be careful {new_area} is dangerous")
+        print(f"Moving to {new_area}...")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif game_board[(new_x, new_y)] == "horizontal_wall" or game_board[(new_x, new_y)] == "vertical_wall":
+    elif new_area in ["horizontal_wall", "vertical_wall"]:
         print("Invalid move. You've hit a wall.")
-    elif game_board[(new_x, new_y)] == "Door to School":
-        if game_board[(x, y)] == "Town":
+    elif new_area == "Door to School":
+        if current_area == "Town":
             print("You are moving through the door to School.")
         else:
             print("You are moving through the door to Town.")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif game_board[(new_x, new_y)] == "Door to Forest":
-        if game_board[(x, y)] == "Town":
+    elif new_area == "Door to Forest":
+        if current_area == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
@@ -171,24 +167,22 @@ def move_character(character, direction: str, game_board: dict[tuple[int, int], 
         else:
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
             print("You are moving through the door to Town.")
-    elif game_board[(new_x, new_y)] == "Door to Desert":
-        if game_board[(x, y)] == "Town":
+    elif new_area == "Door to Desert":
+        if current_area == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
-                user_input = input("Are you sure to enter the Desert? Y/N ")
+                user_input = input("Are you sure to enter the Desert? Recommended lever: 10 Y/N ")
                 user_input = user_input.lower()
             if user_input == "y":
                 character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
                 print("Be careful... Desert is dangerous....")
             else:
                 print("Come back when you are ready...")
-        else:
-            character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-            print("You are moving through the door to Town.")
-    elif game_board[(new_x, new_y)] == "home":
+    elif new_area == "home":
         character["hp"] = character["max_hp"]
         print("Your hp is full now.")
     else:
-        func_name = getattr(npc, game_board[(new_x, new_y)])  # Call the function based on the NPC name
+        func_name = getattr(npc, new_area)  # Call the function based on the NPC name
         call(func_name, character)
+
