@@ -63,7 +63,7 @@ def game_loop():
     time.sleep(2)
     while not name:
         name = input("Elder: I apologize, but I must ask again. What is your name?")
-        character["name"] = name
+    character["name"] = name
     print(f"Elder: {character['name']} please save us from Chris! But... do tread carefully. Not all is as it seems.")
     time.sleep(2)
     print(f"{character['name']}: Fear not, I shall bring peace back to Dragon Coast.")
