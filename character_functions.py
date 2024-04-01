@@ -1,11 +1,9 @@
 import random
 from operator import call
 import npc
-import combat
-import board
 
 
-def create_character():
+def create_character() -> dict[str, str | int | bool | dict[str, int]]:
     character_class = "Citizen"
 
     citizen_skill = {
@@ -22,7 +20,7 @@ def create_character():
     # Initialize the character with class-specific stats, location, level, Exp, and skills
     user_character = {
         "class": character_class,
-        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int'],],
+        "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int']],
         "location": {"x-coordinate": 6, "y-coordinate": 2},  # Default location at home
         "level": 1,  # Starting level
         "exp": 0,  # Starting experience points
@@ -32,17 +30,20 @@ def create_character():
         "elixir": 1,  # Starting elixir
         "money": 0,  # Starting money
         "shawn_quest": None,
-        "david_quest": None,
-        "heca_found": False
+        "david_quest": False,
+        "heca_found": False,
+        "tree branches": 0,
+        "chris": False
     }
 
     return user_character
 
 
-def update_skills(character):
+def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
     skills = {
         "Citizen": {
-            "Tackle": "normal"
+            "Tackle": "normal",
+            "Guardian of Justice": "normal"
         },
         "Knight": {
             "Shield Attack": "normal",
@@ -58,26 +59,23 @@ def update_skills(character):
             "Ice Age": "water",
             "Inferno Sphere": "fire",
             "Poison Nova": "grass",
+        },
+        "Devil": {
+            "Hell Fire": "fire",
+            "Abracadabra": "normal",
         }
     }
     character["skills"] = skills[character["class"]]
 
 
-def update_level(character):
+def update_level(character: dict[str, str | int | bool | dict[str, int]]):
     # Base experience required for the first level up
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
-    exp_growth_rate = 1.05  # 5% more Exp required for each level
-    # base hp to calculate total hp when character leveled up
-    base_hp = {
-        "Citizen": 100,
-        "Knight": 150,
-        "Archer": 100,
-        "Magician": 80,
-    }
+    exp_growth_rate = 1.01  # 1% more Exp required for each level
 
     # Calculate the current required Exp for the next level
-    exp_for_next_level = base_exp_per_level * (exp_growth_rate ** (character["level"] - 1))
+    exp_for_next_level = round(base_exp_per_level * (exp_growth_rate ** (character["level"] - 1)))
 
     # Check if the character has enough Exp to level up
     if character["exp"] >= exp_for_next_level:
@@ -89,34 +87,29 @@ def update_level(character):
 
         # Stat increases depend on character class
         if character["class"] == "Citizen":
-            character["stats"]["str"] += 1
-            character["stats"]["dex"] += 1
-            character["stats"]["int"] += 1
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 1  # str stat
+            character["stats"][1] += 1  # dex stat
+            character["stats"][2] += 1  # int stat
+            character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
         elif character["class"] == "Knight":
-            character["stats"]["str"] += 2
-            character["stats"]["dex"] += 1
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 10  # str stat
+            character["stats"][1] += 5  # dex stat
+            character["max_hp"] += character["level"] * 15
             character["hp"] = character["max_hp"]
         elif character["class"] == "Archer":
-            character["stats"]["str"] += 1
-            character["stats"]["dex"] += 4
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][0] += 10  # str stat
+            character["stats"][1] += 15  # dex stat
+            character["max_hp"] += character["level"] * 12
             character["hp"] = character["max_hp"]
         elif character["class"] == "Magician":
-            character["stats"]["dex"] += 2
-            character["stats"]["int"] += 3
-            # 10% increase hp
-            character["max_hp"] = round(base_hp[character["class"]] * (1 + ((character["level"] - 1) / 10)), 0)
+            character["stats"][2] += 20  # int stat
+            character["max_hp"] += character["level"] * 10
             character["hp"] = character["max_hp"]
 
         print("Your stats have increased:")
-        print(f"Strength: {character["stats"]["str"]}, Dexterity: {character["stats"]["dex"]}, \
-        Intelligence: {character["stats"]["int"]}, HP: {character["hp"]}")
+        print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},"
+              f" Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
 
         # Check for another level up in case of remaining Exp
         update_level(character)
@@ -124,49 +117,46 @@ def update_level(character):
         print(f"You need {exp_for_next_level - character["exp"]} more Exp to reach level {character["level"] + 1}.")
 
 
-def get_user_choice():
+def get_user_choice() -> str:
     user_input = ""
     while user_input not in ["up", "down", "left", "right", "quit", "elixir"]:
-        user_input = input("Enter movement direction (up, down, left, right) or 'elixir' to drink elixir or 'quit' to exit: ")
+        user_input = input("Enter movement direction (up, down, left, right) or 'elixir'"
+                           " to drink elixir or 'quit' to exit: ")
         user_input = user_input.lower()
     return user_input
 
 
-def move_character(character, direction, board):
+def move_character(character, direction: str, game_board: dict[tuple[int, int], str]):
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
+    movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
     # Current location
     x, y = character["location"]["x-coordinate"], character["location"]["y-coordinate"]
     # Calculate new location based on the direction
-    new_x, new_y = x, y
-
-    if direction == "up":
-        new_y -= 1
-    elif direction == "down":
-        new_y += 1
-    elif direction == "left":
-        new_x -= 1
-    elif direction == "right":
-        new_x += 1
+    value_of_coordinates = movement.get(direction, (0, 0))
+    new_x, new_y = x + value_of_coordinates[0], y + value_of_coordinates[1]
 
     # Check for out-of-bounds
-    if (new_x, new_y) not in board:
+    if (new_x, new_y) not in game_board:
         print("Invalid move. Out of bounds.")
         return
-
-    # Allow movement if it"s within the same region, through a door, or from home
-    if board[(new_x, new_y)] in valid_move:
-        print(f"Moving to {board[(new_x, new_y)]}...")
+    new_area = game_board[(new_x, new_y)]
+    current_area = game_board[(x, y)]
+    # Allow movement if it's within the same region, through a door, or from home
+    if new_area in valid_move:
+        if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
+            print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
+        print(f"Moving to {new_area}...")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif board[(new_x, new_y)] == "horizontal_wall" or board[(new_x, new_y)] == "vertical_wall":
+    elif new_area in ["horizontal_wall", "vertical_wall"]:
         print("Invalid move. You've hit a wall.")
-    elif board[(new_x, new_y)] == "Door to School":
-        if board[(x, y)] == "Town":
+    elif new_area == "Door to School":
+        if current_area == "Town":
             print("You are moving through the door to School.")
         else:
             print("You are moving through the door to Town.")
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-    elif board[(new_x, new_y)] == "Door to Forest":
-        if board[(x, y)] == "Town":
+    elif new_area == "Door to Forest":
+        if current_area == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
@@ -180,24 +170,21 @@ def move_character(character, direction, board):
         else:
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
             print("You are moving through the door to Town.")
-    elif board[(new_x, new_y)] == "Door to Desert":
-        if board[(x, y)] == "Town":
+    elif new_area == "Door to Desert":
+        if current_area == "Town":
             user_input = ""
             valid_input = ["y", "n"]
             while user_input not in valid_input:
-                user_input = input("Are you sure to enter the Desert? Y/N ")
+                user_input = input("Are you sure to enter the Desert? Recommended lever: 10 Y/N ")
                 user_input = user_input.lower()
             if user_input == "y":
                 character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
                 print("Be careful... Desert is dangerous....")
             else:
                 print("Come back when you are ready...")
-        else:
-            character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-            print("You are moving through the door to Town.")
-    elif board[(new_x, new_y)] == "home":
+    elif new_area == "home":
         character["hp"] = character["max_hp"]
         print("Your hp is full now.")
     else:
-        func_name = getattr(npc, board[(new_x, new_y)]) # Call the function based on the NPC name
+        func_name = getattr(npc, new_area)  # Call the function based on the NPC name
         call(func_name, character)
