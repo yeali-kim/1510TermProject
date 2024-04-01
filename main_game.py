@@ -2,6 +2,7 @@ import character_functions
 import board
 import combat
 import npc
+import time
 
 
 def game_loop():
@@ -22,12 +23,51 @@ def game_loop():
     game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
     game_board = board.set_npc_location(game_board, character)  # Set the locations of NPCs on the board
-    print("In a realm where legends breathe, the land of Dragon Coast calls for a hero to rise. You, the chosen one,\n"
-          "embark on a quest to save the world from the Dragon Chris, a beast said to darken the skies and threaten "
-          "all life.")
-    character["name"] = input("Elder: Oh brave one, please tell me your name. ")
+    greet_texts = [
+        "In a realm where legends breathe, the land of Dragon Coast calls for a hero to rise.",
+        "You, the chosen one, embark on a quest to save the world from the Dragon Chris,",
+        "a beast said to darken the skies and threaten all life."]
+    chris_face = """⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠖⠉⠁⠀⠀⡜⠀⠀⠀⠀⣠⠔⠋⠉⠀⠀⠀⠀⠀⠀⠀⡠⠊
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠞⠉⠀⠀⠀⠀⢀⡜⠁⠀⣠⠔⠋⠀⠀⠀⠀⠀⠀⠀⠀⣠⠔⠋⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠛⣆⠀⠀⠀⠀⠀⣠⠾⢒⡶⠊⠁⠀⠀⠀⠀⠀⠀⠀⢀⡴⠚⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣞⣁⡀⠈⠉⠁⠒⢒⣾⡽⡖⠉⠀⠀⠀⢠⠂⠀⠀⠀⣠⠞⠧⣄⡀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⠚⠉⢉⣀⠀⠀⠀⣠⠞⠉⠀⠀⠘⢄⠀⠀⠀⡈⠀⠀⣠⠞⠁⠀⠀⠀⠉⠳⢤⡀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⣏⡤⠊⠁⠀⡠⠚⡿⠁⠀⣀⡾⣥⠄⠀⠀⠀⠀⠀⠉⠢⣞⣁⣀⣴⡃⠀⠀⠀⠀⠀⠀⣀⡠⠽⠒⠊
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠎⠀⠋⠀⠀⢠⠞⠀⠀⠓⠒⠉⢀⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣸⣁⣀⠤⠴⠒⠚⠉⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡎⡀⠀⠀⡠⠚⠁⠀⠀⠀⠀⠀⠀⡘⠁⠀⠀⠀⢠⠇⠀⢀⠀⢀⡠⠔⠋⠀⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠋⠀⢠⠎⠀⠀⠀⠀⠀⠀⣀⡤⠚⠀⠀⠀⠀⠀⣿⠒⠀⠀⠳⣄⠀⠀⠀⢰⡁⠀⠀⠀⠀⠀⠀⠀⠀⢀⠴⠊
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⡎⠀⠀⠀⣠⣶⣾⡿⣿⢠⠃⠀⠀⠀⠀⠀⠸⡄⠀⠀⠀⠘⡆⠀⠀⠈⢇⠀⠀⠀⠀⢀⡠⠔⠊⠁⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢀⡴⠃⠀⠀⠇⠀⠀⣰⣿⣇⣳⣧⠟⠃⠀⠀⠀⠀⠀⢀⡴⠃⠀⠀⠀⢰⠇⠀⠀⠀⠘⢄⡠⠔⠪⡁⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣀⠀⢰⠋⠀⠀⠀⠀⠀⠀⠐⠉⠉⢩⠟⠁⠀⠀⢠⠶⠒⡖⢲⠏⠀⠀⠀⠀⠀⢸⠤⠔⢆⠀⠀⢨⠇⠀⠀⠙⢄⠀⠀⠀⠀⠀
+⠀⠀⠀⡼⢹⣔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⢠⣟⢢⠀⢸⠎⠀⠀⠀⠀⠀⠀⡎⠀⣀⡬⠗⠶⣋⠀⠀⠀⠀⠈⢣⡀⠀⠀⠀
+⠀⣠⠚⡇⣀⡼⠁⠀⠀⠀⠀⠀⣠⠤⠀⠀⠘⠀⠀⠀⣠⠏⠀⡄⢳⡞⠀⠀⠀⠀⠀⠀⢰⡇⡘⠁⠀⠀⠀⠈⠣⡀⠀⠀⠀⠀⠱⡄⠀⠀
+⢠⠇⠀⠈⠀⠀⣠⠆⠀⠀⢀⠞⢁⣤⣤⣤⠤⠤⠖⠚⠻⢶⣄⠰⣰⠃⠀⠀⠀⠀⠀⠀⢸⠁⠇⠀⠀⠀⠀⠀⠀⠙⣄⠀⠀⠀⠀⠘⡄⠀
+⠸⡄⠀⠀⠀⠐⠁⠀⠀⠀⣠⣶⢿⣍⡿⣏⣀⡤⠤⠒⠒⠒⠈⠹⣿⠀⠀⠀⠀⠀⠀⠀⢘⣿⠤⠤⠔⠒⠒⠒⠒⠤⢼⠄⠀⠀⠀⠀⠸⡀
+⠀⠙⢦⣄⣀⣀⣀⣀⣤⣾⠛⢟⠺⠆⣰⠞⠁⠀⠀⠀⠀⣀⣀⣀⡿⠀⠀⠀⠀⠀⠀⣠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱
+⠀⠀⠀⠘⣿⣿⣿⣽⣧⣿⠢⡘⡄⢰⠃⠀⠀⠀⢀⡤⠤⠤⠄⢼⣇⠀⠀⠀⠀⢀⠞⠁⠉⠢⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠉⠈⡇⠀⠀⠀⡿⡅⠀⠀⢀⣸⣿⠀⠀⠀⡴⠋⠀⠀⠀⠀⠈⠳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠀⢀⣴⣷⣷⠀⠀⣸⣍⡏⠀⠀⡼⠁⠀⠀⠀⠀⠀⠀⠀⠘⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⠤⠖⠚⣋⡡⠔⠋⠀⢈⣿⠀⢀⣛⣼⡇⠀⢸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠱⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⢀⡴⣺⠭⠔⠒⠊⣉⡇⠀⠀⣄⣠⣾⣿⠄⣀⢫⡽⠀⢀⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠱⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⣏⠻⣀⣀⣀⣤⡾⠋⡀⠀⠀⠙⣏⡿⣬⣦⣀⡽⠁⠀⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⠀⢱⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠙⠦⠤⠤⠭⠽⠟⠋⠁⠀⠀⠀⠹⢍⡉⠉⠁⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠋⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀"""
+    for text in greet_texts:
+        print(text)
+        time.sleep(2)
+    lines = chris_face.split("\n")
+    for line in lines:
+        print("\033[0;31m" + line + "\033[0m")  # Print the face of the dragon Chris in red
+        time.sleep(0.1)
+    name = input("Elder: Oh brave one, please tell me your name.")
+    time.sleep(2)
+    while not name:
+        name = input("Elder: I apologize, but I must ask again. What is your name?")
+        character["name"] = name
     print(f"Elder: {character['name']} please save us from Chris! But... do tread carefully. Not all is as it seems.")
+    time.sleep(2)
     print(f"{character['name']}: Fear not, I shall bring peace back to Dragon Coast.")
+    time.sleep(2)
     board.print_board(game_board, character)  # Display the game board
     
     while combat.is_alive(character) and npc.game_clear(character):
@@ -39,7 +79,7 @@ def game_loop():
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
-            print("Thank you for playing! Goodbye.")
+            print("Thank you for playing, \u001b[33;1m{character['name']}\033[0m! Goodbye.")
             break
         if direction == 'elixir':
             combat.drink_elixir(character)
