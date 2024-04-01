@@ -83,7 +83,7 @@ def game_loop():
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
-        print(f"You have {character['money']} golds and {character['elixir']} elixirs")
+        print(f"You have {character['gold']} gold and {character['elixir']} elixir(s)")
         print(f"Your stats: str: {character['stats'][0]}, dex: {character['stats'][1]}, int: {character['stats'][2]}")
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
