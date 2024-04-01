@@ -25,8 +25,9 @@ def game_loop():
     game_board = board.set_npc_location(game_board, character)  # Set the locations of NPCs on the board
     greet_texts = [
         "In a realm where legends breathe, the land of Dragon Coast calls for a hero to rise.",
-        "You, the chosen one, embark on a quest to save the world from the Dragon Chris,",
-        "a beast said to darken the skies and threaten all life."]
+        "You, the chosen one, embark on a quest to save the world from the Dragon \033[0;31mChris\033[0m,",
+        "a beast said to darken the skies and threaten all life."
+        ]
     chris_face = """⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠖⠉⠁⠀⠀⡜⠀⠀⠀⠀⣠⠔⠋⠉⠀⠀⠀⠀⠀⠀⠀⡠⠊
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠞⠉⠀⠀⠀⠀⢀⡜⠁⠀⣠⠔⠋⠀⠀⠀⠀⠀⠀⠀⠀⣠⠔⠋⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠛⣆⠀⠀⠀⠀⠀⣠⠾⢒⡶⠊⠁⠀⠀⠀⠀⠀⠀⠀⢀⡴⠚⠁⠀⠀⠀⠀
@@ -59,17 +60,25 @@ def game_loop():
     for line in lines:
         print("\033[0;31m" + line + "\033[0m")  # Print the face of the dragon Chris in red
         time.sleep(0.1)
-    name = input("Elder: Oh brave one, please tell me your name.")
-    time.sleep(2)
+    name = input("\033[0;34mElder\033[0m: Oh brave one, please tell me your name.") # Get the player's name
+    time.sleep(1)
     while not name:
-        name = input("Elder: I apologize, but I must ask again. What is your name?")
+        name = input("\033[0;34mElder\033[0m: I apologize, but I must ask again. What is your name?")
         character["name"] = name
-    print(f"Elder: {character['name']} please save us from Chris! But... do tread carefully. Not all is as it seems.")
-    time.sleep(2)
-    print(f"{character['name']}: Fear not, I shall bring peace back to Dragon Coast.")
-    time.sleep(2)
+    start_texts = [
+        f"\033[0;34mElder\033[0m: \033[1;33m{character['name']}\033[0m, please save us from \033[0;31mChris\033[0m!",
+        "But... do tread carefully. Not all is as it seems.",
+        f"\033[1;33m{character['name']}\033[0m: Fear not, I shall bring peace back to Dragon Coast.",
+        ".",
+        ".",
+        ".",
+        "And so, the journey begins..."
+        ]
+    for text in start_texts:
+        print(text)
+        time.sleep(1)
+
     board.print_board(game_board, character)  # Display the game board
-    
     while combat.is_alive(character) and npc.game_clear(character):
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
@@ -79,14 +88,13 @@ def game_loop():
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
-            print("Thank you for playing, \u001b[33;1m{character['name']}\033[0m! Goodbye.")
+            print("Thank you for playing, \033[1;33m{character['name']}\033[0m! Goodbye.")
             break
         if direction == 'elixir':
             combat.drink_elixir(character)
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
         npc.heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
-
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
     print(f"{character['name']} is {character['class']}, has {character['skills']} skills")
 
