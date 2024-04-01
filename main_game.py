@@ -64,7 +64,7 @@ def game_loop():
     time.sleep(1)
     while not name:
         name = input("\033[0;34mElder\033[0m: I apologize, but I must ask again. What is your name?")
-        character["name"] = name
+    character["name"] = name
     start_texts = [
         f"\033[0;34mElder\033[0m: \033[1;33m{character['name']}\033[0m, please save us from \033[0;31mChris\033[0m!",
         "But... do tread carefully. Not all is as it seems.",
