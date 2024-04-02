@@ -372,7 +372,7 @@ def chris(character):
     for line in scripts:
         print(line)
         time.sleep(3)
-    print(f"Heca: Please...{character['name']} stop to kill innocents")
+    print(f"Heca: Please...{character['name']} stop killing innocents")
     user_input = input("You can accept or deny her final request accept/deny? ")
     user_input = user_input.lower()
     if user_input == "accept":
