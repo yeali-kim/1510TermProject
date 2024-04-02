@@ -30,7 +30,7 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
         "elixir": 1,  # Starting elixir
         "gold": 0,  # Starting money
         "shawn_quest": None,
-        "david_quest": False,
+        "david_quest": None,
         "heca_found": False,
         "tree_branches": 0,
         "chris": False
