@@ -5,7 +5,7 @@ import random
 import combat
 
 
-def jinkx(character):
+def jinkx(character:dict[str, str | int | bool | dict[str, int]]) -> dict[str, str | int | bool | dict[str, int]]:
     if character['class'] == 'Citizen':  # check if class is Citizen
         say_hi = input(
             "You met \033[1;35mJinkx\033[0m, the wise wizard. Do you want to talk to her? (Y/N)").strip().lower()  # ask user if they want to talk to Jinkx
@@ -244,6 +244,17 @@ def david(character):
         print(
             "But we're still living under the fear of \u001b[31;1mChris\033[0m the dragon. Please kill him to save the Dragon Coast.")
 
+def get_valid_elixir_quantity(prompt):
+    while True:
+        try:
+            quantity = int(input(prompt))
+            if quantity < 0:
+                print("Quantity must be an integer greater than 0.")
+            else:
+                return quantity
+        except ValueError:
+            print("You need to enter a valid integer greater than 0.")
+
 
 def daniel(character):
     say_hi = input("You met \u001b[34;1mDaniel\033[0m, the apothecary. Do you want to talk to him? (Y/N): ").strip().lower()
@@ -263,13 +274,18 @@ def daniel(character):
         if user_action == "y":
             elixir_price = 50
             maximum_purchase = character["gold"] // elixir_price
-            elixir_quantity = int(input(f"\u001b[34;1mDaniel\033[0m: How many elixirs would you like to buy? They are {elixir_price} gold each): "))
-            while elixir_quantity < 0:
-                elixir_quantity = int(input("Please enter a valid quantity of 0 or higher: "))
-            if elixir_quantity == 0 or elixir_quantity ==None:
-                print("\u001b[34;1mDaniel\033[0m: So you don't want to buy any elixirs at this time, eh? Sure. Come back if you change your mind.")
-            while elixir_quantity * elixir_price > character["gold"]:
-                elixir_quantity = int(input(f"\u001b[34;1mDaniel\033[0m: You don't have enough gold. You can buy up to {maximum_purchase} elixirs. How many would you like to buy?: "))
+            elixir_quantity = get_valid_elixir_quantity(    #Call valid_elixir_quantity function
+                f"\u001b[34;1mDaniel\033[0m: How many elixirs would you like to buy?"
+                f"They are {elixir_price} gold each: ")
+            if elixir_quantity == 0:    #Player buys 0
+                print("\u001b[34;1mDaniel\033[0m: So you don't want to buy any elixirs at this time, eh?"
+                      "Sure. Come back if you change your mind.")
+
+            while elixir_quantity * elixir_price > character["gold"]:   #See if player has enough gold
+                print(f"\u001b[34;1mDaniel\033[0m: You don't have enough gold. "
+                      f"You can buy up to {maximum_purchase} elixirs. ")
+                elixir_quantity = get_valid_elixir_quantity(f"How many would you like to buy?: ")
+
             character["gold"] -= elixir_quantity * elixir_price
             character["elixir"] += elixir_quantity
             print(f"You bought {elixir_quantity} elixirs.")
