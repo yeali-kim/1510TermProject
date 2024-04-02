@@ -152,7 +152,7 @@ def shawn(character):
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
             responses = {
-                "y": "\u001b[34;1mShawn\033[0m: Thank you so much! Please find my daughter. She was last seen in the forest.",
+                "y": "\u001b[34;1mShawn\033[0m: Thank you so much! Please find my daughter. She was last seen in the Desert.",
                 "n": "\u001b[34;1mShawn\033[0m: I understand. It's a difficult task. I'll just keep waiting."
             }
             if user_action == "y":
@@ -201,7 +201,7 @@ def heca(character):
 def heca_found(character, board):
     if character["shawn_quest"] == False and character["heca_found"] == True:
         heca_coord = (key for key, val in board.items() if val == "heca")
-        board[heca_coord] = "Forest"
+        board[heca_coord] = "Desert"
         return board
 
 

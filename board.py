@@ -25,7 +25,7 @@ def create_board():
     return board
 
 
-def set_npc_location(board, character):
+def set_npc_location(board):
     set_locations = {
         (0, 0): "jinkx",
         (0, 3): "chrissipus",
@@ -35,7 +35,7 @@ def set_npc_location(board, character):
         (5, 4): "daniel",
         (6, 2): "home",
         (10, 10): "chris",
-        (random.randint(8, 11), random.randint(0, 8)): "heca"
+        (random.randint(0, 5), random.randint(7, 10)): "heca"
     }
     for location, value in set_locations.items():
         board[location] = value

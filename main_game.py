@@ -22,7 +22,7 @@ def game_loop():
     """
     game_board = board.create_board()  # Create the game board
     character = character_functions.create_character()  # Create the character based on user input
-    game_board = board.set_npc_location(game_board, character)  # Set the locations of NPCs on the board
+    game_board = board.set_npc_location(game_board)  # Set the locations of NPCs on the board
     greet_texts = [
         "In a realm where legends breathe, the land of Dragon Coast calls for a hero to rise.",
         "You, the chosen one, embark on a quest to save the world from the Dragon \033[0;31mChris\033[0m,",
