@@ -28,11 +28,11 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
         "hp": classes[character_class]["hp"],
         "max_hp": classes[character_class]["max_hp"],
         "elixir": 1,  # Starting elixir
-        "money": 0,  # Starting money
+        "gold": 0,  # Starting money
         "shawn_quest": None,
-        "david_quest": False,
+        "david_quest": None,
         "heca_found": False,
-        "tree branches": 0,
+        "tree_branches": 0,
         "chris": False
     }
 

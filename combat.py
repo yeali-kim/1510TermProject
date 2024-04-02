@@ -157,9 +157,9 @@ def is_alive(character: dict[str, str | int | bool | dict[str, int]]) -> bool:
 
 def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
     if creature["name"] == "Stump" and character["david_quest"]:
-        character["tree branches"] += creature["tree branches"]
-        print(f"You got {creature['tree branches']} tree branches.")
-        print(f"Now you have {character['tree branches']} branches")
+        character["tree_branches"] += creature["tree_branches"]
+        print(f"You got {creature['tree_branches']} tree branches.")
+        print(f"Now you have {character['tree_branches']} branches")
 
 
 def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], board: dict[tuple[int, int], str]):
@@ -192,7 +192,7 @@ def main_combat(creature: dict[str, int | str], character: dict[str, str | int |
             gained_exp = creature['exp']  # Use the creature's exp value
             character['exp'] += gained_exp
             print(f"You gained {gained_exp} Exp!")
-            character["money"] += creature["golds"]  # Add creature's gold
+            character["gold"] += creature["golds"]  # Add creature's gold
             print(f"You got {creature['golds']} golds")
             tree_branches(character, creature)
             character_functions.update_level(character)  # Check and handle level up

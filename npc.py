@@ -5,10 +5,10 @@ import random
 import combat
 
 
-def jinkx(character):
+def jinkx(character:dict[str, str | int | bool | dict[str, int]]) -> dict[str, str | int | bool | dict[str, int]]:
     if character['class'] == 'Citizen':  # check if class is Citizen
         say_hi = input(
-            "You met \033[1;35mJinkx\033[0m. Do you want to talk to her? (Y/N)").strip().lower()  # ask user if they want to talk to Jinkx
+            "You met \033[1;35mJinkx\033[0m, the wise wizard. Do you want to talk to her? (Y/N)").strip().lower()  # ask user if they want to talk to Jinkx
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
@@ -32,7 +32,7 @@ def jinkx(character):
                     "...",
                     "...",
                     "Great job surviving through the training.",
-                    "You are now a \033[92mmagician\033[0m!",
+                    "You are now a \033[92mMAGICIAN\033[0m!",
                     "Use your new skills wisely.\n",
                     f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
                     f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
@@ -52,7 +52,7 @@ def jinkx(character):
 
 def chrissipus(character):
     if character['class'] == 'Citizen':  # check if class is Citizen
-        say_hi = input("You met \033[1;35mChrissipus\033[0m. Do you want to talk to him? (Y/N)").strip().lower()
+        say_hi = input("You met \033[1;35mChrissipus\033[0m, the mighty knight. Do you want to talk to him? (Y/N)").strip().lower()
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
@@ -77,7 +77,7 @@ def chrissipus(character):
                     "...",
                     "...",
                     "Great job surviving through the training.",
-                    "You are now a \033[92mknight\033[0m!",
+                    "You are now a \033[92mKNIGHT\033[0m!",
                     "Use your new skills carefully.\n",
                     f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
                     f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
@@ -97,7 +97,7 @@ def chrissipus(character):
 
 def hypatia(character):
     if character['class'] == 'Citizen':  # check if class is Citizen
-        say_hi = input("You met \033[1;35mHypatia\033[0m. Do you want to talk to her? (Y/N)").strip().lower()
+        say_hi = input("You met \033[1;35mHypatia\033[0m, the great archer. Do you want to talk to her? (Y/N)").strip().lower()
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
@@ -122,7 +122,7 @@ def hypatia(character):
                     "...",
                     "...",
                     "Great job surviving through the training.",
-                    "You are now an \033[92marcher\033[0m!",
+                    "You are now an \033[92mARCHER\033[0m!",
                     "Use your new skills thoughtfully.\n",
                     f"\u001b[34mYour class is now \033[92m{character['class']}\033[0m.",
                     f"\u001b[34mNow you can use these skills. \033[92m{character['skills']}\033[0m."
@@ -142,15 +142,15 @@ def hypatia(character):
 
 def shawn(character):
     if character["shawn_quest"] == None:
-        say_hi = input("You met \u001b[34;1mShawn\033[0m. Do you want to talk to him? (Y/N)").strip().lower()
+        say_hi = input("You met \u001b[34;1mShawn\033[0m, the mayor. Do you want to talk to him? (Y/N): ").strip().lower()
         while say_hi not in ["y", "n"]:
-            say_hi = input("Invalid input. Please enter Y or N").strip().lower()
+            say_hi = input("Invalid input. Please enter Y or N: ").strip().lower()
         if say_hi == "y":
-            print("\u001b[34;1mShawn\033[0m: Hello there! My name is \u001b[34;1mShawn\033[0m. I need your help.")
+            print("\u001b[34;1mShawn\033[0m: Hello there! My name is \u001b[34;1mShawn\033[0m. Please, I need your help..")
             time.sleep(1)
-            print("My daughter \u001b[31;1mHeca\033[0m has been missing for a month. Can you help me find her? (Y/N)")
+            user_action = input("My daughter \u001b[36mHeca\033[0m has been missing for a month. Can you help me find her? (Y/N): ").strip().lower()
             while user_action not in ["y", "n"]:
-                user_action = input("Invalid input. Please enter Y or N").strip().lower()
+                user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
             responses = {
                 "y": "\u001b[34;1mShawn\033[0m: Thank you so much! Please find my daughter. She was last seen in the forest.",
                 "n": "\u001b[34;1mShawn\033[0m: I understand. It's a difficult task. I'll just keep waiting."
@@ -162,29 +162,38 @@ def shawn(character):
                 print(responses["n"])
     elif character["shawn_quest"] == True and character["heca_found"] == False:
         print(
-            "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[31;1mHeca\033[0m. Please hurry.")
+            "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[36mHeca\033[0m. Please hurry.")
     elif character["shawn_quest"] == True and character["heca_found"] == True:
+        character["elixir"] += 3
+        character["shawn_quest"] = False
         print(
-            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[36mHeca\033[0m! I am forever grateful.")
         time.sleep(1)
-        print("\u001b[34;1mShawn\033[0m: Here is a reward for you.")
+        print("\u001b[34;1mShawn\033[0m: Please take these elixirs as a token of my gratitude.")
         time.sleep(1)
         print("You received \u001b[37;1m3 \u001b[37melixirs\033[0m.")
-        character["shawn_quest"] = False
-        character["elixir"] += 3
+        time.sleep(1)
+        print(f"You now have \u001b[37;1m{character["elixir"]} \u001b[37melixirs\033[0m.")
     else:
         print(
-            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[36mHeca\033[0m! I am forever grateful.")
+        print(
+            "But we're still living under the fear of \u001b[31;1mChris\033[0m the dragon. Please kill him to save the Dragon Coast.")
 
 
 def heca(character):
-    if character["shawn_quest"] == True:
-        print("\u001b[31;1mHeca\033[0m: Yes, Shawn is my father! Thank you for finding me!")
-        time.sleep(1)
-        print("I was lost in the forest. My father must be worried sick.")
-        time.sleep(1)
-        print("Let's go back to my father!")
+    if character["shawn_quest"] == True and character["heca_found"] == False:
+        heca_lines = [
+            "\u001b[36mHeca\033[0m: Yes, Shawn is my father! Thank you so much for finding me!",
+            "I was lost in the forest. My father must be worried sick.",
+            "Let's go back to my father!"
+        ]
+        for line in heca_lines:
+            print(line)
+            time.sleep(1)
         character["heca_found"] = True
+    elif character["shawn_quest"] == True and character["heca_found"] == True:
+        print("\u001b[36mHeca\033[0m: Let's go back to my father!")
     else:
         print("\u001b[31;1m???\033[0m: I don't know you. Leave me alone!")
 
@@ -197,32 +206,90 @@ def heca_found(character, board):
 
 
 def david(character):
-    responses = {
-        "greeting": "I need some tree branches to make chopsticks with. Can you help me? (Y/N)",
-        "yes_response": "Great! I need 10 branches. Bring them to me and I'll reward you.",
-        "no_response": "I understand. Let me know if you change your mind.",
-        "fulfilled": "Thank you so much! Here is your reward.",
-        "unfulfilled": "I'm still waiting for those branches. Please hurry."
-    }
-    print(responses["greeting"])
+    if character["david_quest"] == None:
+        say_hi = input("You met \u001b[34;1mDavid\033[0m, the carpenter. Do you want to talk to him? (Y/N): ").strip().lower()
+        while say_hi not in ["y", "n"]:
+            say_hi = input("Invalid input. Please enter Y or N: ").strip().lower()
+        if say_hi == "y":
+            print("\u001b[34;1mDavid\033[0m: Hello there! My name is \u001b[34;1mDavid\033[0m. Please, I need your help..")
+            time.sleep(1)
+            user_action = input("I haven't had noodles for a couple months now because my last pair of chopsticks broke. Can you help me collect some tree branches so I can make some more? (Y/N): ").strip().lower()
+            while user_action not in ["y", "n"]:
+                user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
+            responses = {
+                "y": "\u001b[34;1mDavid\033[0m: Thank you so much! I need 10 tree branches. You can find them by defeating some monsters in the forest.",
+                "n": "\u001b[34;1mDavid\033[0m: I understand. I mean... I guess I'll continue eating something else.."
+            }
+            if user_action == "y":
+                print(responses["y"])
+                character["david_quest"] = True
+            else:
+                print(responses["n"])
+    elif character["david_quest"] == True and character["tree_branches"] < 10:
+        print(f"\u001b[34;1mDavid\033[0m: I need 10 tree branches... {character["tree_branches"]} is not enough. Please get some more.")
+    elif character["david_quest"] == True and character["tree_branches"] >= 10:
+        character["gold"] += 100
+        character["david_quest"] = False
+        print(
+            "\u001b[34;1mDavid\033[0m: Thank you so much! Now I can eat my favorite noodles gracefully. I am forever grateful.")
+        time.sleep(1)
+        print("\u001b[34;1mDavid\033[0m: Please take these as a token of my gratitude.")
+        time.sleep(1)
+        print("You received \u001b[37;1m 100 \u001b[37mGold\033[0m.")
+        time.sleep(1)
+        print(f"You now have \u001b[37;1m {character["gold"]} \u001b[37mgold\033[0m.")
+    else:
+        print(
+            "\u001b[34;1mDavid\033[0m: Thank you for getting me those tree branches! I don't know what I would have done without these chopsticks!")
+        print(
+            "But we're still living under the fear of \u001b[31;1mChris\033[0m the dragon. Please kill him to save the Dragon Coast.")
+
+def get_valid_elixir_quantity(prompt):
+    while True:
+        try:
+            quantity = int(input(prompt))
+            if quantity < 0:
+                print("Quantity must be an integer greater than 0.")
+            else:
+                return quantity
+        except ValueError:
+            print("You need to enter a valid integer greater than 0.")
 
 
 def daniel(character):
-    responses = {
-        "greeting": "Welcome to my shop! Full health elixirs are 100G each. Would you like to buy one? (Y/N)",
-        "yes_response": "Great! That will be 100G.",
-        "no_response": "No worries. My elixirs are always available.",
-        "fulfilled": "Thank you for your purchase! Use your elixir wisely.",
-        "unfulfilled": "You don't have enough gold to buy a elixir. Come back when you do."
-    }
-    print(responses["greeting"])
+    say_hi = input("You met \u001b[34;1mDaniel\033[0m, the apothecary. Do you want to talk to him? (Y/N): ").strip().lower()
+    while say_hi not in ["y", "n"]:
+        say_hi = input("Invalid input. Please enter Y or N: ").strip().lower()
+    if say_hi == "y":
+        welcome_lines = [
+            "\u001b[34;1mDaniel\033[0m: Hello there! My name is \u001b[34;1mDaniel\033[0m. I'm the local apothecary.",
+            "You can buy more elixirs from me to help you on your journey."
+        ]
+        for line in welcome_lines:
+            print(line)
+            time.sleep(1)
+        user_action = input("\u001b[34;1mDaniel\033[0m: Would you like to buy some elixirs? (Y/N): ").strip().lower()
+        while user_action not in ["y", "n"]:
+            user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
+        if user_action == "y":
+            elixir_price = 50
+            maximum_purchase = character["gold"] // elixir_price
+            elixir_quantity = get_valid_elixir_quantity(    #Call valid_elixir_quantity function
+                f"\u001b[34;1mDaniel\033[0m: How many elixirs would you like to buy?"
+                f"They are {elixir_price} gold each: ")
+            if elixir_quantity == 0:    #Player buys 0
+                print("\u001b[34;1mDaniel\033[0m: So you don't want to buy any elixirs at this time, eh?"
+                      "Sure. Come back if you change your mind.")
 
+            while elixir_quantity * elixir_price > character["gold"]:   #See if player has enough gold
+                print(f"\u001b[34;1mDaniel\033[0m: You don't have enough gold. "
+                      f"You can buy up to {maximum_purchase} elixirs. ")
+                elixir_quantity = get_valid_elixir_quantity(f"How many would you like to buy?: ")
 
-def daughter(character):
-    responses = {
-        "greeting": "Thank you for finding me! I was lost in the forest. My father must be worried sick."
-    }
-    print(responses["greeting"])
+            character["gold"] -= elixir_quantity * elixir_price
+            character["elixir"] += elixir_quantity
+            print(f"You bought {elixir_quantity} elixirs.")
+            print(f"You now have {character["elixir"]} elixirs and {character["gold"]} gold.")
 
 
 def game_clear(character):
@@ -231,13 +298,14 @@ def game_clear(character):
 
 def chris(character):
     dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
-    print("You've encountered dragon Chris!!")
+    print("You've encountered the dragon Chris!!")
     print(f"Chris has {dragon_chris['health']} hp and type is {dragon_chris['type']}")
-    print("Chris: You've come far, hero. But have you ever questioned "
-          "why I'm the enemy? Who decided I was the villain?")
+    print("Chris: You've come far, hero. But have you ever questioned why I'm the enemy? "
+          "Who decided I was the villain?")
     time.sleep(2)
     print(f"{character['name']}: You threaten all of Dragon Coast! Your reign ends now.")
-    print("Chris: Look around. Who brought more harm? I, who sought to protect my realm, "
+    print("Chris: Look around. Who brought more harm? "
+          "I, who sought to protect my realm,"
           "or you, who blindly followed a path of destruction?")
     while dragon_chris['health'] > 0:
         # Let the user choose a skill
