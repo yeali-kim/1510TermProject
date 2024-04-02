@@ -148,7 +148,7 @@ def shawn(character):
         if say_hi == "y":
             print("\u001b[34;1mShawn\033[0m: Hello there! My name is \u001b[34;1mShawn\033[0m. Please, I need your help..")
             time.sleep(1)
-            user_action = input("My daughter \u001b[31;1mHeca\033[0m has been missing for a month. Can you help me find her? (Y/N): ").strip().lower()
+            user_action = input("My daughter \u001b[36mHeca\033[0m has been missing for a month. Can you help me find her? (Y/N): ").strip().lower()
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
             responses = {
@@ -162,12 +162,12 @@ def shawn(character):
                 print(responses["n"])
     elif character["shawn_quest"] == True and character["heca_found"] == False:
         print(
-            "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[31;1mHeca\033[0m. Please hurry.")
+            "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[36mHeca\033[0m. Please hurry.")
     elif character["shawn_quest"] == True and character["heca_found"] == True:
         character["elixir"] += 3
         character["shawn_quest"] = False
         print(
-            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[36mHeca\033[0m! I am forever grateful.")
         time.sleep(1)
         print("\u001b[34;1mShawn\033[0m: Please take these elixirs as a token of my gratitude.")
         time.sleep(1)
@@ -176,7 +176,7 @@ def shawn(character):
         print(f"You now have \u001b[37;1m{character["elixir"]} \u001b[37melixirs\033[0m.")
     else:
         print(
-            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[31;1mHeca\033[0m! I am forever grateful.")
+            "\u001b[34;1mShawn\033[0m: Thank you for finding my daughter \u001b[36mHeca\033[0m! I am forever grateful.")
         print(
             "But we're still living under the fear of \u001b[31;1mChris\033[0m the dragon. Please kill him to save the Dragon Coast.")
 
@@ -184,7 +184,7 @@ def shawn(character):
 def heca(character):
     if character["shawn_quest"] == True and character["heca_found"] == False:
         heca_lines = [
-            "\u001b[31;1mHeca\033[0m: Yes, Shawn is my father! Thank you so much for finding me!",
+            "\u001b[36mHeca\033[0m: Yes, Shawn is my father! Thank you so much for finding me!",
             "I was lost in the forest. My father must be worried sick.",
             "Let's go back to my father!"
         ]
@@ -193,7 +193,7 @@ def heca(character):
             time.sleep(1)
         character["heca_found"] = True
     elif character["shawn_quest"] == True and character["heca_found"] == True:
-        print("\u001b[31;1mHeca\033[0m: Let's go back to my father!")
+        print("\u001b[36mHeca\033[0m: Let's go back to my father!")
     else:
         print("\u001b[31;1m???\033[0m: I don't know you. Leave me alone!")
 
@@ -298,13 +298,14 @@ def game_clear(character):
 
 def chris(character):
     dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
-    print("You've encountered dragon Chris!!")
+    print("You've encountered the dragon Chris!!")
     print(f"Chris has {dragon_chris['health']} hp and type is {dragon_chris['type']}")
-    print("Chris: You've come far, hero. But have you ever questioned "
-          "why I'm the enemy? Who decided I was the villain?")
+    print("Chris: You've come far, hero. But have you ever questioned why I'm the enemy? "
+          "Who decided I was the villain?")
     time.sleep(2)
     print(f"{character['name']}: You threaten all of Dragon Coast! Your reign ends now.")
-    print("Chris: Look around. Who brought more harm? I, who sought to protect my realm, "
+    print("Chris: Look around. Who brought more harm? "
+          "I, who sought to protect my realm,"
           "or you, who blindly followed a path of destruction?")
     while dragon_chris['health'] > 0:
         # Let the user choose a skill
