@@ -122,6 +122,7 @@ def choose_skill(character: dict) -> tuple[str, str]:
 def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]):
     if character['elixir'] > 0:
         character['hp'] = character['max_hp']
+        character["elixir"] -= 1
         print("Your hp is full now!")
     else:
         print("You don't have any elixir...")
