@@ -1,5 +1,5 @@
 import random
-import npc
+
 
 def create_board():
     """
@@ -22,15 +22,23 @@ def create_board():
                 board[(col, row)] = "Castle"
             if row == 5 and col < 7:
                 board[(col, row)] = "horizontal_wall"
-            if col == 3 and row < 3 or col == 3 and row == 4 or col == 7 and row == 0 or col == 7 and row == 2 or col == 7 and 1 < row < 5:
+            if (col == 3 and row < 3 or col == 3 and row == 4 or col == 7 and row == 0 or
+                    col == 7 and row == 2 or col == 7 and 1 < row < 5):
                 board[(col, row)] = "vertical_wall"
     board[(3, 3)] = 'Door to School'  # Town to School
     board[(7, 1)] = 'Door to Forest'  # Town to Forest
     board[(4, 5)] = 'Door to Desert'  # Town to Desert
+    print(board)
     return board
 
 
 def set_npc_location(board):
+    """
+    Set the location of the NPCs on the board.
+    
+    :param board: a dictionary with coordinates as keys and cell description as values
+    :return: a dictionary with coordinates as keys and the updated cell description as values
+    """
     set_locations = {
         (0, 0): "jinkx",
         (0, 3): "chrissipus",
