@@ -2,6 +2,11 @@ import random
 import npc
 
 def create_board():
+    """
+    Make game board.
+    
+    :return: a dictionary with coordinates as keys and values as the cell description
+    """
     board = {}
     # Set fields on board
     for row in range(11):
@@ -67,9 +72,9 @@ def print_board(board, character):
                 print('\033[91m' + " P " + '\033[0m', end="")
             elif (col, row) in [(3, 3), (7, 1), (4, 5)]:
                 print("   ", end="")
-            elif cell_value == "Forest" or cell_value == "heca":
+            elif cell_value == "Forest":
                 print('\033[92m' + " ^ " + '\033[0m', end="")
-            elif cell_value == "Desert":
+            elif cell_value == "Desert" or cell_value == "heca":
                 print('\033[93m' + " ~ " + '\033[0m', end="")
             elif cell_value == "Castle":
                 print('\033[90m' + " # " + '\033[0m', end="")
