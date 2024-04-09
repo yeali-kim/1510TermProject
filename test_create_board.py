@@ -30,6 +30,5 @@ class TestCreateBoard(TestCase):
                     (0, 10): 'Desert', (1, 10): 'Desert', (2, 10): 'Desert', (3, 10): 'Desert', (4, 10): 'Desert',
                     (5, 10): 'Desert', (6, 10): 'Castle', (7, 10): 'Castle', (8, 10): 'Castle', (9, 10): 'Castle',
                     (10, 10): 'Castle'}
-
         actual = create_board()
         self.assertEqual(expected, actual)
