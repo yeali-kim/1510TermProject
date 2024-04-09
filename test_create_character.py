@@ -3,7 +3,7 @@ from character_functions import create_character
 from unittest.mock import patch
 
 
-class Test(TestCase):
+class TestCreateCharacter(TestCase):
     @patch('character_functions.random.randint')
     def test_create_character(self, mock_randint):
         mock_randint.side_effect = [5, 5, 5]
