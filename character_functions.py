@@ -118,12 +118,20 @@ def update_level(character: dict[str, str | int | bool | dict[str, int]]):
 
 
 def get_user_choice() -> str:
-    user_input = ""
-    while user_input not in ["w", "a", "s", "d", "quit", "elixir"]:
-        user_input = input("Enter movement direction (w, a, s, d) or 'elixir'"
-                           " to drink elixir or 'quit' to exit: ")
-        user_input = user_input.lower().split()
-    return user_input
+    """
+    Get the direction from the user of where they want to move their character in.
+
+    :precondition: The character coordinate must be within the board dimension
+    :postcondition: request user input for the direction to move the character in
+    :return: a string that is one of "Up", "Down", "Left", and "Right"
+    """
+    directions = {"w": "up", "s": "down", "a": "left", "d": "right"}
+    user_direction = input("Enter movement direction (w, a, s, d) or 'elixir' to drink elixir or 'quit' to exit: ")
+    while user_direction not in directions:
+        user_direction = input(
+            "Enter movement direction (w, a, s, d) or 'elixir' to drink elixir or 'quit' to exit: ")
+    direction = directions[user_direction]
+    return direction
 
 
 def move_character(character, direction: str, game_board: dict[tuple[int, int], str]):
