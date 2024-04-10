@@ -30,7 +30,7 @@ class TestUpdateSkills(unittest.TestCase):
         self.assertEqual(character_magician["skills"], {
             "Ice Age": "water",
             "Inferno Sphere": "fire",
-            "Poison Nova": "normal"
+            "Poison Nova": "grass"
         })
         
     def test_update_skills_devil(self):
