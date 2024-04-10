@@ -28,7 +28,6 @@ def create_board():
     board[(3, 3)] = 'Door to School'  # Town to School
     board[(7, 1)] = 'Door to Forest'  # Town to Forest
     board[(4, 5)] = 'Door to Desert'  # Town to Desert
-    print(board)
     return board
 
 

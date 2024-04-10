@@ -9,7 +9,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
             {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass', 'golds': random.randint(1, 5)},
             {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal', 'golds': random.randint(2, 8)},
             {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',
-             'golds': random.randint(5, 10), 'tree branches': random.randint(1, 3)},
+             'golds': random.randint(5, 10), 'tree_branches': random.randint(10, 30)},
             {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 80, 'type': 'grass',
              'golds': random.randint(7, 12)},
         ],
@@ -38,9 +38,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
 
     if region in creatures:
         creature_number = random.randint(1, 10)
-        # Define thresholds for creature selection
-        probability = [3, 6, 8, 10]  # Last number ensures all cases are covered
-        # Determine the creature based on the random number
+        probability = [3, 6, 8, 10]
         for index, threshold in enumerate(probability):
             if creature_number <= threshold:
                 selected_creature = creatures[region][index]
