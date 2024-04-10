@@ -95,8 +95,6 @@ def game_loop():
         if direction == 'quit':
             print("Thank you for playing, \033[1;33m{character['name']}\033[0m! Goodbye.")
             break
-        if direction == 'elixir':
-            combat.drink_elixir(character)
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
         npc.heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
