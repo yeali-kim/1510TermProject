@@ -6,10 +6,12 @@ def create_creature(region: str) -> dict[str, int | str] | None:
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass', 'golds': random.randint(1, 5)},
-            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal', 'golds': random.randint(2, 8)},
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass',
+             'golds': random.randint(1, 5)},
+            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal',
+             'golds': random.randint(2, 8)},
             {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',
-             'golds': random.randint(5, 10), 'tree_branches': random.randint(10, 30)},
+             'golds': random.randint(5, 10), 'tree_branches': random.randint(1, 3)},
             {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 80, 'type': 'grass',
              'golds': random.randint(7, 12)},
         ],
@@ -46,7 +48,6 @@ def create_creature(region: str) -> dict[str, int | str] | None:
                 print(f"{message} {selected_creature['name']} appears!")
                 return selected_creature
     else:
-        print("No creatures found in this region.")
         return None
 
 
