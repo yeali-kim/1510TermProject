@@ -54,7 +54,7 @@ def game_loop():
 ⠀⠀⠀⠀⠀⠙⠦⠤⠤⠭⠽⠟⠋⠁⠀⠀⠀⠹⢍⡉⠉⠁⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠋⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀"""
 
-    text = iter(greet_texts) # proof of concept
+    text = iter(greet_texts)  # proof of concept
     print(next(text))
     time.sleep(2)
     print(next(text))
@@ -65,7 +65,7 @@ def game_loop():
     for line in lines:
         print("\033[0;31m" + line + "\033[0m")  # Print the face of the dragon Chris in red
         time.sleep(0.1)
-    name = input("\033[0;34mElder\033[0m: Oh brave one, please tell me your name.") # Get the player's name
+    name = input("\033[0;34mElder\033[0m: Oh brave one, please tell me your name.")  # Get the player's name
     time.sleep(1)
     while not name:
         name = input("\033[0;34mElder\033[0m: I apologize, but I must ask again. What is your name?")
@@ -99,7 +99,7 @@ def game_loop():
         npc.heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
-    print(f"{character['name']} is {character['class']}, has {character['skills']} skills")
+    print(f"{character['name']} was {character['class']}, had {character['skills']} skills")
 
 
 def main():

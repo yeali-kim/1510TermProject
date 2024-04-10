@@ -4,6 +4,14 @@ import npc
 
 
 def create_character() -> dict[str, str | int | bool | dict[str, int]]:
+    """
+    Create and initialize a character with default settings.
+
+    :precondition: random module must be imported
+    :postcondition: a fully initialized character dictionary with all necessary attributes set to their default or
+    randomized starting values
+    :return: a dictionary of character's default information
+    """
     character_class = "Citizen"
 
     citizen_skill = {
@@ -14,8 +22,8 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
     }
 
     classes = {
-        "Citizen": {"str": random.randint(1000000000, 10000000000), "dex": random.randint(1, 10),
-                    "int": random.randint(1, 10), "hp": 10000000, "max_hp": 10000000},
+        "Citizen": {"str": random.randint(1, 10), "dex": random.randint(1, 10),
+                    "int": random.randint(1, 10), "hp": 100, "max_hp": 100},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills
@@ -41,6 +49,22 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
 
 
 def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
+    """
+    Update the character's skill based on their class.
+
+    :param character: a dictionary representing a character
+    :precondition: the character dictionary must have a class key with a valid class name as its value
+    :postcondition: the skills key in the character dictionary is updated to reflect the skills corresponding to
+    the character's class
+    >>> player= {"class": "Knight"}
+    >>> update_skills(player)
+    >>> player["skills"]
+    {'Shield Attack': 'normal', 'Fire Sword': 'fire', 'Guillotine': 'normal', 'Elixir': 'normal'}
+    >>> player= {"class": "Archer"}
+    >>> update_skills(player)
+    >>> player["skills"]
+    {'Fire Arrow': 'fire', 'Frost Arrow': 'water', 'Storm of Arrows': 'normal', 'Elixir': 'normal'}
+    """
     skills = {
         "Guardian": {
             "Tackle": "normal",
@@ -73,6 +97,30 @@ def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
 
 
 def update_level(character: dict[str, str | int | bool | dict[str, int]]):
+    """
+    Update the character's level and stats based on their accumulated experience points.
+
+    :param character: a dictionary representing a character
+    :precondition: character must be a well-defined dictionary with all necessary keys and values for level progression
+    :postcondition: if the character has sufficient experience for a level up, their level is increased,
+    and appropriate stat increases are applied based on their class
+    the character's exp is adjusted to remove the amount used for leveling up.
+    >>> player = {"class": "Citizen", "level": 1, "exp": 100, "stats": [1, 1, 1], "max_hp": 100}
+    >>> update_level(player)
+    Congratulations! Your character is now level 2.
+    Your stats have increased:
+    Strength: 2, Dexterity: 2, Intelligence: 2, HP: 120
+    You need 101 more Exp to reach level 3.
+    >>> player = {"class": "Magician", "level": 10, "exp": 300, "stats": [10, 11, 15], "max_hp": 300}
+    >>> update_level(player)
+    Congratulations! Your character is now level 11.
+    Your stats have increased:
+    Strength: 10, Dexterity: 11, Intelligence: 35, HP: 410
+    Congratulations! Your character is now level 12.
+    Your stats have increased:
+    Strength: 10, Dexterity: 11, Intelligence: 55, HP: 530
+    You need 31 more Exp to reach level 13.
+    """
     # Base experience required for the first level up
     base_exp_per_level = 100
     # Experience growth rate for each subsequent level
@@ -89,31 +137,26 @@ def update_level(character: dict[str, str | int | bool | dict[str, int]]):
         # Print level-up message
         print(f"Congratulations! Your character is now level {character["level"]}.")
 
-        # Stat increases depend on character class
-        if character["class"] == "Citizen":
-            character["stats"][0] += 1  # str stat
-            character["stats"][1] += 1  # dex stat
-            character["stats"][2] += 1  # int stat
-            character["max_hp"] += character["level"] * 10
-            character["hp"] = character["max_hp"]
-        elif character["class"] == "Knight":
-            character["stats"][0] += 10  # str stat
-            character["stats"][1] += 5  # dex stat
-            character["max_hp"] += character["level"] * 15
-            character["hp"] = character["max_hp"]
-        elif character["class"] == "Archer":
-            character["stats"][0] += 10  # str stat
-            character["stats"][1] += 15  # dex stat
-            character["max_hp"] += character["level"] * 12
-            character["hp"] = character["max_hp"]
-        elif character["class"] == "Magician":
-            character["stats"][2] += 20  # int stat
-            character["max_hp"] += character["level"] * 10
-            character["hp"] = character["max_hp"]
+        class_growth = {
+            "Citizen": {"stats": [1, 1, 1], "hp_growth_factor": 10},
+            "Knight": {"stats": [10, 5, 0], "hp_growth_factor": 15},
+            "Archer": {"stats": [5, 15, 0], "hp_growth_factor": 12},
+            "Magician": {"stats": [0, 0, 20], "hp_growth_factor": 10},
+        }
 
-        print("Your stats have increased:")
-        print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},"
-              f" Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
+        growth_info = class_growth.get(character["class"], None)
+
+        if growth_info:
+            for i, stat_growth in enumerate(growth_info["stats"]):
+                character["stats"][i] += stat_growth
+
+            character["max_hp"] += character["level"] * growth_info["hp_growth_factor"]
+            character["hp"] = character["max_hp"]
+            print("Your stats have increased:")
+            print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},"
+                  f" Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
+        else:
+            print(f"No growth info for class: {character['class']}")
 
         # Check for another level up in case of remaining Exp
         update_level(character)
@@ -138,6 +181,19 @@ def get_user_choice() -> str:
 
 
 def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, tuple[int, int]]) -> tuple[int, int]:
+    """
+    Calculate character's new position
+
+    :param x: the current x-coordinate of the character as an integer
+    :param y: the current x-coordinate of the character as an integer
+    :param direction: a string indicating the direction in which the character is moving
+    :param movement: a dictionary where each key is a direction and each value is a tuple of two integers
+    :precondition: x and y must be integers representing the current position of the character
+    direction should be a string that matches one of the keys in the 'movement' dictionary
+    movement must be a dictionary with string keys (directions) and tuple values indicating movement offsets
+    :postcondtion:
+    :return:
+    """
     value_of_coordinates = movement.get(direction, (0, 0))
     new_x = x + value_of_coordinates[0]
     new_y = y + value_of_coordinates[1]
@@ -149,10 +205,6 @@ def handle_valid_move_area(character, current_area, new_area, new_x: int, new_y:
         print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
     print(f"Moving to {new_area}...")
     character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-
-
-def handle_wall_collision():
-    print("Invalid move. You've hit a wall.")
 
 
 def handle_door_interaction(character: dict[str, str | int | bool | dict[str, int]], door_to: str, current_area: str,
@@ -217,7 +269,7 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
     if new_area in valid_move:
         handle_valid_move_area(character, current_area, new_area, new_x, new_y)
     elif new_area in ["horizontal_wall", "vertical_wall"]:
-        handle_wall_collision()
+        print("Invalid move. You've hit a wall.")
     elif "Door" in new_area:
         door_to = new_area.split(" ")[2]
         handle_door_interaction(character, door_to, current_area, new_x, new_y)

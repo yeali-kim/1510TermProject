@@ -142,7 +142,7 @@ def hypatia(character: dict[str, str | int | bool | dict[str, int]]):
 
 
 def shawn(character: dict[str, str | int | bool | dict[str, int]]):
-    if character["shawn_quest"] == None:
+    if character["shawn_quest"] is None:
         say_hi = input(
             "You met \u001b[34;1mShawn\033[0m, the mayor. Do you want to talk to him? (Y/N): ").strip().lower()
         while say_hi not in ["y", "n"]:
@@ -167,11 +167,11 @@ def shawn(character: dict[str, str | int | bool | dict[str, int]]):
                 character["shawn_quest"] = True
             else:
                 print(responses["n"])
-    elif character["shawn_quest"] == True and character["heca_found"] == False:
+    elif character["shawn_quest"] and character["heca_found"] is False:
         print(
             "\u001b[34;1mShawn\033[0m: I'm still waiting for you to find my daughter \u001b[36mHeca\033[0m. Please "
             "hurry.")
-    elif character["shawn_quest"] == True and character["heca_found"] == True:
+    elif character["shawn_quest"] and character["heca_found"]:
         character["elixir"] += 3
         character["shawn_quest"] = False
         print(
@@ -191,7 +191,7 @@ def shawn(character: dict[str, str | int | bool | dict[str, int]]):
 
 
 def heca(character: dict[str, str | int | bool | dict[str, int]]):
-    if character["shawn_quest"] == True and character["heca_found"] == False:
+    if character["shawn_quest"] and character["heca_found"] is False:
         heca_lines = [
             "\u001b[36mHeca\033[0m: Yes, Shawn is my father! Thank you so much for finding me!",
             "I was lost in the forest. My father must be worried sick.",
@@ -201,21 +201,21 @@ def heca(character: dict[str, str | int | bool | dict[str, int]]):
             print(line)
             time.sleep(1)
         character["heca_found"] = True
-    elif character["shawn_quest"] == True and character["heca_found"] == True:
+    elif character["shawn_quest"] and character["heca_found"]:
         print("\u001b[36mHeca\033[0m: Let's go back to my father!")
     else:
         print("\u001b[31;1m???\033[0m: I don't know you. Leave me alone!")
 
 
 def heca_found(character: dict[str, str | int | bool | dict[str, int]], board: dict) -> dict[tuple[int, int], str]:
-    if character["shawn_quest"] == False and character["heca_found"] == True:
+    if character["shawn_quest"] is False and character["heca_found"]:
         heca_coord = (key for key, val in board.items() if val == "heca")
         board[heca_coord] = "Desert"
         return board
 
 
 def david(character: dict[str, str | int | bool | dict[str, int]]):
-    if character["david_quest"] == None:
+    if character["david_quest"] is None:
         say_hi = input(
             "You met \u001b[34;1mDavid\033[0m, the carpenter. Do you want to talk to him? (Y/N): ").strip().lower()
         while say_hi not in ["y", "n"]:
@@ -240,11 +240,11 @@ def david(character: dict[str, str | int | bool | dict[str, int]]):
                 character["david_quest"] = True
             else:
                 print(responses["n"])
-    elif character["david_quest"] == True and character["tree_branches"] < 10:
+    elif character["david_quest"] and character["tree_branches"] < 10:
         print(
             f"\u001b[34;1mDavid\033[0m: I need 10 tree branches... {character["tree_branches"]} is not enough. Please "
             f"get some more.")
-    elif character["david_quest"] == True and character["tree_branches"] >= 10:
+    elif character["david_quest"] and character["tree_branches"] >= 10:
         character["gold"] += 100
         character["david_quest"] = False
         print(
