@@ -53,7 +53,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
 def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creature: dict) -> int:
     skill_damage_formulas = {
         'Tackle': character['stats'][0] * 0.5 + character['stats'][1] * 0.5 + character['stats'][2] * 0.5,
-        "Knife of Justice": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
+        "Sword of Justice": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
 
         'Shield Attack': character['stats'][0] * 1.5 + character['stats'][1] * 2,
         "Fire Sword": character["stats"][0] * 2,
@@ -69,6 +69,7 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
 
         "Hell Fire": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
         "Abracadabra": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
+        "Elixir": drink_elixir(character)
     }
     types = {
         ('grass', 'normal'): 1,
@@ -97,11 +98,11 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
         return 0
 
 
-def choose_skill(character: dict) -> tuple[str, str]:
+def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str]:
     print("Available skills:")
     skills_list = list(character['skills'].keys())  # Convert skill names to a list
-    for i in range(len(skills_list)):
-        print(f"{i + 1}. {skills_list[i]}")
+    for skill_number in range(len(skills_list)):
+        print(f"{skill_number + 1}. {skills_list[skill_number]}")
 
     skill_choice = 0
     while skill_choice < 1 or skill_choice > len(skills_list):
@@ -122,8 +123,11 @@ def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]):
         character['hp'] = character['max_hp']
         character["elixir"] -= 1
         print("Your hp is full now!")
+        print(f"Now you have {character['elixir']}")
+        return 0
     else:
         print("You don't have any elixir...")
+        return 0
 
 
 def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
@@ -175,19 +179,22 @@ def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], bo
             print("It's quiet... too quiet.")
 
 
+def run_combat(character: dict[str, str | int | bool | dict[str, int]],
+               creature: dict[str, str | int | bool | dict[str, int]]):
+    if random.random() < 0.5:  # 50% chance to escape
+        print("You managed to escape safely.")
+    else:
+        print("Failed to escape. Forced into combat.")
+        engage_combat(character, creature)
+
+
 def main_combat(creature: dict[str, int | str], character: dict[str, str | int | bool | dict[str, int]]):
-    # Offer choice to engage in combat or try to run
     action = input("Do you wish to fight (f) or try to run (r)? ")
 
     if action.lower() == 'f':
         engage_combat(character, creature)
 
-        # Check if the character is alive after combat
-        if character['hp'] <= 0:
-            print("You've been defeated. Game Over.")
-            return False  # This exits the function, potentially ending the game or requiring a game reset
-
-        elif creature['health'] <= 0:
+        if creature['health'] <= 0:
             gained_exp = creature['exp']  # Use the creature's exp value
             character['exp'] += gained_exp
             print(f"You gained {gained_exp} Exp!")
@@ -197,11 +204,7 @@ def main_combat(creature: dict[str, int | str], character: dict[str, str | int |
             character_functions.update_level(character)  # Check and handle level up
 
     elif action.lower() == 'r':
-        if random.random() < 0.5:  # 50% chance to escape
-            print("You managed to escape safely.")
-        else:
-            print("Failed to escape. Forced into combat.")
-            engage_combat(character, creature)
+        run_combat(character, creature)
     else:
         print("Invalid action. You're forced into combat.")
         engage_combat(character, creature)

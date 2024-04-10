@@ -53,9 +53,14 @@ def game_loop():
 ⠀⠀⠀⠀⠀⣏⠻⣀⣀⣀⣤⡾⠋⡀⠀⠀⠙⣏⡿⣬⣦⣀⡽⠁⠀⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡸⠀⠀⢱⡀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠙⠦⠤⠤⠭⠽⠟⠋⠁⠀⠀⠀⠹⢍⡉⠉⠁⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠋⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀"""
-    for text in greet_texts:
-        print(text)
-        time.sleep(2)
+
+    text = iter(greet_texts) # proof of concept
+    print(next(text))
+    time.sleep(2)
+    print(next(text))
+    time.sleep(2)
+    print(next(text))
+
     lines = chris_face.split("\n")
     for line in lines:
         print("\033[0;31m" + line + "\033[0m")  # Print the face of the dragon Chris in red
