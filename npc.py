@@ -318,7 +318,7 @@ def ending(character):
     if user_input == "accept":
         print("I see now the destruction I've wrought. I am the architect of Dragon Coast's demise. "
               "It's time I make amends, not as a hero, but as a guardian.")
-        character["class"] = "Citizen"
+        character["class"] = "Guardian"
         character_functions.update_skills(character)
     else:
         print("They misunderstand. I did what I had to do. If being the devil means shouldering the world's hate to "
