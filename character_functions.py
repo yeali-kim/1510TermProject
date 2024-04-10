@@ -8,7 +8,8 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
 
     citizen_skill = {
         "Citizen": {
-            "Tackle": "normal"
+            "Tackle": "normal",
+            "Elixir": "normal"
         }
     }
 
@@ -48,17 +49,20 @@ def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
         "Knight": {
             "Shield Attack": "normal",
             "Fire Sword": "fire",
-            "Guillotine": "normal"
+            "Guillotine": "normal",
+            "Elixir": "normal"
         },
         "Archer": {
             "Fire Arrow": "fire",
             "Frost Arrow": "water",
-            "Storm of Arrows": "normal"
+            "Storm of Arrows": "normal",
+            "Elixir": "normal"
         },
         "Magician": {
             "Ice Age": "water",
             "Inferno Sphere": "fire",
             "Poison Nova": "grass",
+            "Elixir": "normal"
         },
         "Devil": {
             "Hell Fire": "fire",
@@ -126,10 +130,9 @@ def get_user_choice() -> str:
     :return: a string that is one of "Up", "Down", "Left", and "Right"
     """
     directions = {"w": "up", "s": "down", "a": "left", "d": "right"}
-    user_direction = input("Enter movement direction (w, a, s, d) or 'elixir' to drink elixir or 'quit' to exit: ")
+    user_direction = input("Enter movement direction (w, a, s, d) or 'quit' to exit: ")
     while user_direction not in directions:
-        user_direction = input(
-            "Enter movement direction (w, a, s, d) or 'elixir' to drink elixir or 'quit' to exit: ")
+        user_direction = input("Enter movement direction (w, a, s, d) or 'quit' to exit: ")
     direction = directions[user_direction]
     return direction
 
@@ -156,7 +159,8 @@ def handle_wall_collision():
     print("Invalid move. You've hit a wall.")
 
 
-def handle_door_interaction(character, door_to, current_area: str, new_x: int, new_y: int):
+def handle_door_interaction(character: dict[str, str | int | bool | dict[str, int]], door_to: str, current_area: str,
+                            new_x: int, new_y: int):
     if current_area == "Town" and door_to == "Forest":
         decision = ask_for_confirmation("Are you sure to enter the Forest? Y/N ")
         if decision:
@@ -188,7 +192,7 @@ def interact_with_npc(character: dict[str, str | int | bool | dict[str, int]], n
     call(func_name, character)
 
 
-def ask_for_confirmation(prompt: str):
+def ask_for_confirmation(prompt: str) -> bool:
     user_input = ""
     valid_input = ["y", "n"]
     while user_input not in valid_input:
@@ -200,7 +204,8 @@ def move_character_to_new_position(character: dict[str, str | int | bool | dict[
     character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
 
 
-def move_character(character: dict[str, str | int | bool | dict[str, int]], direction: str, game_board: dict[tuple[int, int], str]):
+def move_character(character: dict[str, str | int | bool | dict[str, int]], direction: str,
+                   game_board: dict[tuple[int, int], str]):
     movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
 
@@ -226,66 +231,3 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
         handle_home_interaction(character)
     else:
         interact_with_npc(character, new_area)
-
-# def move_character(character, direction: str, game_board: dict[tuple[int, int], str]):
-#     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
-#     movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
-#     # Current location
-#     x, y = character["location"]["x-coordinate"], character["location"]["y-coordinate"]
-#     # Calculate new location based on the direction
-#     value_of_coordinates = movement.get(direction, (0, 0))
-#     new_x, new_y = x + value_of_coordinates[0], y + value_of_coordinates[1]
-#
-#     # Check for out-of-bounds
-#     if (new_x, new_y) not in game_board:
-#         print("Invalid move. Out of bounds.")
-#         return
-#     new_area = game_board[(new_x, new_y)]
-#     current_area = game_board[(x, y)]
-#     # Allow movement if it's within the same region, through a door, or from home
-#     if new_area in valid_move:
-#         if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
-#             print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
-#         print(f"Moving to {new_area}...")
-#         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-#     elif new_area in ["horizontal_wall", "vertical_wall"]:
-#         print("Invalid move. You've hit a wall.")
-#     elif new_area == "Door to School":
-#         if current_area == "Town":
-#             print("You are moving through the door to School.")
-#         else:
-#             print("You are moving through the door to Town.")
-#         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-#     elif new_area == "Door to Forest":
-#         if current_area == "Town":
-#             user_input = ""
-#             valid_input = ["y", "n"]
-#             while user_input not in valid_input:
-#                 user_input = input("Are you sure to enter the Forest? Y/N ")
-#                 user_input = user_input.lower()
-#             if user_input == "y":
-#                 character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-#                 print("Be careful...")
-#             else:
-#                 print("Come back when you are ready...")
-#         else:
-#             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-#             print("You are moving through the door to Town.")
-#     elif new_area == "Door to Desert":
-#         if current_area == "Town":
-#             user_input = ""
-#             valid_input = ["y", "n"]
-#             while user_input not in valid_input:
-#                 user_input = input("Are you sure to enter the Desert? Recommended lever: 10 Y/N ")
-#                 user_input = user_input.lower()
-#             if user_input == "y":
-#                 character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-#                 print("Be careful... Desert is dangerous....")
-#             else:
-#                 print("Come back when you are ready...")
-#     elif new_area == "home":
-#         character["hp"] = character["max_hp"]
-#         print("Your hp is full now.")
-#     else:
-#         func_name = getattr(npc, new_area)  # Call the function based on the NPC name
-#         call(func_name, character)
