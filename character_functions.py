@@ -14,7 +14,7 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
 
     classes = {
         "Citizen": {"str": random.randint(1000000000, 10000000000), "dex": random.randint(1, 10),
-                    "int": random.randint(1, 10), "hp": 100, "max_hp": 100},
+                    "int": random.randint(1, 10), "hp": 10000000, "max_hp": 10000000},
     }
 
     # Initialize the character with class-specific stats, location, level, Exp, and skills

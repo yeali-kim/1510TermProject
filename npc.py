@@ -294,80 +294,20 @@ def daniel(character):
 
 def game_clear(character):
     return False if character["chris"] else True
-
-
-def chris(character):
-    dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
-    print("You've encountered the dragon Chris!!")
-    print(f"Chris has {dragon_chris['health']} hp and type is {dragon_chris['type']}")
-    print("Chris: You've come far, hero. But have you ever questioned why I'm the enemy? "
-          "Who decided I was the villain?")
-    time.sleep(2)
-    print(f"{character['name']}: You threaten all of Dragon Coast! Your reign ends now.")
-    print("Chris: Look around. Who brought more harm? "
-          "I, who sought to protect my realm,"
-          "or you, who blindly followed a path of destruction?")
-    while dragon_chris['health'] > 0:
-        # Let the user choose a skill
-        chosen_skill, chosen_type = combat.choose_skill(character)
-        damage_dealt = combat.calculate_skill_damage(chosen_skill, chosen_type, character, dragon_chris)
-        print(f"Unleashing {chosen_skill}, you inflict {damage_dealt} damage upon Chris.")
-        dragon_chris['health'] -= damage_dealt
-        if dragon_chris['health'] <= 0:
-            print(f"You've defeated the Chris!")
-            break
-        print(f"Chris is still alive with {dragon_chris['health']} health left.")
-        dragon_chris['type'] = random.choice(["fire", "water", "grass", "normal"])
-        print(f"An enigmatic aura envelops Chris, transforming him into a {dragon_chris['type']} dragon!!!")
-        dragon_skills = ['attack', 'fire breath', 'question']
-        skill = random.choice(dragon_skills)
-        if skill == "attack":
-            print("Chris unleashes a devastating attack, dealing 500 damage to you!!")
-            character["hp"] -= 500
-            print(f"Reeling from the blow, you're left with {character['hp']} health!!")
-        elif skill == "fire breath":
-            print("Danger looms! Chris inhales deeply, preparing to unleash his dragon breath!!")
-            user_choice = input("Quick! Move up, down, left, or right to dodge the inferno!! ")
-            user_choice = user_choice.lower()
-            dragon_breath = ['up', 'down', 'left', 'right']
-            if user_choice == random.choice(dragon_breath) or user_choice not in dragon_breath:
-                character["hp"] -= 700
-                print("Engulfed by flames, agony consumes you!!!")
-                print(f"Reeling from the blow, you're left with {character['hp']} health!!")
-            else:
-                print("With agility, you evade the deadly flames!")
-        elif skill == "question":
-            print("Chris eyes you with a cunning glint. 'Let's test your agility,' he smirks.")
-            print("'Catch a glimpse of this word; it will vanish in 0.3 seconds. Be ready...'")
-            print("Open your eyes...")
-            time.sleep(3)
-            random_words = ['dog', 'cat', 'rat', 'pet']
-            answer = random.choice(random_words)
-            print(answer)
-            time.sleep(0.3)
-            print("\n" * 100)
-            user_answer = input("What was the word? Speak quickly: ")
-            if user_answer == answer:
-                print("'Impressive,' Chris nods, acknowledging your sharpness.")
-            else:
-                character["max_hp"] -= 100
-                print("Chris's curse weaves its dark magic, reducing your vigor. Your maximum health decreases...")
-                print(f"Now, your vitality's ceiling is a mere {character['max_hp']}.")
-        if character['hp'] <= 0:
-            print("Game Over")
-            break
-    character["chris"] = True
+    
+        
+def ending(character):
     scripts = [
-        "Chris (with his last breath): See the world through my eyes, and understand the truth you refused to see.",
-        "The player returns to the villages and landscapes they once 'saved', only to find them in ruins or eerily "
-        "silent.",
-        'NPCs, now fearful, whisper among themselves as the player approaches, branding them not as a hero but as '
-        '"The True Devil of Dragon Coast."',
-        "Environmental cues highlight the destruction: withered lands, extinguished fires, and monuments once erected "
-        "in the player's honor now defaced.",
-        "With the fall of Chris, the scales of Dragon Coast tip into darkness. The hero, once revered, now walks a "
-        "path lined with the shadows of their deeds.",
-        "A new legend begins—not of a savior, but of a harbinger who bore the world's end on their shoulders."
+    "Chris (with his last breath): See the world through my eyes, and understand the truth you refused to see.",
+    "The player returns to the villages and landscapes they once 'saved', only to find them in ruins or eerily "
+    "silent.",
+    'NPCs, now fearful, whisper among themselves as the player approaches, branding them not as a hero but as '
+    '"The True Devil of Dragon Coast."',
+    "Environmental cues highlight the destruction: withered lands, extinguished fires, and monuments once erected "
+    "in the player's honor now defaced.",
+    "With the fall of Chris, the scales of Dragon Coast tip into darkness. The hero, once revered, now walks a "
+    "path lined with the shadows of their deeds.",
+    "A new legend begins—not of a savior, but of a harbinger who bore the world's end on their shoulders."
     ]
     for line in scripts:
         print(line)
@@ -385,4 +325,80 @@ def chris(character):
               "bring about change, then so be it.")
         character["class"] = "Devil"
         character_functions.update_skills(character)
+        
 
+def skill_fire_breath(character):
+    print("Danger looms! Chris inhales deeply, preparing to unleash his dragon breath!!")
+    user_choice = input("Quick! Enter 'up', 'down', 'left', or 'right' to dodge the inferno!!")
+    user_choice = user_choice.lower()
+    dragon_breath = ['up', 'down', 'left', 'right']
+    if user_choice == random.choice(dragon_breath) or user_choice not in dragon_breath:
+        character["hp"] -= 700
+        print("Engulfed by flames, agony consumes you!!!")
+        print(f"Reeling from the blow, you're left with {character['hp']} health!!")
+    else:
+        print("With agility, you evade the deadly flames!")
+    
+    
+def skill_question(character):
+    print("Chris eyes you with a cunning glint. 'Let's test your agility,' he smirks.")
+    print("'Catch a glimpse of this word; it will vanish in 0.3 seconds. Be ready...'")
+    print("Open your eyes...")
+    time.sleep(3)
+    random_words = ['dog', 'cat', 'rat', 'pet']
+    answer = random.choice(random_words)
+    print(answer)
+    time.sleep(0.3)
+    print("\n" * 100)
+    user_answer = input("What was the word? Speak quickly: ")
+    if user_answer == answer:
+        print("'Impressive,' Chris nods, acknowledging your sharpness.")
+    else:
+        character["max_hp"] -= 100
+        print("Chris's curse weaves its dark magic, reducing your vigor. Your maximum health decreases...")
+        print(f"Wrong answer. Now, your vitality's ceiling is a mere {character['max_hp']}.")    
+        
+        
+def battle_chris(character, dragon_chris):
+    chosen_skill, chosen_type = combat.choose_skill(character)
+    damage_dealt = combat.calculate_skill_damage(chosen_skill, chosen_type, character, dragon_chris)
+    print(f"Unleashing {chosen_skill}, you inflict {damage_dealt} damage upon Chris.")
+    dragon_chris['health'] -= damage_dealt
+    if dragon_chris['health'] <= 0:
+        print(f"You've defeated Chris!")
+        return
+    print(f"Chris is still alive with {dragon_chris['health']} health left.")
+    dragon_chris['type'] = random.choice(["fire", "water", "grass", "normal"])
+    print(f"An enigmatic aura envelops Chris, transforming him into a {dragon_chris['type']} dragon!!!")
+    dragon_skills = ['attack', 'fire breath', 'question']
+    skill = random.choice(dragon_skills)
+    if skill == "attack":
+        print("Chris unleashes a devastating attack, dealing 500 damage to you!!")
+        character["hp"] -= 500
+        print(f"Reeling from the blow, you're left with {character['hp']} health!!")
+    elif skill == "fire breath":
+        skill_fire_breath(character)
+    elif skill == "question":
+        skill_question(character)
+    if character['hp'] <= 0:
+        print("Game Over")
+        return
+    
+    
+def chris(character):
+    dragon_chris = {'health': 5000, 'type': random.choice(["fire", "water", "grass", "normal"])}
+    print("You've encountered the dragon Chris!!")
+    print(f"Chris has {dragon_chris['health']} hp and type is {dragon_chris['type']}")
+    print("Chris: You've come far, hero. But have you ever questioned why I'm the enemy? "
+          "Who decided I was the villain?")
+    time.sleep(2)
+    print(f"{character['name']}: You threaten all of Dragon Coast! Your reign ends now.")
+    print("Chris: Look around. Who brought more harm? "
+          "I, who sought to protect my realm,"
+          "or you, who blindly followed a path of destruction?")
+    while dragon_chris['health'] > 0:
+        # Let the user choose a skill
+        battle_chris(character, dragon_chris)    
+    character["chris"] = True
+    ending(character)
+    character[location] = {"x-coordinate": 6, "y-coordinate": 2}
