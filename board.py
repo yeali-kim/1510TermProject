@@ -1,7 +1,7 @@
 import random
 
 
-def create_board():
+def create_board() -> dict[tuple[int, int], str]:
     """
     Make game board.
     
@@ -31,7 +31,7 @@ def create_board():
     return board
 
 
-def set_npc_location(board):
+def set_npc_location(board: dict[tuple[int, int], str]) -> dict[tuple[int, int], str]:
     """
     Set the location of the NPCs on the board.
     
@@ -54,7 +54,7 @@ def set_npc_location(board):
     return board
 
 
-def print_board(board, character):
+def print_board(board: dict[tuple[int, int], str], character: dict[str, str | int | bool | dict[str, int]]):
     print("╔═══" + "═══" * 2 + "═╦═" + "═══" * 3 + "═╦═" + "═══" * 3 + "╗")  # Top border
     for row in range(11):
         print("║", end="")  # Left border
