@@ -162,6 +162,8 @@ def handle_wall_collision():
 def handle_door_interaction(character: dict[str, str | int | bool | dict[str, int]], door_to: str, current_area: str,
                             new_x: int, new_y: int):
     if current_area == "Town" and door_to == "Forest":
+        print("Before you go to Forest, I strongly recommend you to get a class!")
+        print("You can go to school left of the Town to get great skills")
         decision = ask_for_confirmation("Are you sure to enter the Forest? Y/N ")
         if decision:
             print("Be careful... the Forest is mysterious and full of dangers.")
