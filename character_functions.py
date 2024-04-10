@@ -42,9 +42,9 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
 
 def update_skills(character: dict[str, str | int | bool | dict[str, int]]):
     skills = {
-        "Citizen": {
+        "Guardian": {
             "Tackle": "normal",
-            "Guardian of Justice": "normal"
+            "Sword of Justice": "normal"
         },
         "Knight": {
             "Shield Attack": "normal",
