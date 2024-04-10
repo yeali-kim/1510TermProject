@@ -200,20 +200,6 @@ def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, t
     return new_x, new_y
 
 
-def is_valid_move(new_x: int, new_y: int, game_board: dict[tuple[int, int], str]) -> bool:
-    """
-    Check character's move is valid or not
-
-    :param new_x:
-    :param new_y:
-    :param game_board:
-    :precondition:
-    :postcondition:
-    :return:
-    """
-    return (new_x, new_y) in game_board
-
-
 def handle_valid_move_area(character, current_area, new_area, new_x: int, new_y: int):
     if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
         print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
@@ -229,7 +215,7 @@ def handle_door_interaction(character: dict[str, str | int | bool | dict[str, in
         decision = ask_for_confirmation("Are you sure to enter the Forest? Y/N ")
         if decision:
             print("Be careful... the Forest is mysterious and full of dangers.")
-            move_character_to_new_position(character, new_x, new_y)
+            character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         else:
             print("Come back when you are ready...")
 
@@ -237,12 +223,12 @@ def handle_door_interaction(character: dict[str, str | int | bool | dict[str, in
         decision = ask_for_confirmation("Are you sure to enter the Desert? Recommended level: 10 Y/N ")
         if decision:
             print("Be careful... the Desert is harsh and unforgiving.")
-            move_character_to_new_position(character, new_x, new_y)
+            character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         else:
             print("Come back when you are ready...")
 
     else:
-        move_character_to_new_position(character, new_x, new_y)
+        character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         print(f"You are moving through the door to {door_to}.")
 
 
@@ -264,10 +250,6 @@ def ask_for_confirmation(prompt: str) -> bool:
     return user_input == "y"
 
 
-def move_character_to_new_position(character: dict[str, str | int | bool | dict[str, int]], new_x: int, new_y: int):
-    character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
-
-
 def move_character(character: dict[str, str | int | bool | dict[str, int]], direction: str,
                    game_board: dict[tuple[int, int], str]):
     movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
@@ -277,7 +259,7 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
 
     new_x, new_y = calculate_new_position(x, y, direction, movement)
 
-    if not is_valid_move(new_x, new_y, game_board):
+    if (new_x, new_y) not in game_board:
         print("Invalid move. Out of bounds.")
         return
 
