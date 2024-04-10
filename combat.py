@@ -38,7 +38,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
 
     if region in creatures:
         creature_number = random.randint(1, 10)
-        probability = [3, 6, 8, 10]
+        probability = [3, 6, 8, 10]  # 30%, 30%, 20%, 20%
         for index, threshold in enumerate(probability):
             if creature_number <= threshold:
                 selected_creature = creatures[region][index]
@@ -69,7 +69,7 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
 
         "Hell Fire": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
         "Abracadabra": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
-        "Elixir": drink_elixir(character)
+        "Elixir": 0
     }
     types = {
         ('grass', 'normal'): 1,
@@ -98,7 +98,7 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
         return 0
 
 
-def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str]:
+def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str] | int:
     print("Available skills:")
     skills_list = list(character['skills'].keys())  # Convert skill names to a list
     for skill_number in range(len(skills_list)):
@@ -115,19 +115,21 @@ def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tup
 
     # Return the chosen skill name and type as a tuple
     chosen_skill_name = skills_list[skill_choice - 1]
+    if chosen_skill_name == "Elixir":
+        return drink_elixir(character)
     return chosen_skill_name, character['skills'][chosen_skill_name]
 
 
-def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]):
+def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str]:
     if character['elixir'] > 0:
         character['hp'] = character['max_hp']
         character["elixir"] -= 1
         print("Your hp is full now!")
         print(f"Now you have {character['elixir']}")
-        return 0
+        return "Elixir", "normal"
     else:
         print("You don't have any elixir...")
-        return 0
+        return "Elixir", "normal"
 
 
 def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
