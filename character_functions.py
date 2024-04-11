@@ -104,7 +104,7 @@ def update_level(character: dict[str, str | int | bool | dict[str, int]]):
     :precondition: character must be a well-defined dictionary with all necessary keys and values for level progression
     :postcondition: if the character has sufficient experience for a level up, their level is increased,
     and appropriate stat increases are applied based on their class
-    the character's exp is adjusted to remove the amount used for leveling up.
+    :postcondition: the character's exp is adjusted to remove the amount used for leveling up.
     >>> player = {"class": "Citizen", "level": 1, "exp": 100, "stats": [1, 1, 1], "max_hp": 100}
     >>> update_level(player)
     Congratulations! Your character is now level 2.
@@ -189,8 +189,8 @@ def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, t
     :param direction: a string indicating the direction in which the character is moving
     :param movement: a dictionary where each key is a direction and each value is a tuple of two integers
     :precondition: x and y must be integers representing the current position of the character
-    direction should be a string that matches one of the keys in the 'movement' dictionary
-    movement must be a dictionary with string keys (directions) and tuple values indicating movement offsets
+    :precondition: direction should be a string that matches one of the keys in the 'movement' dictionary
+    :precondition: movement must be a dictionary with string keys (directions) and tuple values indicating movement offsets
     :postcondtion: a tuple of two integers representing the new position of the character.
     :return: a tuple (new_x, new_y) representing the new coordinates of the character after the movement.
     >>> calculate_new_position(1, 1, "up", {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)})
@@ -215,9 +215,21 @@ def handle_valid_move_area(character: dict[str, str | int | bool | dict[str, int
     :param new_x: the new x-coordinate (integer) for the character in the new area
     :param new_y: the new y-coordinate (integer) for the character in the new area
     :precondition: character must be a dictionary that includes location information
-    current_area and new_area should be among the predefined valid areas
+    :precondition: current_area and new_area should be among the predefined valid areas
     :postcondition: prints a message indicating the character is moving and includes a warning
-    updates the character's location key with the new x and y coordinates
+    :postcondition: updates the character's location key with the new x and y coordinates
+    >>> player = {"location": {"x-coordinate": 1, "y-coordinate": 1}}
+    >>> current = "Forest"
+    >>> new = "Desert"
+    >>> new_x_coordinate, new_y_coordinate = 1, 0
+    >>> handle_valid_move_area(player, current, new, new_x_coordinate, new_y_coordinate)
+    Now you move from Forest to Desert. Be careful Desert is dangerous
+    Moving to Desert...
+    >>> player = {"location": {"x-coordinate": 1, "y-coordinate": 1}}
+    >>> current = "Desert"
+    >>> new = "Desert"
+    >>> new_x_coordinate, new_y_coordinate = 1, 0
+    >>> handle_valid_move_area(player, current, new, new_x_coordinate, new_y_coordinate)
     """
     if current_area != new_area:
         if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
@@ -228,6 +240,22 @@ def handle_valid_move_area(character: dict[str, str | int | bool | dict[str, int
 
 def handle_door_interaction(character: dict[str, str | int | bool | dict[str, int]], door_to: str, current_area: str,
                             new_x: int, new_y: int):
+    """
+    Handle character interactions with doors leading to different areas, providing narrative prompts and updating the
+    character's location based on decisions.
+
+    :param character: a dictionary representing a character
+    :param door_to: a string representing the name of the next area the character intends to enter
+    :param current_area: a string representing the area the character is currently in
+    :param new_x: the new x-coordinate (integer) for the character in the new area
+    :param new_y: the new y-coordinate (integer) for the character in the new area
+    :precondition: character must be a dictionary with a location key that includes x-coordinate and y-coordinate
+    :precondition: current_area and door_to should be valid area names within the game's world
+    :precondition: new_x and new_y should be integers representing valid coordinates
+    :postcondition: if moving from Town to Forest or Desert, the function prompts the player for confirmation
+    :postcondition: if confirmed, the character's location is updated
+    :postcondition: for all other area transitions, the character's location is updated directly to the new coordinates
+    """
     if current_area == "Town" and door_to == "Forest":
         print("Before you go to Forest, I strongly recommend you to get a class!")
         print("You can go to school left of the Town to get great skills")
@@ -252,16 +280,45 @@ def handle_door_interaction(character: dict[str, str | int | bool | dict[str, in
 
 
 def handle_home_interaction(character: dict[str, str | int | bool | dict[str, int]]):
+    """
+    Restores the character's health points to their maximum when they interact with their home.
+
+    :param character: a dictionary representing a character
+    :precondition: the character dictionary must exist and contain hp and max_hp keys, hp and max_hp must be integers
+    :postcondition: the character's hp is set equal to their max_hp, effectively restoring the character's hp to full
+    a message is printed to notify the player of the health restoration
+    >>> player = {"hp": 100, "max_hp": 100}
+    >>> handle_home_interaction(player)
+    Your hp is full now.
+    """
     character["hp"] = character["max_hp"]
     print("Your hp is full now.")
 
 
 def interact_with_npc(character: dict[str, str | int | bool | dict[str, int]], npc_name: str):
+    """
+    Handle the character's interaction with a Non-Player Character (NPC) by calling a specific function associated
+    with the NPC's name.
+
+    :param character: a dictionary representing a character
+    :param npc_name: a string representing the name of the NPC
+    :precondition: each function should accept a single argument: a character dictionary
+    :postcondition: the function associated with 'npc_name' within the 'npc' object or module is called,
+    passing 'character' as an argument.
+    """
     func_name = getattr(npc, npc_name)
     call(func_name, character)
 
 
 def ask_for_confirmation(prompt: str) -> bool:
+    """
+    Prompts the user with a question and expects a 'yes' or 'no' response.
+
+    :param prompt: a string containing the question or message to present to the user
+    :precondition: the prompt should be a string
+    :postcondition: the user is repeatedly prompted until a valid input (y or n) is provided
+    :return: a boolean value representing the user's response. True for y and False for n
+    """
     user_input = ""
     valid_input = ["y", "n"]
     while user_input not in valid_input:
@@ -271,6 +328,19 @@ def ask_for_confirmation(prompt: str) -> bool:
 
 def move_character(character: dict[str, str | int | bool | dict[str, int]], direction: str,
                    game_board: dict[tuple[int, int], str]):
+    """
+    Move the character in the specified direction and handle interactions based on the new location.
+
+    :param character: a dictionary representing a character
+    :param direction: a string indicating the direction in which the character is moving
+    :param game_board: a dictionary mapping (x, y) coordinated tuples to strings describing the area.
+    :precondition: character must have valid location with current coordinates
+    :precondition: direction must be one of the specified valid directions (up, down, left, right)
+    :precondition: game_board must accurately represent the current game state, with coordinates
+    :postcondition: if the move is valid and leads to an area that triggers a specific interaction,
+    the corresponding interaction function is called
+    :postcondition: if the move is invalid, an appropriate message is printed, and no position update is made
+    """
     movement = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
     valid_move = ["Town", "School", "Forest", "Desert", "Castle"]
 
