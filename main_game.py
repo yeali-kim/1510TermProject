@@ -93,7 +93,7 @@ def game_loop():
 
         direction = character_functions.get_user_choice()  # Get user input for the next action
         if direction == 'quit':
-            print("Thank you for playing, \033[1;33m{character['name']}\033[0m! Goodbye.")
+            print(f"Thank you for playing, \033[1;33m{character['name']}\033[0m! Goodbye.")
             break
         character_functions.move_character(character, direction, game_board)  # Move the character based on the input
         npc.heca_found(character, game_board)
