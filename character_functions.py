@@ -190,7 +190,8 @@ def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, t
     :param movement: a dictionary where each key is a direction and each value is a tuple of two integers
     :precondition: x and y must be integers representing the current position of the character
     :precondition: direction should be a string that matches one of the keys in the 'movement' dictionary
-    :precondition: movement must be a dictionary with string keys (directions) and tuple values indicating movement offsets
+    :precondition: movement must be a dictionary with string keys (directions)
+    and tuple values indicating movement offsets
     :postcondtion: a tuple of two integers representing the new position of the character.
     :return: a tuple (new_x, new_y) representing the new coordinates of the character after the movement.
     >>> calculate_new_position(1, 1, "up", {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)})
