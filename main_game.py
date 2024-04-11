@@ -54,12 +54,9 @@ def game_loop():
 ⠀⠀⠀⠀⠀⠙⠦⠤⠤⠭⠽⠟⠋⠁⠀⠀⠀⠹⢍⡉⠉⠁⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠋⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀"""
 
-    text = iter(greet_texts)  # proof of concept
-    print(next(text))
-    time.sleep(2)
-    print(next(text))
-    time.sleep(2)
-    print(next(text))
+    for text in greet_texts:
+        print(text)
+        time.sleep(2)
 
     lines = chris_face.split("\n")
     for line in lines:
