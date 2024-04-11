@@ -172,7 +172,7 @@ def get_user_choice() -> str:
     :postcondition: request user input for the direction to move the character in
     :return: a string that is one of "Up", "Down", "Left", and "Right"
     """
-    directions = {"w": "up", "s": "down", "a": "left", "d": "right"}
+    directions = {"w": "up", "s": "down", "a": "left", "d": "right", "quit": "quit"}
     user_direction = input("Enter movement direction (w, a, s, d) or 'quit' to exit: ")
     while user_direction not in directions:
         user_direction = input("Enter movement direction (w, a, s, d) or 'quit' to exit: ")
