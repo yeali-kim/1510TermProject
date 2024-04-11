@@ -3,6 +3,17 @@ import character_functions
 
 
 def create_creature(region: str) -> dict[str, int | str] | None:
+    """
+    Randomly generates a creature based on the specified region with predefined attributes.
+
+    :param region: a string indicating the region from which to generate a creature.
+    :precondition: the region parameter must correspond to a key in the predefined creatures dictionary
+    :postcondition: if the region is valid, a creature dictionary containing the creature's attributes is returned
+    :postcondition: the specific creature is chosen based on a randomized probability distribution
+    :postcondition: if the specified region is not recognized, the function returns None
+    :postcondition: a message is printed indicating the appearance of the creature
+    :return: a dictionary with the selected creature's attributes if the region is valid; otherwise, None
+    """
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
@@ -51,7 +62,42 @@ def create_creature(region: str) -> dict[str, int | str] | None:
         return None
 
 
-def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creature: dict) -> int:
+def calculate_skill_damage(skill: str, chosen_type: str, character: dict[str, str | int | bool | dict[str, int]],
+                           creature: dict[str, int | str]) -> int:
+    """
+    Calculates the damage inflicted by a specific skill used by a character against a creature, factoring in the
+    character's stats and the type advantages between the character's chosen type and the creature's type.
+
+    :param skill: a string representing the skill used by the character
+    :param chosen_type: a string representing the chosen type of the character for the skill interaction
+    :param character: a dictionary representing a character
+    :param creature: a dictionary representing a creature
+    :precondition: skill must be the key in the skill_damage_formulas dictionary
+    :precondition: chosen_type and the creature's type must be a valid key in the type dictionary
+    :precondition: the character dictionary must have a stats key
+    :precondition: the creature dictionary must have a type key with a valid type string
+    :postcondition: calculate and return the damage as an integer, based on the character's stats, the skill used,
+    and the type advantage multiplier.
+    :return: an integer representing the calculated damage and returns 0 for an unknown skill
+    >>> skill_name = "Tackle"
+    >>> user_chosen_type = "normal"
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> creature_type = {"type": "normal"}
+    >>> calculate_skill_damage(skill_name, user_chosen_type, player, creature_type)
+    7.5
+    >>> skill_name = "Poison Nova"
+    >>> user_chosen_type = "grass"
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> creature_type = {"type": "fire"}
+    >>> calculate_skill_damage(skill_name, user_chosen_type, player, creature_type)
+    -7.5
+    """
     skill_damage_formulas = {
         'Tackle': character['stats'][0] * 0.5 + character['stats'][1] * 0.5 + character['stats'][2] * 0.5,
         "Sword of Justice": character["stats"][0] * 100 + character["stats"][1] * 100 + character["stats"][2] * 100,
@@ -100,6 +146,19 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
 
 
 def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str] | int:
+    """
+    Prompts the user to choose a skill from the character's available skills and returns the selected skill's name
+    and type.
+
+    :param character: a dictionary representing a character
+    :precondition: character must have a skills key with a dictionary value
+    :precondition: if Elixir is chosen by user, a function called drink_elixir must exist and accept the character
+    dictionary as a parameter
+    :postcondition: if a valid skill other than Elixir is chosen, the function returns a tuple containing
+    the skill's name and type
+    :postcondition: if Elixir is chosen, the drink_elixir function will be called
+    :return: a tuple containing the chosen skill's name and type
+    """
     print("Available skills:")
     skills_list = list(character['skills'].keys())  # Convert skill names to a list
     for skill_number in range(len(skills_list)):
@@ -122,6 +181,31 @@ def choose_skill(character: dict[str, str | int | bool | dict[str, int]]) -> tup
 
 
 def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]) -> tuple[str, str]:
+    """
+    Restores the character's health points to maximum if an elixir is available and decreases the elixir count by one.
+
+    :param character: a dictionary representing a character
+    :precondition: the character dictionary must contain hp, max_hp, and elixir keys with integer values
+    :postcondition: if elixir is greater than 0, hp is set to max_hp, elixir is decremented by one,
+    and a success message is printed
+    :postcondition: if elixir is 0, a failure message is printed indicating that no elixirs are available
+    :return: a tuple containing the string "Elixir" and its type "normal"
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> drink_elixir(player)
+    Your hp is full now!
+    Now you have 0
+    ('Elixir', 'normal')
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 0,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> drink_elixir(player)
+    You don't have any elixir...
+    ('Elixir', 'normal')
+    """
     if character['elixir'] > 0:
         character['hp'] = character['max_hp']
         character["elixir"] -= 1
@@ -134,6 +218,17 @@ def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]) -> tup
 
 
 def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
+    """
+    Simulates combat between the character and a creature, allowing the character to use skills against the creature.
+
+    :param character: a dictionary representing a character
+    :param creature: a dictionary representing a creature
+    :precondition: character must have hp and skills keys
+    :precondition: creature must be properly initialized with name, health, and damage
+    :postcondition: combat continues in turns until the character or the creature's health is reduced to zero or below
+    :postcondition: if the creature's health is reduced to zero or below first, a victory message is printed
+    :postcondition: if the character's health is reduced to zero or below, print a game over message
+    """
     print(f"Engaging in combat with {creature['name']}...")
 
     while creature['health'] > 0:
@@ -158,6 +253,34 @@ def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creat
 
 
 def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
+    """
+    Rewards the character with tree branches if they defeat a 'Stump' creature while on the 'David' quest.
+
+    :param character: a dictionary representing a character
+    :param creature: a dictionary representing a creature
+    :precondition: the character dictionary must contain a david_quest key that indicates
+    whether the quest is active or not
+    :precondition: the creature dictionary must contain a name key that matches Stump
+    :precondition: the Stump should include a tree_branches key
+    :postcondition: if the conditions ar met, the number of tree_branches in the character's inventory is increased
+    :postcondition: print notifications how many tree branches got and have
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': True, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> monster = {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',\
+             'golds': 5, 'tree_branches': 2}
+    >>> tree_branches(player, monster)
+    You got 2 tree branches.
+    Now you have 2 branches
+    >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
+                     'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
+                     'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
+                     'chris': False}
+    >>> monster = {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',\
+             'golds': 5, 'tree_branches': 2}
+    >>> tree_branches(player, monster)
+    """
     if creature["name"] == "Stump" and character["david_quest"]:
         character["tree_branches"] += creature["tree_branches"]
         print(f"You got {creature['tree_branches']} tree branches.")
@@ -165,6 +288,9 @@ def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creat
 
 
 def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], board: dict[tuple[int, int], str]):
+    """
+
+    """
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
     current_location_type = board[(x, y)]
 
