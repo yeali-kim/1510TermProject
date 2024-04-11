@@ -193,6 +193,10 @@ def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, t
     movement must be a dictionary with string keys (directions) and tuple values indicating movement offsets
     :postcondtion: a tuple of two integers representing the new position of the character.
     :return: a tuple (new_x, new_y) representing the new coordinates of the character after the movement.
+    >>> calculate_new_position(1, 1, "up", {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)})
+    (1, 0)
+    >>> calculate_new_position(1, 1, "left", {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)})
+    (0, 1)
     """
     value_of_coordinates = movement.get(direction, (0, 0))
     new_x = x + value_of_coordinates[0]
@@ -200,10 +204,25 @@ def calculate_new_position(x: int, y: int, direction: str, movement: dict[str, t
     return new_x, new_y
 
 
-def handle_valid_move_area(character, current_area, new_area, new_x: int, new_y: int):
-    if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
-        print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
-    print(f"Moving to {new_area}...")
+def handle_valid_move_area(character: dict[str, str | int | bool | dict[str, int]], current_area: str, new_area: str,
+                           new_x: int, new_y: int):
+    """
+    Update the character's location and provide feedback on moving between different areas.
+
+    :param character: a dictionary representing a character
+    :param current_area: a string representing the area the character is currently in
+    :param new_area: a string representing the area the character intends to move to
+    :param new_x: the new x-coordinate (integer) for the character in the new area
+    :param new_y: the new y-coordinate (integer) for the character in the new area
+    :precondition: character must be a dictionary that includes location information
+    current_area and new_area should be among the predefined valid areas
+    :postcondition: prints a message indicating the character is moving and includes a warning
+    updates the character's location key with the new x and y coordinates
+    """
+    if current_area != new_area:
+        if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
+            print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
+        print(f"Moving to {new_area}...")
     character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
 
 
