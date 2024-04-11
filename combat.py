@@ -157,10 +157,6 @@ def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creat
             break
 
 
-def is_alive(character: dict[str, str | int | bool | dict[str, int]]) -> bool:
-    return False if character["hp"] <= 0 else True
-
-
 def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creature: dict[str, int | str]):
     if creature["name"] == "Stump" and character["david_quest"]:
         character["tree_branches"] += creature["tree_branches"]
