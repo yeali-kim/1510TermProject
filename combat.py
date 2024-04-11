@@ -273,6 +273,11 @@ def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creat
     >>> tree_branches(player, monster)
     You got 2 tree branches.
     Now you have 2 branches
+    >>> print(player)
+    {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2}, 'level': 1, 'exp': 0,\
+ 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1, 'gold': 0, 'shawn_quest': None,\
+ 'david_quest': True, 'heca_found': False, 'tree_branches': 2, 'chris': False}
+
     >>> player = {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2},\
                      'level': 1, 'exp': 0, 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1,\
                      'gold': 0, 'shawn_quest': None, 'david_quest': None, 'heca_found': False, 'tree_branches': 0,\
@@ -280,6 +285,11 @@ def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creat
     >>> monster = {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',\
              'golds': 5, 'tree_branches': 2}
     >>> tree_branches(player, monster)
+    >>> print(player)
+    {'class': 'Citizen', 'stats': [5, 5, 5], 'location': {'x-coordinate': 6, 'y-coordinate': 2}, 'level': 1, 'exp': 0,\
+ 'skills': {'Tackle': 'normal'}, 'hp': 100, 'max_hp': 100, 'elixir': 1, 'gold': 0, 'shawn_quest': None,\
+ 'david_quest': None, 'heca_found': False, 'tree_branches': 0, 'chris': False}
+
     """
     if creature["name"] == "Stump" and character["david_quest"]:
         character["tree_branches"] += creature["tree_branches"]
