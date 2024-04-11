@@ -24,10 +24,13 @@ def jinkx(character: dict[str, str | int | bool | dict[str, int]]):
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print("\033[1;35mJinkx\033[0m: Hi there little fella! My name is \033[1;35mJinkx\033[0m, the wise wizard!")
-            time.sleep(1)
-            print("I can teach you some magic spells.")
-            time.sleep(1)
+            greet_lines = ["\033[1;35mJinkx\033[0m: Hi there little fella! My name is \033[1;35mJinkx\033[0m, the wise wizard!",
+                           "I can teach you some magic spells.",
+                           "If you learn from me, you will become the best magician in the world!"
+                           "But you won't be able to choose other classes."]
+            for line in greet_lines:
+                print(line)
+                time.sleep(1)
             user_action = input(
                 "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn magic spells
             while user_action not in ["y", "n"]:
@@ -81,12 +84,14 @@ def chrissipus(character: dict[str, str | int | bool | dict[str, int]]):
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print(
-                "\033[1;35mChrissipus\033[0m : Hi there young man! My name is \033[1;35mChrissipus\033[0m, the mighty "
-                "knight!")
-            time.sleep(1)
-            print("I can teach you some sword skills.")
-            time.sleep(1)
+            greet_lines = ["\033[1;35mChrissipus\033[0m : Hi there young man! My name is \033[1;35mChrissipus\033[0m, the mighty "
+                "knight!"
+                "I can teach you some sword skills.",
+                "If you learn from me, you will become the best swordsman in the world!",
+                "But you won't be able to choose other classes."]
+            for line in greet_lines:
+                print(line)
+                time.sleep(1)
             user_action = input(
                 "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn sword skills
             while user_action not in ["y", "n"]:
@@ -140,11 +145,13 @@ def hypatia(character: dict[str, str | int | bool | dict[str, int]]):
         while say_hi not in ["y", "n"]:
             say_hi = input("Invalid input. Please enter Y or N").strip().lower()
         if say_hi == "y":
-            print(
-                "\033[1;35mHypatia\033[0m: Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!")
-            time.sleep(1)
-            print("I can teach you some archery skills.")
-            time.sleep(1)
+            greet_lines = ["\033[1;35mHypatia\033[0m: Hi there young man! My name is \033[1;35mHypatia\033[0m, the great archer!",
+                           "I can teach you some archery skills.",
+                           "If you learn from me, you will become the best archer in the world!"
+                           "But you won't be able to choose other classes."]
+            for line in greet_lines:
+                print(line)
+                time.sleep(1)
             user_action = input(
                 "Would you like to learn some? (Y/N)").strip().lower()  # ask user if they want to learn archery skills
             while user_action not in ["y", "n"]:
@@ -310,8 +317,8 @@ def david(character: dict[str, str | int | bool | dict[str, int]]):
             while user_action not in ["y", "n"]:
                 user_action = input("Invalid input. Please enter Y or N: ").strip().lower()
             responses = {
-                "y": "\u001b[34;1mDavid\033[0m: Thank you so much! I need 10 tree branches. You can find them by "
-                     "defeating some monsters in the forest.",
+                "y": "\u001b[34;1mDavid\033[0m: Thank you so much! I need 10 tree branches.\n"
+                     "You can find them by defeating some monsters in the forest.",
                 "n": "\u001b[34;1mDavid\033[0m: I understand. I mean... I guess I'll continue eating something else.."
             }
             if user_action == "y":
