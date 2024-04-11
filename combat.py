@@ -88,7 +88,7 @@ def calculate_skill_damage(skill: str, chosen_type: str, character: dict, creatu
         ('fire', 'normal'): 1,
         ('fire', 'grass'): -0.5,
         ('fire', 'water'): 2,
-        ('fire', 'other'): 0.5,
+        ('fire', 'fire'): 0.5,
     }
     if skill in skill_damage_formulas:
         multiplier = types[(creature["type"], chosen_type)]
