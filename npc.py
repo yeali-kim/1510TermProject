@@ -247,6 +247,7 @@ def david(character: dict[str, str | int | bool | dict[str, int]]):
     elif character["david_quest"] and character["tree_branches"] >= 10:
         character["gold"] += 100
         character["david_quest"] = False
+        character["tree_branches"] -= 10
         print(
             "\u001b[34;1mDavid\033[0m: Thank you so much! Now I can eat my favorite noodles gracefully. I am forever "
             "grateful.")
