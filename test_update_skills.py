@@ -4,7 +4,7 @@ from character_functions import update_skills
 import unittest
 
 
-class TestUpdateSkills(unittest.TestCase):
+class TestUpdateSkills(TestCase):
     def test_update_skills_knight(self):
         character_knight = {"class": "Knight"}
         update_skills(character_knight)
