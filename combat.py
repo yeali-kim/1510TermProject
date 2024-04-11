@@ -289,7 +289,14 @@ def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creat
 
 def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], board: dict[tuple[int, int], str]):
     """
+    Simulates an encounter with a creature when the character moves into certain locations on the board.
 
+    :param character: a dictionary representing a character
+    :param board: a dictionary mapping (x, y) coordinated tuples to strings describing the area
+    :precondition: the character dictionary must include a location key
+    :precondition: the board dictionary must include keys for all valid locations
+    :postcondition: if an encounter occurs, the function generates a creature using "create_creature" function
+    :postcondition: if no encounter occurs, a simple message is printed
     """
     x, y = character['location']['x-coordinate'], character['location']['y-coordinate']
     current_location_type = board[(x, y)]
@@ -306,6 +313,16 @@ def handle_encounter(character: dict[str, str | int | bool | dict[str, int]], bo
 
 def run_combat(character: dict[str, str | int | bool | dict[str, int]],
                creature: dict[str, str | int | bool | dict[str, int]]):
+    """
+    Attempts to escape from combat with a creature based on a randomized chance.
+
+    :param character: a dictionary representing a character
+    :param creature: a dictionary representing a creature
+    :precondition: the "engage_combat" function must exist and accept the character dictionary and creature dictionary
+     as a parameter
+    :postcondition: if the escape is successful, a safe notification message is printed
+    :postcondition: if the escape fails, "engage_combat" is called
+    """
     if random.random() < 0.5:  # 50% chance to escape
         print("You managed to escape safely.")
     else:
@@ -314,6 +331,19 @@ def run_combat(character: dict[str, str | int | bool | dict[str, int]],
 
 
 def main_combat(creature: dict[str, int | str], character: dict[str, str | int | bool | dict[str, int]]):
+    """
+    Manages the main combat loop, allowing the player to choose between fighting or running from a creature encounter.
+
+    :param creature: a dictionary representing a creature
+    :param character: a dictionary representing a character
+    :precondition: creature must have health, exp, and gold keys
+    :precondition: character must include keys for exp, gold, and may include specific quest-related items or conditions
+    :postcondition: if the player chooses to fight and wins, character is updated with gained exp, golds,
+    and quest specific items
+    :postcondition: if the player attempts to run and the attempt fails, engage_combat is automatically called
+    :postcondition: the character's level may be updated if the gained exp from defeating the creature is sufficient
+    for leveling up
+    """
     action = input("Do you wish to fight (f) or try to run (r)? ")
 
     if action.lower() == 'f':
