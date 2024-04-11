@@ -333,7 +333,7 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
 
     :param character: a dictionary representing a character
     :param direction: a string indicating the direction in which the character is moving
-    :param game_board: a dictionary mapping (x, y) coordinated tuples to strings describing the area.
+    :param game_board: a dictionary mapping (x, y) coordinated tuples to strings describing the area
     :precondition: character must have valid location with current coordinates
     :precondition: direction must be one of the specified valid directions (up, down, left, right)
     :precondition: game_board must accurately represent the current game state, with coordinates
