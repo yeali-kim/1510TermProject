@@ -314,10 +314,6 @@ def daniel(character: dict[str, str | int | bool | dict[str, int]]):
             print(f"You now have {character["elixir"]} elixirs and {character["gold"]} gold.")
 
 
-def game_clear(character: dict[str, str | int | bool | dict[str, int]]):
-    return False if character["chris"] else True
-
-
 def ending(character: dict[str, str | int | bool | dict[str, int]]):
     scripts = [
         "Chris (with his last breath): See the world through my eyes, and understand the truth you refused to see.",

@@ -84,7 +84,7 @@ def game_loop():
         time.sleep(1)
 
     board.print_board(game_board, character)  # Display the game board
-    while character["hp"] > 0 and npc.game_clear(character):
+    while character["hp"] > 0 and character["chris"] is False:
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
         print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
