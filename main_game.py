@@ -54,16 +54,17 @@ def game_loop():
 ⠀⠀⠀⠀⠀⠙⠦⠤⠤⠭⠽⠟⠋⠁⠀⠀⠀⠹⢍⡉⠉⠁⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠃⠀⠀⠀⢳⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠋⠀⠀⠀⠀⠸⠀⠀⠀⠀⠀⠀⠀⠀"""
 
-    text = iter(greet_texts)  # proof of concept
+    text = iter(greet_texts)  # itertool proof of concept
     print(next(text))
     time.sleep(2)
     print(next(text))
     time.sleep(2)
     print(next(text))
+    time.sleep(2)
 
-    lines = chris_face.split("\n")
+    lines = chris_face.split("\n")  # Print the face of the dragon Chris in red
     for line in lines:
-        print("\033[0;31m" + line + "\033[0m")  # Print the face of the dragon Chris in red
+        print("\033[0;31m" + line + "\033[0m")
         time.sleep(0.1)
     name = input("\033[0;34mElder\033[0m: Oh brave one, please tell me your name.")  # Get the player's name
     time.sleep(1)
@@ -72,22 +73,21 @@ def game_loop():
     character["name"] = name
     start_texts = [
         f"\033[0;34mElder\033[0m: \033[1;33m{character['name']}\033[0m, please save us from \033[0;31mChris\033[0m!",
-        "But... do tread carefully. Not all is as it seems.",
+        f"\033[0;34mElder\033[0m: But... do tread carefully. Not all is as it seems.",
         f"\033[1;33m{character['name']}\033[0m: Fear not, I shall bring peace back to Dragon Coast.",
-        ".",
         ".",
         ".",
         "And so, the journey begins..."
         ]
     for text in start_texts:
         print(text)
-        time.sleep(1)
+        time.sleep(2)
 
     board.print_board(game_board, character)  # Display the game board
     while character["hp"] > 0 and character["chris"] is False:
         # Display character's current status
         print(f"\nCurrent location: ({character['location']['x-coordinate']}, {character['location']['y-coordinate']})")
-        print(f"HP: {character['hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
+        print(f"HP: {character['hp']}/{character['max_hp']} | Level: {character['level']} | Exp: {character['exp']}\n")
         print(f"You have {character['gold']} gold and {character['elixir']} elixir(s)")
         print(f"Your stats: str: {character['stats'][0]}, dex: {character['stats'][1]}, int: {character['stats'][2]}")
 
@@ -99,7 +99,11 @@ def game_loop():
         npc.heca_found(character, game_board)
         board.print_board(game_board, character)  # Display the game board
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
-    print(f"{character['name']} was {character['class']}, had {character['skills']} skills")
+    final_words = [f"\033[1;33m{character['name']}\033[0m became the {character['class']} of Dragon coast.",
+                   f"\033[1;33m{character['name']}\033[0m now has {character['skills']} skills"]
+    for text in final_words:
+        print(text)
+        time.sleep(2)
 
 
 def main():
