@@ -8,22 +8,26 @@
 
 --------------------------
 ### Name: Yeali Kim
-### Student Number :
-### GitHub Name: 
+### Student Number : A00985734
+### GitHub Name: yeali-kim
 
 ## Any important comments you'd like to make about your work:
-First time building a game with partner. So Exited!
+We are very excited to share our very first Python text based game project!
 
 ## Text-Based Adventure Game
-This is a SUD (Single User Dungeon) game. In this game, you play as a hero who has set off to save
-Dragon Coast from dragon Chris. There are 12 unique creatures to encounter, and 4 types 
-"Fire", "Water", "Grass", and "Normal". Choose your skill carefully based on the creature's type!!
-Have Fun Hero!
+This is a SUD (Single User Dungeon) game. 
+In this game, you play as a hero who has set off to save Dragon Coast from dragon Chris. 
+- Player starts from Home, located at (6, 2).
+- Returning home will fully heal the player.
+- The game encourages the player to go to the school to get a class first.
+- There are 12 unique creatures to encounter, and 4 types, "Fire", "Water", "Grass", and "Normal".
+  Choose your skills carefully based on your enemy's type!
+  Using wrong types will increase your enemy's health instead of decreasing it.
+Have Fun, Hero!
 
 ## How to Play
 1. Run the main() function from the main_game file.
-2. The game introduces the player to the school to get a class first.
-3. Players input directions to navigate through the forest.
+2. Players input directions (w, a, s, d) to navigate through the map.
 
 ## Type Chart
 |        | Fire | Water | Grass | Normal | 
@@ -38,10 +42,11 @@ Have Fun Hero!
 | Description         | Line of Code                       |
 |---------------------|------------------------------------|
 | Function Recursion  | Line 162 in character_functions.py |
-| Itertools           | Line 55 in combat.py               |
-| Function Annotation | All functions                      |
-| Using exception     | Line 173 in combat.py              |
-| Random module       | Line 315 in combat.py              |
+| Itertools           | Line 58 in combat.py               |
+| Function Annotation | Line 210 in character_functions.py |
+| Using exception     | Line 172 in combat.py              |
+| Random module       | Line 323 in combat.py              |
+
 
 ## Technologies and Resources Used
 - Python 3.12.1
