@@ -100,7 +100,7 @@ def game_loop():
         board.print_board(game_board, character)  # Display the game board
         combat.handle_encounter(character, game_board)  # Check for and handle any encounters
     final_words = [f"\033[1;33m{character['name']}\033[0m became the {character['class']} of Dragon coast.",
-                   f"\033[1;33m{character['name']}\033[0m has {character['skills']} skills"]
+                   f"\033[1;33m{character['name']}\033[0m now has these skills: \033[92m{character['skills']}\033[0m"]
     for text in final_words:
         print(text)
         time.sleep(2)

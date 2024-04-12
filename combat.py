@@ -1,5 +1,6 @@
 import random
 import character_functions
+import time
 
 
 def create_creature(region: str) -> dict[str, int | str] | None:
@@ -210,10 +211,13 @@ def drink_elixir(character: dict[str, str | int | bool | dict[str, int]]) -> tup
         character['hp'] = character['max_hp']
         character["elixir"] -= 1
         print("Your hp is full now!")
+        time.sleep(1)
         print(f"Now you have {character['elixir']}")
+        time.sleep(1)
         return "Elixir", "normal"
     else:
         print("You don't have any elixir...")
+        time.sleep(1)
         return "Elixir", "normal"
 
 
@@ -249,6 +253,7 @@ def engage_combat(character: dict[str, str | int | bool | dict[str, int]], creat
         print(f"After the {creature['name']}'s attack, your HP is now {character['hp']}.")
         if character['hp'] <= 0:
             print("Game Over")
+            time.sleep(1)
             break
 
 
@@ -294,6 +299,7 @@ def tree_branches(character: dict[str, str | int | bool | dict[str, int]], creat
     if creature["name"] == "Stump" and character["david_quest"]:
         character["tree_branches"] += creature["tree_branches"]
         print(f"You got {creature['tree_branches']} tree branches.")
+        time.sleep(1)
         print(f"Now you have {character['tree_branches']} branches")
 
 
@@ -337,6 +343,7 @@ def run_combat(character: dict[str, str | int | bool | dict[str, int]],
         print("You managed to escape safely.")
     else:
         print("Failed to escape. Forced into combat.")
+        time.sleep(1)
         engage_combat(character, creature)
 
 
@@ -372,4 +379,5 @@ def main_combat(creature: dict[str, int | str], character: dict[str, str | int |
         run_combat(character, creature)
     else:
         print("Invalid action. You're forced into combat.")
+        time.sleep(1)
         engage_combat(character, creature)
