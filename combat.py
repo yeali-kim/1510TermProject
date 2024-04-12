@@ -2,6 +2,7 @@ import random
 import character_functions
 import time
 
+import itertools
 
 def create_creature(region: str) -> dict[str, int | str] | None:
     """
@@ -18,13 +19,13 @@ def create_creature(region: str) -> dict[str, int | str] | None:
     # Define basic attributes for creatures in each region
     creatures = {
         'Forest': [
-            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 50, 'type': 'grass',
+            {'name': 'Rabbit', 'health': 10, 'damage': 5, 'exp': 80, 'type': 'grass',
              'golds': random.randint(1, 5)},
-            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 60, 'type': 'normal',
+            {'name': 'Gump', 'health': 20, 'damage': 10, 'exp': 100, 'type': 'normal',
              'golds': random.randint(2, 8)},
-            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 70, 'type': 'grass',
+            {'name': 'Stump', 'health': 30, 'damage': 15, 'exp': 120, 'type': 'grass',
              'golds': random.randint(5, 10), 'tree_branches': random.randint(1, 3)},
-            {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 80, 'type': 'grass',
+            {'name': 'Wild Boar', 'health': 50, 'damage': 20, 'exp': 130, 'type': 'grass',
              'golds': random.randint(7, 12)},
         ],
         'Desert': [
@@ -53,7 +54,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
     if region in creatures:
         creature_number = random.randint(1, 10)
         probability = [3, 6, 8, 10]  # 30%, 30%, 20%, 20%
-        for index, threshold in enumerate(probability):
+        for index, threshold in zip(itertools.count(0), probability):  # proof of concept
             if creature_number <= threshold:
                 selected_creature = creatures[region][index]
                 message = "A wild" if region != 'Castle' else "A guardian"
