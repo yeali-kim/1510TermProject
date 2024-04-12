@@ -1,6 +1,7 @@
 import random
 from operator import call
 import npc
+import time
 
 
 def create_character() -> dict[str, str | int | bool | dict[str, int]]:
@@ -13,38 +14,35 @@ def create_character() -> dict[str, str | int | bool | dict[str, int]]:
     :return: a dictionary of character's default information
     """
     character_class = "Citizen"
-
     citizen_skill = {
         "Citizen": {
             "Tackle": "normal",
             "Elixir": "normal"
         }
     }
-
     classes = {
         "Citizen": {"str": random.randint(1, 10), "dex": random.randint(1, 10),
-                    "int": random.randint(1, 10), "hp": 100, "max_hp": 100},
+                    "int": random.randint(1, 10), "hp": 100, "max_hp": 100
+                    },
     }
-
     # Initialize the character with class-specific stats, location, level, Exp, and skills
     user_character = {
         "class": character_class,
         "stats": [classes[character_class]['str'], classes[character_class]['dex'], classes[character_class]['int']],
         "location": {"x-coordinate": 6, "y-coordinate": 2},  # Default location at home
-        "level": 1,  # Starting level
-        "exp": 0,  # Starting experience points
+        "level": 1,
+        "exp": 0,
         "skills": citizen_skill[character_class],
         "hp": classes[character_class]["hp"],
         "max_hp": classes[character_class]["max_hp"],
-        "elixir": 1,  # Starting elixir
-        "gold": 0,  # Starting money
+        "elixir": 1,
+        "gold": 0,
         "shawn_quest": None,
         "david_quest": None,
         "heca_found": False,
         "tree_branches": 0,
         "chris": False
     }
-
     return user_character
 
 
@@ -135,7 +133,8 @@ def update_level(character: dict[str, str | int | bool | dict[str, int]]):
         character["level"] += 1  # Increase level
 
         # Print level-up message
-        print(f"Congratulations! Your character is now level {character["level"]}.")
+        print(f"Congratulations! You are now \033[1;33m level {character["level"]}\033[0m.")
+        time.sleep(1)
 
         class_growth = {
             "Citizen": {"stats": [1, 1, 1], "hp_growth_factor": 10},
@@ -153,15 +152,18 @@ def update_level(character: dict[str, str | int | bool | dict[str, int]]):
             character["max_hp"] += character["level"] * growth_info["hp_growth_factor"]
             character["hp"] = character["max_hp"]
             print("Your stats have increased:")
+            time.sleep(1)
             print(f"Strength: {character["stats"][0]}, Dexterity: {character["stats"][1]},"
                   f" Intelligence: {character["stats"][2]}, HP: {character["hp"]}")
+            time.sleep(1)
         else:
             print(f"No growth info for class: {character['class']}")
-
-        # Check for another level up in case of remaining Exp
+            time.sleep(1)
+        # Call function until exp runs out
         update_level(character)
     else:
         print(f"You need {exp_for_next_level - character["exp"]} more Exp to reach level {character["level"] + 1}.")
+        time.sleep(1)
 
 
 def get_user_choice() -> str:
@@ -235,7 +237,9 @@ def handle_valid_move_area(character: dict[str, str | int | bool | dict[str, int
     if current_area != new_area:
         if current_area in ["Forest", "Desert", "Castle"] and new_area in ["Forest", "Desert", "Castle"]:
             print(f"Now you move from {current_area} to {new_area}. Be careful {new_area} is dangerous")
+            time.sleep(1.5)
         print(f"Moving to {new_area}...")
+        time.sleep(1.5)
     character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
 
 
@@ -257,27 +261,33 @@ def handle_door_interaction(character: dict[str, str | int | bool | dict[str, in
     :postcondition: if confirmed, the character's location is updated
     :postcondition: for all other area transitions, the character's location is updated directly to the new coordinates
     """
-    if current_area == "Town" and door_to == "Forest":
-        print("Before you go to Forest, I strongly recommend you to get a class!")
-        print("You can go to school left of the Town to get great skills")
+    if current_area == "Town" and door_to == "Forest" and character["class"] == "Citizen":
+        print("Before you enter the Forest, I strongly recommend you to obtain a class!")
+        time.sleep(1.5)
+        print("You can go to school located next to the Town to get great skills.")
+        time.sleep(1.5)
         decision = ask_for_confirmation("Are you sure to enter the Forest? Y/N ")
         if decision:
             print("Be careful... the Forest is mysterious and full of dangers.")
+            time.sleep(1.5)
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         else:
             print("Come back when you are ready...")
 
     elif current_area == "Town" and door_to == "Desert":
-        decision = ask_for_confirmation("Are you sure to enter the Desert? Recommended level: 10 Y/N ")
+        decision = ask_for_confirmation("Are you sure to enter the Desert? Recommended level: 10. Y/N ")
         if decision:
             print("Be careful... the Desert is harsh and unforgiving.")
+            time.sleep(1.5)
             character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         else:
             print("Come back when you are ready...")
+            time.sleep(1.5)
 
     else:
         character["location"]["x-coordinate"], character["location"]["y-coordinate"] = new_x, new_y
         print(f"You are moving through the door to {door_to}.")
+        time.sleep(1.5)
 
 
 def handle_home_interaction(character: dict[str, str | int | bool | dict[str, int]]):
@@ -294,6 +304,7 @@ def handle_home_interaction(character: dict[str, str | int | bool | dict[str, in
     """
     character["hp"] = character["max_hp"]
     print("Your hp is full now.")
+    time.sleep(1.5)
 
 
 def interact_with_npc(character: dict[str, str | int | bool | dict[str, int]], npc_name: str):
@@ -351,6 +362,7 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
 
     if (new_x, new_y) not in game_board:
         print("Invalid move. Out of bounds.")
+        time.sleep(1)
         return
 
     new_area = game_board[(new_x, new_y)]
@@ -360,6 +372,7 @@ def move_character(character: dict[str, str | int | bool | dict[str, int]], dire
         handle_valid_move_area(character, current_area, new_area, new_x, new_y)
     elif new_area in ["horizontal_wall", "vertical_wall"]:
         print("Invalid move. You've hit a wall.")
+        time.sleep(1)
     elif "Door" in new_area:
         door_to = new_area.split(" ")[2]
         handle_door_interaction(character, door_to, current_area, new_x, new_y)
