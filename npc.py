@@ -521,6 +521,12 @@ def skill_fire_breath(character: dict[str, str | int | bool | dict[str, int]]):
 
 
 def skill_question():
+    """
+    Challenges the player with a agility test, requiring them to recall a word that flashes on the screen.
+    
+    :postcondition: the function returns a randomly chosen word from a list of words
+    :return: a string of randomly chosen word from the list of words
+    """
     quiz_lines = ["\033[0;31mChris\033[0m eyes you with a cunning glint."
                   "\033[0;31mChris\033[0m: 'Let's test your agility,'",
                   "(smirk)",
@@ -539,7 +545,7 @@ def skill_question():
 
 def skill_question_check(character: dict[str, str | int | bool | dict[str, int]]):
     """
-    Challenges the character with a memory test, impacting their maximum health based on their response.
+    Challenges the character with a agility test, impacting their maximum health based on their response.
 
     :param character: a dictionary representing a character
     :precondition: character must contain a max_hp key
