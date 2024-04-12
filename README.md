@@ -1,15 +1,15 @@
 # 1510TermProject
-## Contributors:
 
+## Contributors:
 --------------------------
 ### Name: Seogin Hong
 ### Student Number: A01353628
 ### GitHub Name: seogin
 
---------------------------
 ### Name: Yeali Kim
 ### Student Number : A00985734
 ### GitHub Name: yeali-kim
+--------------------------
 
 ## Any important comments you'd like to make about your work:
 We are very excited to share our very first Python text based game project!
@@ -67,7 +67,6 @@ Have Fun, Hero!
 | Normal | 100% | 100%  | 100%  | 100%   |
 
 ## Mandatory Python Elements
-
 | Description              | Line of Code                       |
 |--------------------------|------------------------------------|
 | Function Recursion       | Line 162 in character_functions.py |
