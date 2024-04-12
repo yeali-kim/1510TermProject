@@ -4,6 +4,7 @@ import time
 
 import itertools
 
+
 def create_creature(region: str) -> dict[str, int | str] | None:
     """
     Randomly generates a creature based on the specified region with predefined attributes.
