@@ -46,7 +46,13 @@ Have Fun, Hero!
 | Function Annotation | Line 210 in character_functions.py |
 | Using exception     | Line 172 in combat.py              |
 | Random module       | Line 323 in combat.py              |
-
+| Membership Operator | Line 142 in combat.py              |
+| Range Function      | Line 35 in board.py                |
+| Enumerate Function  | Line 149 in character_functions.py |
+| While loop          | Line 179 in character_functions.py |
+| If Statement        | Line 388 in npc.py                 |
+| Mutable Data        | Line 29 in character_functions.py  |
+| Immutable Data      | Line 65 in board.py                |
 
 ## Technologies and Resources Used
 - Python 3.12.1
