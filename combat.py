@@ -36,7 +36,7 @@ def create_creature(region: str) -> dict[str, int | str] | None:
              "golds": random.randint(12, 17)},
             {'name': 'Golem', 'health': 300, 'damage': 70, 'exp': 300, "type": "water",
              "golds": random.randint(15, 20)},
-            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 250, "type": "normal",
+            {'name': 'Sand Serpent', 'health': 500, 'damage': 100, 'exp': 350, "type": "normal",
              "golds": random.randint(20, 25)},
 
         ],
