@@ -62,8 +62,11 @@ def jinkx(character: dict[str, str | int | bool | dict[str, int]]):
     elif character['class'] == 'Knight':
         print("\033[1;35mJinkx\033[0m: You are already a knight. Chrissipus will be disappointed.")
         time.sleep(1)
-    else:
+    elif character['class'] == 'Archer':
         print("\033[1;35mJinkx\033[0m: You are already an archer. Hypatia will be disappointed.")
+        time.sleep(1)
+    else:
+        print("\033[1;35mJinkx\033[0m: I have nothing else to teach you!")
         time.sleep(1)
 
 
@@ -127,8 +130,11 @@ def chrissipus(character: dict[str, str | int | bool | dict[str, int]]):
     elif character['class'] == 'Magician':
         print("\033[1;35mChrissipus\033[0m: You are already a magician. Jinkx will be disappointed.")
         time.sleep(1)
-    else:
+    elif character['class'] == 'Archer':
         print("\033[1;35mChrissipus\033[0m: You are already an archer. Hypatia will be disappointed.")
+        time.sleep(1)
+    else:
+        print("\033[1;35mChrissipus\033[0m: I have nothing else to teach you!")
         time.sleep(1)
 
 
@@ -189,8 +195,11 @@ def hypatia(character: dict[str, str | int | bool | dict[str, int]]):
     elif character['class'] == 'Magician':
         print("\033[1;35mHypatia\033[0m : You are already a magician. Jinkx will be disappointed.")
         time.sleep(1)
-    else:
+    elif character['class'] == 'Knight':
         print("\033[1;35mHypatia\033[0m : You are already a knight. Chrissipus will be disappointed.")
+        time.sleep(1)
+    else:
+        print("\033[1;35mHypatia\033[0m : I have nothing else to teach you!")
         time.sleep(1)
 
 
