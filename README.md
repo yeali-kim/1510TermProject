@@ -29,6 +29,35 @@ Have Fun, Hero!
 1. Run the main() function from the main_game file.
 2. Players input directions (w, a, s, d) to navigate through the map.
 
+## Creatures
+>Forest
+
+|        | Rabbit | Gump   | Stump | Wild Boar |
+|--------|--------|--------|-------|-----------|
+| HP     | 10     | 20     | 30    | 50        |
+| Damage | 5      | 10     | 15    | 20        |
+| EXP    | 80     | 100    | 120   | 130       |
+| Type   | Grass  | Normal | Grass | Grass     |
+
+>Desert
+
+|        | Scorpion | Skeleton | Golem | Sand Serpent |
+|--------|----------|----------|-------|--------------|
+| HP     | 100      | 200      | 300   | 500          |
+| Damage | 30       | 50       | 70    | 100          |
+| EXP    | 150      | 200      | 300   | 350          |
+| Type   | Fire     | Normal   | Water | Normal       |
+
+>Castle
+
+|        | Cerberus | Gargoyle | Lich  | Death Knight |
+|--------|----------|----------|-------|--------------|
+| HP     | 700      | 1000     | 1000  | 2000         |
+| Damage | 200      | 300      | 700   | 500          |
+| EXP    | 500      | 800      | 1000  | 1500         |
+| Type   | Fire     | Normal   | Water | Normal       |
+
+
 ## Type Chart
 |        | Fire | Water | Grass | Normal | 
 |--------|------|-------|-------|--------|
