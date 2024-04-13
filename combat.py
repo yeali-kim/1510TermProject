@@ -1,7 +1,6 @@
 import random
 import character_functions
 import time
-
 import itertools
 
 
@@ -367,13 +366,15 @@ def main_combat(creature: dict[str, int | str], character: dict[str, str | int |
 
     if action.lower() == 'f':
         engage_combat(character, creature)
-        gained_exp = creature['exp']  # Use the creature's exp value
-        character['exp'] += gained_exp
-        print(f"You gained {gained_exp} Exp!")
-        character["gold"] += creature["golds"]  # Add creature's gold
-        print(f"You got {creature['golds']} golds")
-        tree_branches(character, creature)
-        character_functions.update_level(character)  # Check and handle level up
+
+        if creature['health'] <= 0:
+            gained_exp = creature['exp']  # Use the creature's exp value
+            character['exp'] += gained_exp
+            print(f"You gained {gained_exp} Exp!")
+            character["gold"] += creature["golds"]  # Add creature's gold
+            print(f"You got {creature['golds']} golds")
+            tree_branches(character, creature)
+            character_functions.update_level(character)  # Check and handle level up
 
     elif action.lower() == 'r':
         run_combat(character, creature)
